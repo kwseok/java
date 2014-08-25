@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>Hangul library</description>
+	<display-name>Hangul</display-name>
+	<tlib-version>1.1</tlib-version>
+	<short-name>han</short-name>
+    <uri>http://io.teamscala.java/tags/hangul</uri>
+
+	<function>
+		<description>
+	 		문자열이 한글형식인지 확인한다.
+		</description>
+		<name>isHangul</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>boolean isHangul(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${han:isHangul('한글')} => true
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		첫번째 문자의 초성을 가져온다.
+		</description>
+		<name>getInitial</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>char getInitial(char)</function-signature>
+		<example>
+		<![CDATA[
+			${han:getInitial('한')} => 'ㅎ'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		첫번째 문자의 중성을 가져온다.
+		</description>
+		<name>getVowel</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>char getVowel(char)</function-signature>
+		<example>
+		<![CDATA[
+			${han:getVowel('한')} => 'ㅏ'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		첫번째 문자의 종성을 가져온다.
+		</description>
+		<name>getUnder</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>char getUnder(char)</function-signature>
+		<example>
+		<![CDATA[
+			${utils:getUnder('한')} => 'ㄴ'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		첫번째 문자의 종성이 존재하는지 확인한다.
+		</description>
+		<name>hasUnder</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>boolean hasUnder(char)</function-signature>
+		<example>
+		<![CDATA[
+			${han:hasJongsung('한')} => true
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		마지막 문자의 종성이 존재하는지 확인한다.
+		</description>
+		<name>hasLastUnder</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>boolean hasLastUnder(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${han:hasLastUnder('한글')} => true
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			숫자를 한글로 파싱한다.
+		</description>
+		<name>toHangulNumber</name>
+		<function-class>io.teamscala.java.core.util.HangulUtils</function-class>
+		<function-signature>java.lang.String toHangulNumber(int, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${han:toHangulNumber(1249124, ' ')} => '백이십사만 구천백이십사'
+		]]>
+		</example>
+	</function>
+
+</taglib>

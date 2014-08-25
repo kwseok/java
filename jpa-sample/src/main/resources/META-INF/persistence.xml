@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="hsqlPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+		<properties>
+			<!-- HSQL -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+			<!-- MySQL -->
+			<!--property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/-->
+			<!-- Oracle -->
+			<!--property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/-->
+
+			<!-- value="create" to build a new database on each run; value="update" to modify an existing database; value="create-drop" means the same as "create" but also drops tables when Hibernate closes; value="validate" makes no changes to the database -->
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+			<property name="hibernate.connection.charSet" value="UTF-8"/>
+			<property name="hibernate.bytecode.use_reflection_optimizer" value="true"/>
+
+			<!-- Uncomment the following two properties for JBoss only -->
+			<!-- property name="hibernate.validator.apply_to_ddl" value="false" /-->
+			<!-- property name="hibernate.validator.autoregister_listeners" value="false" /-->
+
+			<!-- 콘솔창에 사용하는 모든 SQL문을 출력 -->
+			<!--property name="hibernate.show_sql" value="true"/-->
+			<property name="hibernate.format_sql" value="true"/>
+
+			<!-- Cache configuration -->
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+			<!--property name="hibernate.cache.provider_configuration_file_resource_path" value="/META-INF/ehcache.xml"/-->
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
+
+			<!-- 하이버네이트 질의들의 토큰들로부터 SQL 토큰들로의 매핑 -->
+			<property name="hibernate.query.substitutions" value="true 1, false 0, yes 'Y', no 'N'"/>
+
+			<!-- 현제 세션의 Scope/Context 설정 <jta|thread|managed|custom> -->
+			<!--property name="hibernate.current_session_context_class" value="thread"/-->
+
+			<!--
+				true 설정할 경우, 세션은 트랜잭션의 완료 단계 후에 자동적으로 종료될 것이다.
+				이미 구성되어 있는 자동 세션 컨텍스트 관리가 더 선호 된다
+			-->
+			<!--property name="hibernate.transaction.auto_close_session" value="true"/-->
+
+			<!--
+				하이버네이트 Transaction API(기본값은 JDBCTransactionFactory)에
+				사용할 TransactionFactory의 클래스의 풀 패키지 이름.
+				classname.of.TransactionFactory
+			-->
+			<!--property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JDBCTransactionFactory"/-->
+
+			<!-- 성능 튜닝에 도움이되는 유용한 통계를 제공 -->
+			<!--property name="hibernate.generate_statistics" value="true"/-->
+
+			<!--
+				인간에게 보다 더 친숙한 형식으로 second-level 캐시 속에
+				데이터를 저장하도록 하이버네이트에게 강제시킨다.
+			-->
+			<!--property name="hibernate.cache.use_structured_entries" value="true"/-->
+		</properties>
+	</persistence-unit>
+    <persistence-unit name="mysqlPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+
+            <!-- value="create" to build a new database on each run; value="update" to modify an existing database; value="create-drop" means the same as "create" but also drops tables when Hibernate closes; value="validate" makes no changes to the database -->
+            <!--property name="hibernate.hbm2ddl.auto" value="update"/-->
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <property name="hibernate.connection.charSet" value="UTF-8"/>
+            <property name="hibernate.bytecode.use_reflection_optimizer" value="true"/>
+
+            <!-- Uncomment the following two properties for JBoss only -->
+            <!-- property name="hibernate.validator.apply_to_ddl" value="false" /-->
+            <!-- property name="hibernate.validator.autoregister_listeners" value="false" /-->
+
+            <!-- 콘솔창에 사용하는 모든 SQL문을 출력 -->
+            <!--property name="hibernate.show_sql" value="true"/-->
+            <property name="hibernate.format_sql" value="true"/>
+
+            <!-- Cache configuration -->
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+
+            <!-- 하이버네이트 질의들의 토큰들로부터 SQL 토큰들로의 매핑 -->
+            <property name="hibernate.query.substitutions" value="true 1, false 0, yes 'Y', no 'N'"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>Tree tracker library</description>
+	<display-name>Tree tracker</display-name>
+	<tlib-version>1.1</tlib-version>
+	<short-name>tt</short-name>
+	<uri>http://io.teamscala.java/tags/treetracker</uri>
+
+	<tag>
+		<description>
+			이 태그는 주어진 객체의 자식 객체들을 추적한다.
+		</description>
+		<name>trackingChildren</name>
+		<tag-class>io.teamscala.java.core.jstl.tags.treetracker.TrackingChildrenTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>
+				추적시에 사용할 변수명을 설정한다.
+			</description>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				추적할 대상 객체를 설정한다.
+			</description>
+			<name>target</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				자식 객체들을 참조할 프로퍼티 이름을 설정한다.
+				이 어트리뷰트를 설정하지 않으면 기본적으로 "children"이 사용된다.
+			</description>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				상태 정보를 처리할 변수명을 설정한다.
+			</description>
+			<name>varStatus</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>
+			이 태그는 주어진 객체의 부모객체 방향으로 추적한다.
+		</description>
+		<name>trackingParent</name>
+		<tag-class>io.teamscala.java.core.jstl.tags.treetracker.TrackingParentTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>
+				추적시에 사용할 변수명을 설정한다.
+			</description>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				추적할 대상 객체를 설정한다.
+			</description>
+			<name>target</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				부모 객체를 참조할 프로퍼티 이름을 설정한다.
+				이 어트리뷰트를 설정하지 않으면 기본적으로 "parent"가 사용된다.
+			</description>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				코드 추적시 오름차순 여부를 설정한다.("asc" or "desc")
+			</description>
+			<name>direction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				상태 정보를 처리할 변수명을 설정한다.
+			</description>
+			<name>varStatus</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

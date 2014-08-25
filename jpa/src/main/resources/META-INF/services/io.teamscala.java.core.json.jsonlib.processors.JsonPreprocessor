@@ -1,0 +1,2 @@
+io.teamscala.java.jpa.json.jsonlib.processors.HibernateProxyJsonPreprocessor
+io.teamscala.java.jpa.json.jsonlib.processors.PersistentCollectionJsonPreprocessor

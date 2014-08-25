@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="user/login" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/pages/user/login.jsp"/>
+    </definition>
+
+    <definition name="user/form" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/pages/user/form.jsp"/>
+    </definition>
+
+    <definition name="user/complete" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/pages/user/complete.jsp"/>
+    </definition>
+
+</tiles-definitions>

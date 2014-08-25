@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<!-- The controllers are autodetected POJOs labeled with the @Controller annotation. -->
+	<context:component-scan base-package="io.teamscala.java.sample.web.controllers" use-default-filters="false" name-generator="io.teamscala.java.sample.FQBeanNameGenerator">
+		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+	</context:component-scan>
+
+	<bean class="io.teamscala.java.jpa.json.jackson.HibernateAwareObjectMapper" id="objectMapper"/>
+	<bean class="io.teamscala.java.core.oxm.xstream.XStreamMarshaller" id="xstreamMarshaller" p:autodetectAnnotations="true"/>
+
+	<!-- Turns on support for mapping requests to Spring MVC @Controller methods
+	     Also registers default Formatters and Validators for use across all @Controllers -->
+	<mvc:annotation-driven conversion-service="applicationConversionService" validator="validator">
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" id="jsonConverter" p:objectMapper-ref="objectMapper"/>
+			<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter" id="marshallingConverter" c:marshaller-ref="xstreamMarshaller"/>
+		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<bean class="io.teamscala.java.core.web.method.support.PageableArgumentResolver"/>
+			<bean class="io.teamscala.java.jpa.web.method.support.JpaEntityAttributeArgumentResolver" c:conversionService-ref="applicationConversionService"/>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="applicationConversionService">
+		<property name="formatterRegistrars">
+			<set>
+				<bean class="io.teamscala.java.sample.format.DefaultFormatterRegistrar"/>
+			</set>
+		</property>
+	</bean>
+
+    <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" id="validator"/>
+
+	<!--
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer" id="customEditorConfigurer">
+		<property name="propertyEditorRegistrars">
+			<array>
+			
+			</array>
+		</property>
+	</bean>
+	-->
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->
+    <mvc:resources mapping="/resources/**" location="/, classpath:/META-INF/web-resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+	<!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource requests to the container's default Servlet -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- register "global" interceptor beans to apply to all registered HandlerMappings -->
+	<mvc:interceptors>
+		<!-- 
+		<bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
+		-->
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/resources/**"/>
+			<bean class="io.teamscala.java.sample.web.interceptors.UserAgentInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- selects a static view for rendering without the need for an explicit controller -->
+	<mvc:view-controller path="/" view-name="index"/>
+	<mvc:view-controller path="/uncaughtException"/>
+	<mvc:view-controller path="/resourceNotFound"/>
+	<mvc:view-controller path="/badRequest"/>
+	<mvc:view-controller path="/accessDenied"/>
+
+	<!-- Resolves localized messages*.properties and application.properties files in the application to	allow for internationalization. 
+		The messages*.properties files translate Roo generated messages which are part of the admin interface, the application.properties
+		resource bundle localizes all application specific messages such as entity names and menu items. -->
+	<bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource">
+		<property name="fallbackToSystemLocale" value="false"/>
+		<property name="basenames">
+			<list>
+				<value>WEB-INF/i18n/messages</value>
+				<value>WEB-INF/i18n/application</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- store preferred language configuration in a cookie -->
+	<bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver" p:cookieName="locale"/>	
+	
+	<!-- resolves localized <theme_name>.properties files in the classpath to allow for theme support -->
+	<!-- 
+	<bean class="org.springframework.ui.context.support.ResourceBundleThemeSource" id="themeSource"/>
+	-->
+	
+	<!-- store preferred theme configuration in a cookie -->
+	<!-- 
+	<bean class="org.springframework.web.servlet.theme.CookieThemeResolver" id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard"/>
+	-->
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" p:order="1"/>
+
+	<bean class="io.teamscala.java.core.web.servlet.handler.SimpleHandlerExceptionResolver" p:order="2">
+        <property name="messageSource" ref="messageSource"/>
+		<property name="defaultErrorViewName" value="uncaughtException"/>
+		<property name="ajaxErrorView" ref="jsonView"/>
+		<property name="exceptionHandlers">
+			<list>
+				<bean class="io.teamscala.java.core.web.servlet.handler.SimpleExceptionHandler">
+					<property name="statusCode" value="404"/>
+					<property name="exceptions">
+						<list>
+							<value>org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException</value>
+							<value>org.springframework.beans.TypeMismatchException</value>
+							<value>org.springframework.web.bind.MissingServletRequestParameterException</value>
+							<value>javax.persistence.EntityNotFoundException</value>
+							<value>org.hibernate.ObjectNotFoundException</value>
+						</list>
+					</property>
+					<property name="errorViewName" value="resourceNotFound"/>
+					<property name="errorMessageCode" value="error.resourceNotFound"/>
+				</bean>
+				<bean class="io.teamscala.java.core.web.servlet.handler.BindExceptionHandler" p:errorViewName="badRequest"/>
+				<bean class="io.teamscala.java.core.web.servlet.handler.SimpleExceptionHandler">
+					<property name="statusCode" value="400"/>
+					<property name="exception" value="org.springframework.web.multipart.MaxUploadSizeExceededException"/>
+					<property name="errorViewName" value="badRequest"/>
+					<property name="errorMessageCode" value="error.fileupload.sizeExceeded"/>
+					<property name="errorMessageArguments" value="maxUploadSize"/>
+				</bean>
+				<bean class="io.teamscala.java.core.web.servlet.handler.HttpExceptionHandler">
+					<property name="errorViewMappings">
+						<props>
+							<prop key="400">badRequest</prop>
+							<prop key="403">accessDenied</prop>
+							<prop key="404">resourceNotFound</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- enable this for integration of file upload functionality -->
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
+
+	<bean class="io.teamscala.java.core.web.servlet.view.json.MappingJackson2JsonView" id="jsonView" p:objectMapper-ref="objectMapper"/>
+	<bean class="io.teamscala.java.core.web.servlet.view.json.MappingJackson2JsonView" id="jsonViewResult" p:objectMapper-ref="objectMapper"
+			p:modelKey="result" p:extractValueFromSingleKeyModel="true"/>
+
+	<bean class="org.springframework.web.servlet.view.xml.MarshallingView" id="xmlView" p:marshaller-ref="xstreamMarshaller"/>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" id="contentNegotiatingViewResolver" p:order="1">
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManager">
+				 <constructor-arg>
+				 	<list>
+				 		<!--
+					 	<bean class="org.springframework.web.accept.FixedContentNegotiationStrategy" c:defaultContentType="application/json"/>
+				 		-->
+						<bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+							<constructor-arg>
+								<map>
+									<entry key="json" value="application/json"/>
+									<entry key="xml" value="application/xml"/>
+									<entry key="html" value="text/html"/>
+								</map>
+							</constructor-arg>
+						</bean>
+					</list>
+				</constructor-arg>
+			</bean>
+		</property>
+	    <property name="defaultViews">
+	        <list>
+	        	<ref bean="jsonView"/>
+	        	<ref bean="xmlView"/>
+	        </list>
+	    </property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="beanNameViewResolver" p:order="2"/>
+
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver" p:order="3"
+			p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"/>
+
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" id="tilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/views/layouts/layouts.xml</value>
+				<!-- Scan views directory for Tiles configurations -->
+				<value>/WEB-INF/views/pages/**/views.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver" p:order="4"
+			p:viewClass="org.springframework.web.servlet.view.JstlView"
+			p:prefix="/WEB-INF/views/pages/" p:suffix=".jsp"/>
+
+</beans>

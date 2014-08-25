@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>Utility library</description>
+	<display-name>Utility</display-name>
+	<tlib-version>1.1</tlib-version>
+	<short-name>util</short-name>
+	<uri>http://io.teamscala.java/tags/util</uri>
+
+	<tag>
+		<description>
+			URL 인코드.
+		</description>
+		<name>urlEncode</name>
+		<tag-class>io.teamscala.java.core.jstl.tags.URLEncodeTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>
+				인코드한 문자열을 설정할 어트리뷰트 이름을 설정한다.
+			</description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue> </attribute>
+		<attribute>
+			<description>
+				인코드할 문자열을 설정한다.
+			</description>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				인코딩 이름을 설정한다. 이 설정이 생략되면 기본적으로
+				'ServletRequest.getCharacterEncoding()'의 값으로 사용한다.
+			</description>
+			<name>encoding</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				유효 영역을 설정한다.
+				"page", "request", "session" 또는 "application" 중에서 설정가능하다.
+				기본적으로 이 어트리뷰트를 설정하지 않으면 "page" 설정값을 사용한다.
+			</description>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>
+			URL 디코드.
+		</description>
+		<name>urlDecode</name>
+		<tag-class>io.teamscala.java.core.jstl.tags.URLDecodeTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>
+				디코드한 문자열을 설정할 어트리뷰트 이름을 설정한다.
+			</description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				디코드할 문자열을 설정한다.
+			</description>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				인코딩 이름을 설정한다. 이 설정이 생략되면 기본적으로
+				'ServletRequest.getCharacterEncoding()'의 값으로 사용한다.
+			</description>
+			<name>encoding</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				유효 영역을 설정한다.
+				"page", "request", "session" 또는 "application" 중에서 설정가능하다.
+				기본적으로 이 어트리뷰트를 설정하지 않으면 "page" 설정값을 사용한다.
+			</description>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- io.teamscala.java.core.web.util.HtmlUtils -->
+
+	<function>
+		<description>
+	 		HTML 태그를 이스케이프한다.
+		</description>
+		<name>htmlEscape</name>
+		<function-class>org.springframework.web.util.HtmlUtils</function-class>
+        <function-signature>java.lang.String htmlEscape(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:htmlEscape('<b>테스트</b>')} => '&lt;b&gt;테스트&lt;/b&gt;'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		이스케이프된 HTML 태그를 언이스케이프한다.
+		</description>
+		<name>htmlUnescape</name>
+        <function-class>org.springframework.web.util.HtmlUtils</function-class>
+		<function-signature>java.lang.String htmlUnescape(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:htmlUnescape('&lt;b&gt;테스트&lt;/b&gt;')} => '<b>테스트</b>'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		공백 문자 및 개행 문자를 각각 '&amp;nbsp;' 와 '&lt;br/&gt;' 태그로 변환한다.
+		</description>
+		<name>nl2br</name>
+		<function-class>io.teamscala.java.core.web.util.HtmlUtils</function-class>
+		<function-signature>java.lang.String nl2br(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:nl2br('<b>테 스 트\n</b>')} => '<b>테&nbsp;스&nbsp;트<br/></b>'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		'&amp;nbsp;' 와 '&lt;br/&gt;' 태그를 각각 공백 문자 및 개행 문자로 변환한다.
+		</description>
+		<name>br2nl</name>
+		<function-class>io.teamscala.java.core.web.util.HtmlUtils</function-class>
+		<function-signature>java.lang.String br2nl(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:br2nl('<b>테&nbsp;스&nbsp;트<br/></b>')} => '<b>테 스 트\n</b>'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		HTML 태그를 이스케이프하고 공백 문자 및 개행 문자를
+	 		각각 '&amp;nbsp;' 와 '&lt;br/&gt;' 태그로 변환한다.
+		</description>
+		<name>nl2brAndEscape</name>
+		<function-class>io.teamscala.java.core.web.util.HtmlUtils</function-class>
+		<function-signature>java.lang.String nl2brAndEscape(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:nl2brAndEscape('<b>테 스 트\n</b>')} => '&lt;b&gt;테&nbsp;스&nbsp;트<br/>&lt;/b&gt;'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		이스케이프된 HTML 태그를 이스케이프하고 '&amp;nbsp;' 와 '&lt;br/&gt;' 태그를
+	 		각각 공백 문자 및 개행 문자로 변환한다.
+		</description>
+		<name>br2nlAndUnescape</name>
+		<function-class>io.teamscala.java.core.web.util.HtmlUtils</function-class>
+		<function-signature>java.lang.String br2nlAndUnescape(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:br2nlAndUnescape('&lt;b&gt;테&nbsp;스&nbsp;트<br/>&lt;/b&gt;')} => '<b>테 스 트\n</b>'
+		]]>
+		</example>
+	</function>
+
+	<!-- io.teamscala.java.core.util.StringUtils -->
+
+	<function>
+		<description>
+			테그를 모두 제거한다.
+		</description>
+		<name>stripTags</name>
+		<function-class>io.teamscala.java.core.util.StringUtils</function-class>
+		<function-signature>java.lang.String stripTags(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:stripTags('<b>테스트</b>')} => '테스트'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		문자열을 일정 길이만큼 잘라서 가져온다.
+		</description>
+		<name>cutstring</name>
+		<function-class>io.teamscala.java.core.util.StringUtils</function-class>
+		<function-signature>java.lang.String cutstring(java.lang.String, int)</function-signature>
+		<example>
+		<![CDATA[
+			${util:cutstring('잘라서 가져올 문자열', 5)} => '잘라서 가'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		문자열을 일정 길이만큼 잘라서 가져온다.
+	 		만약 문자열이 잘릴경우 주어진 접미사를 붙여서 가져온다.
+		</description>
+		<name>cutstringWithSuffix</name>
+		<function-class>io.teamscala.java.core.util.StringUtils</function-class>
+		<function-signature>java.lang.String cutstring(java.lang.String, int, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:cutstringWithSuffix('잘라서 가져올 문자열', 5, '...')} => '잘라서 가...'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		문자열 행마다 앞쪽에 주어진 문자열을 붙여준다.
+		</description>
+		<name>prependEachLine</name>
+		<function-class>io.teamscala.java.core.util.StringUtils</function-class>
+		<function-signature>java.lang.String prependEachLine(java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			<c:set var="string">
+				테스트 문자열1
+				테스트 문자열2
+				테스트 문자열3
+			</c:set>
+			${util:prependEachLine(string, '>> ')}
+			결과 :
+				>> 테스트 문자열1
+				>> 테스트 문자열2
+				>> 테스트 문자열3
+		]]>
+		</example>
+	</function>
+
+	<!-- org.apache.commons.lang3.StringUtils -->
+
+	<function>
+		<description>
+     		Left pad a String with a specified character.
+		</description>
+		<name>leftPad</name>
+		<function-class>org.apache.commons.lang3.StringUtils</function-class>
+		<function-signature>java.lang.String leftPad(java.lang.String, int, char)</function-signature>
+		<example>
+		<![CDATA[
+			${util:leftPad('1', 5, '0')} => '00001'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+     		Right pad a String with a specified character.
+		</description>
+		<name>rightPad</name>
+		<function-class>org.apache.commons.lang3.StringUtils</function-class>
+		<function-signature>java.lang.String rightPad(java.lang.String, int, char)</function-signature>
+		<example>
+		<![CDATA[
+			${util:rightPad('1', 5, '0')} => '10000'
+		]]>
+		</example>
+	</function>
+
+	<!-- io.teamscala.java.core.util.DateUtils -->
+
+	<function>
+		<description>
+	 		주어진 날짜를 주어진 필드에 따라 잘라낸다.
+		</description>
+		<name>truncate</name>
+		<function-class>org.apache.commons.lang3.time.DateUtils</function-class>
+		<function-signature>java.util.Date truncate(java.lang.Object, int)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="date" value="java.util.Date"/>
+			${util:truncate(date, 5)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		주어진 날짜의 날짜 부분을 잘라낸다.
+		</description>
+		<name>truncateDate</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>java.util.Date truncateDate(java.lang.Object)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="date" value="java.util.Date"/>
+			${util:truncateDate(date)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 날짜의 차이를 마이크로초로 반환한다.
+		</description>
+		<name>diffTimes</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffTimes(java.util.Date, java.util.Date)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="fromDate" value="java.util.Date"/>
+			<jsp:useBean id="toDate" value="java.util.Date"/>
+			${util:diffTimes(fromDate, toDate)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 문자열 날짜의 차이를 마이크로초로 반환한다.
+		</description>
+		<name>diffStrTimes</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffTimes(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:diffStrTimes('2007-04-18', '2008-04-18', 'yyyy-MM-dd')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 날짜가 몇일이 차이나는지 반환한다.
+		</description>
+		<name>diffDays</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffDays(java.util.Date, java.util.Date)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="fromDate" value="java.util.Date"/>
+			<jsp:useBean id="toDate" value="java.util.Date"/>
+			${util:diffDays(fromDate, toDate)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 문자열 날짜가 몇일이 차이나는지 반환한다.
+		</description>
+		<name>diffStrDays</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffDays(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:diffStrDays('2007-04-18', '2008-04-18', 'yyyy-MM-dd')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 날짜가 몇시간이 차이나는지 반환한다.
+		</description>
+		<name>diffHours</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffHours(java.util.Date, java.util.Date)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="fromDate" value="java.util.Date"/>
+			<jsp:useBean id="toDate" value="java.util.Date"/>
+			${util:diffHours(fromDate, toDate)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 문자열 날짜가 몇시간이 차이나는지 반환한다.
+		</description>
+		<name>diffStrHours</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffHours(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:diffStrHours('2007-04-18', '2008-04-18', 'yyyy-MM-dd')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 날짜가 몇분이 차이나는지 반환한다.
+		</description>
+		<name>diffMinutes</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffMinutes(java.util.Date, java.util.Date)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="fromDate" value="java.util.Date"/>
+			<jsp:useBean id="toDate" value="java.util.Date"/>
+			${util:diffMinutes(fromDate, toDate)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 문자열 날짜가 몇분이 차이나는지 반환한다.
+		</description>
+		<name>diffStrMinutes</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffMinutes(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:diffStrMinutes('2007-04-18', '2008-04-18', 'yyyy-MM-dd')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 날짜가 몇초가 차이나는지 반환한다.
+		</description>
+		<name>diffSeconds</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffSeconds(java.util.Date, java.util.Date)</function-signature>
+		<example>
+		<![CDATA[
+			<jsp:useBean id="fromDate" value="java.util.Date"/>
+			<jsp:useBean id="toDate" value="java.util.Date"/>
+			${util:diffSeconds(fromDate, toDate)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		두 문자열 날짜가 몇초가 차이나는지 반환한다.
+		</description>
+		<name>diffStrSeconds</name>
+		<function-class>io.teamscala.java.core.util.DateUtils</function-class>
+		<function-signature>long diffSeconds(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:diffStrSeconds('2007-04-18', '2008-04-18', 'yyyy-MM-dd')}
+		]]>
+		</example>
+	</function>
+
+	<!-- io.teamscala.java.core.util.EncryptUtils -->
+
+	<function>
+		<description>
+			MD5 알고리즘으로 암호화한다.
+		</description>
+		<name>md5</name>
+		<function-class>io.teamscala.java.core.util.EncryptUtils</function-class>
+		<function-signature>java.lang.String md5(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:md5('password')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			SHA 알고리즘으로 암호화한다.
+		</description>
+		<name>sha</name>
+		<function-class>io.teamscala.java.core.util.EncryptUtils</function-class>
+		<function-signature>java.lang.String sha(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:sha('password')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			SHA-256 알고리즘으로 암호화한다.
+		</description>
+		<name>sha256</name>
+		<function-class>io.teamscala.java.core.util.EncryptUtils</function-class>
+		<function-signature>java.lang.String sha256(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:sha256('password')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			SHA-384 알고리즘으로 암호화한다.
+		</description>
+		<name>sha384</name>
+		<function-class>io.teamscala.java.core.util.EncryptUtils</function-class>
+		<function-signature>java.lang.String sha384(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:sha384('password')}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			SHA-512 알고리즘으로 암호화한다.
+		</description>
+		<name>sha512</name>
+		<function-class>io.teamscala.java.core.util.EncryptUtils</function-class>
+		<function-signature>java.lang.String sha512(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:sha512('password')}
+		]]>
+		</example>
+	</function>
+
+	<!-- org.apache.commons.collections15.CollectionUtils -->
+
+	<function>
+		<description>
+			컬렉션에서 주어진 컬렉션의 요소중 하나라도 존재하는지 확인한다.
+		</description>
+		<name>containsAny</name>
+		<function-class>org.apache.commons.collections15.CollectionUtils</function-class>
+		<function-signature>boolean containsAny(java.util.Collection, java.util.Collection)</function-signature>
+		<example>
+		<![CDATA[
+			<%
+				List list1 = new ArrayList();
+				list1.add("a");
+				list1.add("b");
+				list1.add("c");
+				List list2 = new ArrayList();
+				list2.add("b");
+				list2.add("c");
+				pageContext.addAttribute("list1", list1);
+				pageContext.addAttribute("list2", list2);
+			%>
+	 		${util:containsAny(list1, list2)} => 'true'
+		]]>
+		</example>
+	</function>
+
+	<!-- io.teamscala.java.core.jstl.functions.Functions -->
+
+	<function>
+		<description>
+			주어진 인덱스에 해당하는 컬렉션의 요소하나를 가져온다.
+		</description>
+		<name>get</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>java.lang.Object get(java.lang.Object, int)</function-signature>
+		<example>
+		<![CDATA[
+			<%
+				List list = new ArrayList();
+				list.add("a");
+				list.add("b");
+				list.add("c");
+				pageContext.addAttribute("list", list);
+			%>
+	 		${util:get(list, 2)} => 'c'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			문자열, 배열 또는 컬렉션을 검색하여 인덱스를 반환한다.
+		</description>
+		<name>indexOf</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>int indexOf(java.lang.Object, java.lang.Object)</function-signature>
+		<example>
+		<![CDATA[
+			<%
+				List list = new ArrayList();
+				list.add("a");
+				list.add("b");
+				list.add("c");
+				list.add("d");
+				pageContext.addAttribute("list", list);
+			%>
+	 		${util:indexOf(list, 'c')} => '2'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			문자열, 배열 또는 컬렉션에 주어진 요소가 존재하는지 확인한다.
+		</description>
+		<name>contains</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>boolean contains(java.lang.Object, java.lang.Object)</function-signature>
+		<example>
+		<![CDATA[
+			<%
+				List list = new ArrayList();
+				list.add("a");
+				list.add("b");
+				list.add("c");
+				pageContext.addAttribute("list", list);
+			%>
+	 		${util:contains(list, 'b')} => 'true'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			Compiles the given regular expression and attempts to match the given input against it. 
+
+			An invocation of this convenience method of the form 
+
+			 Pattern.matches(regex, input);
+
+			behaves in exactly the same way as the expression 
+
+			 Pattern.compile(regex).matcher(input).matches()
+
+			If a pattern is to be used multiple times, compiling it once and reusing it will be more efficient than invoking this method each time. 
+		</description>
+		<name>matches</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>boolean matches(java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:matches("^[a-z]+$", 'abcd')} => 'true'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			Attempts to match the input sequence, starting at the beginning of the region, against the pattern. 
+
+			Like the matches method, this method always starts at the beginning of the region; unlike that method,
+			it does not require that the entire region be matched. 
+
+			If the match succeeds then more information can be obtained via the start, end, and group methods. 
+		</description>
+		<name>lookingAt</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>boolean lookingAt(java.lang.String, java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+	 		${util:lookingAt("^[a-z]+", 'abcd123')} => 'true'
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		JSON 으로 반환한다.
+		</description>
+		<name>toJSON</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>java.lang.String toJSON(java.lang.Object)</function-signature>
+		<example>
+		<![CDATA[
+			${util:toJSON(object)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+	 		JSON 으로 반환 후 Escape 한다.
+		</description>
+		<name>toJSONAndEscape</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>java.lang.String toJSONAndEscape(java.lang.Object)</function-signature>
+		<example>
+		<![CDATA[
+			${util:toJSONAndEscape(object)}
+		]]>
+		</example>
+	</function>
+	<function>
+		<description>
+			사업자 번호 형태의 문자열로 변경한다.
+		</description>
+		<name>formatBrnKO</name>
+		<function-class>io.teamscala.java.core.jstl.functions.Functions</function-class>
+		<function-signature>java.lang.String formatBrnKO(java.lang.Object)</function-signature>
+		<example>
+		<![CDATA[
+			${util:formatBrnKO('2128195211')} => '212-81-95211'
+		]]>
+		</example>
+	</function>
+
+	<!-- org.springframework.web.util.JavaScriptUtils -->
+	
+	<function>
+		<description>
+	 		Java Script Escape
+		</description>
+		<name>javaScriptEscape</name>
+		<function-class>org.springframework.web.util.JavaScriptUtils</function-class>
+		<function-signature>java.lang.String javaScriptEscape(java.lang.String)</function-signature>
+		<example>
+		<![CDATA[
+			${util:javaScriptEscape('{"id": 1}')} => {\"id\": 1}
+		]]>
+		</example>
+	</function>
+
+</taglib>

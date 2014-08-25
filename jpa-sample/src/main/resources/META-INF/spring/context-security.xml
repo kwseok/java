@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+		
+	<!-- Excludes urls -->
+	<sec:http pattern="/favicon.ico" security="none" />
+	<sec:http pattern="/resources/**" security="none" />
+
+	<sec:http auto-config="true"
+			use-expressions="true"
+			disable-url-rewriting="true"
+			access-denied-page="/accessDenied"
+			entry-point-ref="authenticationEntryPoint">
+
+		<!-- 샘플 게시판 -->
+		<sec:intercept-url pattern="/board/**" access="isAuthenticated()" />
+
+		<!-- 지정되지 않은 URL은 모두 접근 가능 -->
+		<sec:intercept-url pattern="/**" access="permitAll()" />
+
+		<sec:form-login login-page="/user/login"
+				username-parameter="loginId"
+				password-parameter="loginPassword"
+				authentication-success-handler-ref="authenticationSuccessHandler"
+				authentication-failure-handler-ref="authenticationFailureHandler"
+				login-processing-url="/user/security"/>
+
+		<sec:logout logout-url="/user/logout" logout-success-url="/" />
+
+		<sec:remember-me token-validity-seconds="31536000" key="r" user-service-ref="userDetailsService"/>
+	</sec:http>
+
+	<!-- SecurityContextHolder set strategy to Inheritable thread local -->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.security.core.context.SecurityContextHolder"/>
+		<property name="targetMethod" value="setStrategyName"/>
+		<property name="arguments" value="MODE_INHERITABLETHREADLOCAL"/>
+	</bean>
+
+	<!-- EntryPoint -->
+	<bean id="authenticationEntryPoint" class="io.teamscala.java.sample.security.web.AjaxAwareLoginUrlAuthenticationEntryPoint"
+			c:loginFormUrl="/user/login" p:useForward="true"/>
+
+	<!-- Success handlers -->
+	<bean id="authenticationSuccessHandler" class="io.teamscala.java.sample.security.web.AjaxAwareAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/"/>
+	</bean>
+
+	<!-- Failure handlers -->
+	<bean id="authenticationFailureHandler" class="io.teamscala.java.sample.security.web.AjaxAwareAuthenticationFailureHandler"/>
+	
+	<!-- UserDetails service -->
+	<bean id="userDetailsService" class="io.teamscala.java.sample.security.userdetails.SecurityDetailsService"/>
+
+	<!-- Authentication manager -->
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="authenticationProvider"/>
+	</sec:authentication-manager>
+
+	<!-- Authentication provider -->
+	<bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService"/>
+		<property name="preAuthenticationChecks" ref="preAuthenticationChecks"/>
+		<property name="postAuthenticationChecks" ref="postAuthenticationChecks"/>
+	</bean>
+
+	<!-- Authentication checkers -->
+	<bean id="preAuthenticationChecks" class="io.teamscala.java.sample.security.userdetails.PreAuthenticationChecks"/>
+	<bean id="postAuthenticationChecks" class="io.teamscala.java.sample.security.userdetails.PostAuthenticationChecks"/>
+
+	<!-- Support annotation -->
+	<sec:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled"/>
+
+</beans>
