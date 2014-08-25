@@ -51,10 +51,10 @@ public class UserController extends BaseController {
     public String update(@Validated @EntityAttribute User user, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) return "user/form";
         else {
-            // 기본 권한 부여
-            user.addRole(new UserRole(UserRole.Type.ROLE_MEMBER));
-            // 패스워드 인코딩
-            user.setPassword(user.getPassword());
+            if (user.getId() == null) {
+                // 기본 권한 부여
+                user.addRole(new UserRole(UserRole.Type.ROLE_MEMBER));
+            }
             // 저장
             user.save();
             return "user/complete";

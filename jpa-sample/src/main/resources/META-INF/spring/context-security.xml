@@ -17,8 +17,8 @@
 			access-denied-page="/accessDenied"
 			entry-point-ref="authenticationEntryPoint">
 
-		<!-- 샘플 게시판 -->
-		<sec:intercept-url pattern="/board/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/board/**" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/user/form" access="isAuthenticated()" />
 
 		<!-- 지정되지 않은 URL은 모두 접근 가능 -->
 		<sec:intercept-url pattern="/**" access="permitAll()" />
