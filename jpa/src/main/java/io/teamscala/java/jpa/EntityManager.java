@@ -10,8 +10,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Entity Manager Context annotation.
  *
- * @author 석기원
- * 
  * @see io.teamscala.java.jpa.EntityManagerContext
  */
 @Target(TYPE)

@@ -18,7 +18,6 @@ import java.util.WeakHashMap;
 /**
  * JPA helper.
  *
- * @author 석기원
  */
 public class JpaHelper implements ApplicationContextAware {
 	private static final Logger LOG = LoggerFactory.getLogger(JpaHelper.class);

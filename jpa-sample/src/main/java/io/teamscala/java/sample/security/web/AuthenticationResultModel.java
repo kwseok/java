@@ -3,7 +3,6 @@ package io.teamscala.java.sample.security.web;
 /**
  * 인증 결과를 반환하기 위한 모델.
  * 
- * @author 이영진
  */
 public class AuthenticationResultModel {
 

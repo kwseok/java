@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * 다국어 변환 길이 체크 검증자.
  * 
- * @author 이영진
  */
 public class LengthValidator implements ConstraintValidator<Length, String> {
 

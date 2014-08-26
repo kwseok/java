@@ -7,7 +7,6 @@ import java.io.File;
 /**
  * 파일이름 유틸리티 클래스.
  * 
- * @author 석기원
  */
 public abstract class FilenameUtils extends org.apache.commons.io.FilenameUtils {
 

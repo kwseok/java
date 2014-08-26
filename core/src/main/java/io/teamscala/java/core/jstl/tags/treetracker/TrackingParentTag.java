@@ -8,7 +8,6 @@ import javax.servlet.jsp.JspException;
 /**
  * Object tracing parent tag.
  *
- * @author 석기원
  */
 public class TrackingParentTag extends LoopTagSupport {
 	private static final long serialVersionUID = 1118282838001547398L;

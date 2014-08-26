@@ -9,7 +9,6 @@ import static org.springframework.beans.BeanUtils.instantiateClass;
 /**
  * Abstract entity converter.
  *
- * @author 석기원
  */
 public abstract class AbstractEntityConverter implements GenericConverter {
 

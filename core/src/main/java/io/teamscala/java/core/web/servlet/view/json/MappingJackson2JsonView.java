@@ -8,7 +8,6 @@ import java.util.Map;
 /**
  * Extends MappingJackson2JsonView.
  *
- * @author 석기원
  */
 public class MappingJackson2JsonView extends org.springframework.web.servlet.view.json.MappingJackson2JsonView {
 

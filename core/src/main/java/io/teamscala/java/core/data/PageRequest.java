@@ -10,7 +10,6 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 /**
  * Pagination &amp; sort request information class.
  * 
- * @author 석기원
  */
 public class PageRequest implements Pageable {
 

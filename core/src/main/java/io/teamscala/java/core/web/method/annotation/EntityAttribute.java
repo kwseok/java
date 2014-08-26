@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 /**
  * Entity attribute annotation.
  *
- * @author 석기원
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

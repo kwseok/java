@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 /**
  * Entity Manager Context interface.
  *
- * @author 석기원
  */
 public interface EntityManagerContext {
     /** @return the entity manager. */

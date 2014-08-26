@@ -8,7 +8,6 @@ import org.hibernate.proxy.LazyInitializer;
 /**
  * Hibernate property filter.
  *
- * @author 석기원
  */
 public class HibernateAwarePropertyFilter implements PropertyFilter {
 

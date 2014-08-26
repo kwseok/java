@@ -12,7 +12,6 @@ import java.util.Properties;
 /**
  * Http exception handler.
  * 
- * @author 석기원
  */
 public class HttpExceptionHandler implements ExceptionHandler {
 

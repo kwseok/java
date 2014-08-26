@@ -37,7 +37,6 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 /**
  * Abstract entity attribute argument resolver.
  *
- * @author 석기원
  */
 public abstract class AbstractEntityAttributeArgumentResolver implements HandlerMethodArgumentResolver, InitializingBean {
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractEntityAttributeArgumentResolver.class);

@@ -6,7 +6,6 @@ import javax.persistence.PersistenceContext;
 /**
  * Default Entity Manager Context.
  *
- * @author 석기원
  */
 public class DefaultEntityManagerContext implements EntityManagerContext {
 
@@ -17,8 +16,6 @@ public class DefaultEntityManagerContext implements EntityManagerContext {
 	/**
 	 * Configurable Default Entity Manager Context.
 	 *
-	 * @author 석기원
-	 * 
 	 * @see org.springframework.beans.factory.annotation.Configurable
 	 */
 	@org.springframework.beans.factory.annotation.Configurable

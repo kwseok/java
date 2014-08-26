@@ -11,7 +11,6 @@ import java.net.URLEncoder;
 /**
  * URL 인코드 태그.
  *
- * @author 석기원
  */
 public class URLEncodeTag extends BodyTagSupport {
 	private static final long serialVersionUID = 6926914653487786834L;

@@ -9,7 +9,6 @@ import java.util.Map;
 /**
  * Exception handler interface.
  *
- * @author 석기원
  */
 public interface ExceptionHandler {
 

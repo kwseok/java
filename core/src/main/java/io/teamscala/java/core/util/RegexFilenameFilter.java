@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 /**
  * 정규식을 이용한 파일 이름 필터 클래스.
  *
- * @author 석기원
  */
 public class RegexFilenameFilter implements java.io.FilenameFilter {
 

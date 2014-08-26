@@ -7,7 +7,6 @@ import org.springframework.core.convert.converter.ConverterFactory;
 /**
  * Enum converter factory.
  *
- * @author 석기원
  */
 public final class EnumConverterFactory implements ConverterFactory<String, Enum<?>> {
 

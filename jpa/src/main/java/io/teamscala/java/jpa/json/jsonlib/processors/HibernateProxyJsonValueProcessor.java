@@ -7,7 +7,6 @@ import org.hibernate.proxy.HibernateProxy;
 /**
  * Json value processor for {@link HibernateProxy}.
  *
- * @author 석기원
  */
 public class HibernateProxyJsonValueProcessor implements JsonValueProcessor {
 

@@ -8,8 +8,6 @@ import static org.apache.commons.lang3.ArrayUtils.toArray;
 /**
  * Throws.
  * 
- * @author 석기원
- * 
  * @see HttpException
  */
 public final class Throws {

@@ -18,7 +18,6 @@ import java.util.Map;
 /**
  * 간단한 검색 조건 생성 리스너. 
  * 
- * @author 석기원
  */
 public class SimpleSearchListener implements SearchListener<SimpleSearch> {
 	private static final Logger LOG = LoggerFactory.getLogger(SimpleSearchListener.class);

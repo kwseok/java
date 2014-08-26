@@ -17,8 +17,6 @@ import static org.apache.commons.lang3.ClassUtils.isAssignable;
 /**
  * 동적으로 객체의 속성, 메소드에 접근할 수 있는 접근자입니다.
  * 
- * @author 석기원
- * 
  * @param <T> the target type
  */
 public class DynamicAccessor<T> {

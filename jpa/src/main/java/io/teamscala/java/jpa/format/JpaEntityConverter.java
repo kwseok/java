@@ -21,7 +21,6 @@ import java.util.Set;
 /**
  * JPA entity converter.
  *
- * @author 석기원
  */
 public class JpaEntityConverter extends AbstractEntityConverter implements InitializingBean {
 

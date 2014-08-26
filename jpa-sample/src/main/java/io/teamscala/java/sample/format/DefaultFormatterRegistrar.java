@@ -11,7 +11,6 @@ import org.springframework.format.datetime.DateFormatter;
 /**
  * Default formatter registrar.
  * 
- * @author 석기원
  */
 public class DefaultFormatterRegistrar implements FormatterRegistrar {
 

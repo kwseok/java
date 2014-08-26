@@ -13,7 +13,6 @@ import java.io.IOException;
 /**
  * 사용자 아이디를 쿠키에 저장하는 핸들러
  * 
- * @author 이영진
  */
 public class SaveUsernameAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 

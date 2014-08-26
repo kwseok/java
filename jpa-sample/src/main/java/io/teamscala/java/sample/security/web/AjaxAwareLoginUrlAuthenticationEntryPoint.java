@@ -12,8 +12,6 @@ import java.io.IOException;
 /**
  * AJAX 인증 처리를 위한 Authentication Entry Point
  * 
- * @author 이영진
- *
  */
 public class AjaxAwareLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 

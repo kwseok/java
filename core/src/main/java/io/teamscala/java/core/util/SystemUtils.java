@@ -14,7 +14,6 @@ import java.util.UUID;
 /**
  * 시스템 관련 유틸리티 클래스.
  
- * @author 석기원
  */
 public abstract class SystemUtils extends org.apache.commons.lang3.SystemUtils {
 

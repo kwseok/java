@@ -31,7 +31,6 @@ import java.util.Set;
  * parsed can be configured. Default configuration uses request properties
  * beginning with {@link #DEFAULT_PREFIX}{@link #DEFAULT_SEPARATOR}.
  *
- * @author Oliver Gierke
  */
 public class PageableArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -271,7 +270,6 @@ public class PageableArgumentResolver implements HandlerMethodArgumentResolver {
 	 * comma separated list where the first entry is the sort direction (
 	 * {@code asc}, {@code desc}) followed by the properties to sort by.
 	 *
-	 * @author Oliver Gierke
 	 */
 	private static class SortPropertyEditor extends PropertyEditorSupport {
 		private final String directionProperty;

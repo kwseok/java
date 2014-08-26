@@ -11,7 +11,6 @@ import java.net.URLDecoder;
 /**
  * URL 디코드 태그.
  *
- * @author 석기원
  */
 public class URLDecodeTag extends BodyTagSupport {
 	private static final long serialVersionUID = 1934328646525866963L;

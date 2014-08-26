@@ -6,7 +6,6 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 /**
  * Is tag support.
  *
- * @author 석기원
  */
 public abstract class IsTagSupport extends BodyTagSupport {
 	private static final long serialVersionUID = -2517095372997445127L;

@@ -4,7 +4,6 @@ package io.teamscala.java.core.util;
  * 한글 처리를 위한 유틸리티 클래스
  * 유니코드 2.0 한글의 범위 * AC00(가) ~ D7A3(힣)
  *
- * @author 석기원
  */
 public abstract class HangulUtils {
 

@@ -6,8 +6,6 @@ import io.teamscala.java.core.data.Searchable;
 /**
  * Search Listener.
  *
- * @author 석기원
- *
  * @param <S> The searchable type
  */
 public interface SearchListener<S extends Searchable> {

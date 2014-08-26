@@ -11,7 +11,6 @@ import java.util.TimeZone;
 /**
  * Json value processor for {@link Date}.
  *
- * @author 석기원
  */
 public class JsDateJsonValueProcessor implements JsonValueProcessor {
 

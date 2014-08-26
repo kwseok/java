@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * Simple exception handler.
  * 
- * @author 석기원
  */
 public class SimpleExceptionHandler implements ExceptionHandler {
 

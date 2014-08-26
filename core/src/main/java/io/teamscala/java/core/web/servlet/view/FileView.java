@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * 파일 뷰
  *
- * @author 석기원
  */
 public class FileView extends AbstractView {
 

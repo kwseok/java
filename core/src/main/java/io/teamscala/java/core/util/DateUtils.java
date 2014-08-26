@@ -12,7 +12,6 @@ import java.util.TimeZone;
 /**
  * 날짜 관련 유틸리티 클래스.
  *
- * @author 석기원
  */
 public abstract class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 

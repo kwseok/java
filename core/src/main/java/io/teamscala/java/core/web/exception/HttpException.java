@@ -8,7 +8,6 @@ import java.util.Map;
 /**
  * HTTP 에러 처리를 위한 예외 클래스
  *
- * @author 석기원
  */
 public class HttpException extends RuntimeException implements MessageSourceResolvable {
     private static final long serialVersionUID = -9195254522372308951L;

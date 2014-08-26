@@ -12,8 +12,6 @@ import static org.springframework.util.NumberUtils.convertNumberToTargetClass;
 /**
  * Number converter factory.
  *
- * @author 이영진
- * @author 석기원
  */
 public final class NumberConverterFactory implements ConverterFactory<String, Number> {
     private final NumberFormat numberFormat;

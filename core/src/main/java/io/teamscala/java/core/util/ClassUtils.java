@@ -10,7 +10,6 @@ import java.util.Locale;
 /**
  * Extends ClassUtils.
  *
- * @author 석기원
  */
 public abstract class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 

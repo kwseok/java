@@ -25,7 +25,6 @@ import static org.springframework.beans.BeanUtils.instantiateClass;
 /**
  * JSON utility class.
  *
- * @author 석기원
  */
 public abstract class JSONUtils {
 

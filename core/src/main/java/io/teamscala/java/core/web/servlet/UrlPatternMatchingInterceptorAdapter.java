@@ -15,7 +15,6 @@ import java.util.Set;
 /**
  * URL pattern matching interceptor adapter.
  *
- * @author 석기원
  */
 public abstract class UrlPatternMatchingInterceptorAdapter implements HandlerInterceptor {
 

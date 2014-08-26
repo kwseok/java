@@ -5,7 +5,6 @@ import java.io.File;
 /**
  * 파일이름 필터 클래스.
  *
- * @author 석기원
  */
 public class FilenameFilter implements java.io.FilenameFilter {
 

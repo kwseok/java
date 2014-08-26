@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 /**
  * 여러개의 {@link Searchable}을 묶어서 처리할때 사용한다.
  *
- * @author 석기원
  */
 public class Searchables implements Searchable, Iterable<Searchable> {
 

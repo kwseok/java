@@ -9,7 +9,6 @@ import org.springframework.validation.Validator;
 /**
  * Validation Utility class.
  *
- * @author 석기원
  */
 public abstract class ValidationUtils extends org.springframework.validation.ValidationUtils {
 

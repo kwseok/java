@@ -9,7 +9,6 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 /**
  * Get tag support.
  *
- * @author 석기원
  */
 public abstract class GetTagSupport extends BodyTagSupport {
 

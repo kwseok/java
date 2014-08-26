@@ -10,7 +10,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Json ignore annotation.
  *
- * @author 석기원
  */
 @Target({FIELD, METHOD})
 @Retention(RUNTIME)

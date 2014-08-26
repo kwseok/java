@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Hibernate aware object mapper.
  *
- * @author 석기원
  */
 public class HibernateAwareObjectMapper extends ObjectMapper {
 	private static final long serialVersionUID = -8608734296572465463L;

@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Bind Information.
  *
- * @author 석기원
  */
 public class BindInfo implements Serializable {
 	private static final long serialVersionUID = -5048891521906443457L;

@@ -13,7 +13,6 @@ import static org.springframework.util.StringUtils.hasText;
 /**
  * Sort information class.
  *
- * @author 석기원
  */
 public class Sort implements Iterable<Order>, Serializable {
     private static final long serialVersionUID = 2983416859639177363L;

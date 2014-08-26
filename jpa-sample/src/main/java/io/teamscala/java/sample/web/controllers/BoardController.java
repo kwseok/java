@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * 게시판 컨트롤러 샘플.
  *
- * @author 석기원
  */
 @Controller
 @RequestMapping("/board")

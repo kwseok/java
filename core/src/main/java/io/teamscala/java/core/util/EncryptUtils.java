@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 /**
  * 암호화 유틸리티 클래스.
  *
- * @author 석기원
  */
 public abstract class EncryptUtils {
 

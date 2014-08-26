@@ -12,7 +12,6 @@ import static org.springframework.util.ReflectionUtils.*;
  * Custom extension of {@link BeanWrapperImpl} that falls back to direct field access in case the object or type being
  * wrapped does not use accessor methods.
  * 
- * @author Oliver Gierke
  */
 public class DirectFieldAccessFallbackBeanWrapper extends BeanWrapperImpl {
 

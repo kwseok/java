@@ -24,7 +24,6 @@ import java.util.Locale;
 /**
  * Web 관련 유틸.
  * 
- * @author 석기원
  */
 public abstract class WebUtils {
 

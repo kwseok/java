@@ -10,7 +10,6 @@ import java.beans.PropertyDescriptor;
 /**
  * XStream marshaller
  *
- * @author 석기원
  */
 public class XStreamMarshaller extends org.springframework.oxm.xstream.XStreamMarshaller {
 

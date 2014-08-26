@@ -13,7 +13,6 @@ import java.util.Map;
 /**
  * Bind exception handler.
  * 
- * @author 석기원
  */
 public class BindExceptionHandler implements ExceptionHandler {
 

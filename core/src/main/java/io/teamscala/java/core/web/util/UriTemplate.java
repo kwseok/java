@@ -17,7 +17,6 @@ import java.util.Map.Entry;
 /**
  * URI Template
  * 
- * @author 석기원
  */
 public class UriTemplate {
 	

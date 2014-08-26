@@ -5,7 +5,6 @@ import java.util.Set;
 /**
  * Processor matcher support.
  * 
- * @author 석기원
  */
 public class ProcessorMatcherSupport {
 

@@ -20,7 +20,6 @@ import static java.util.Collections.unmodifiableList;
 /**
  * Bind Description factory.
  *
- * @author 석기원
  */
 public final class BindInfoFactory {
 

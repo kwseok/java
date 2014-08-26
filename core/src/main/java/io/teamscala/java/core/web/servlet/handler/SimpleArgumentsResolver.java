@@ -9,8 +9,6 @@ import java.util.List;
 /**
  * Simple arguments resolver.
  * 
- * @author 석기원
- *
  * @param <T> the target object type
  */
 public class SimpleArgumentsResolver<T extends Object> implements ArgumentsResolver<T> {

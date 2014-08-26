@@ -3,7 +3,6 @@ package io.teamscala.java.core.data;
 /**
  * Pageable interface.
  *
- * @author 석기원
  */
 public interface Pageable {
 

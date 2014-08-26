@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 /**
  * 문자열 관련 유틸리티 클래스.
  * 
- * @author 석기원
  */
 public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
 

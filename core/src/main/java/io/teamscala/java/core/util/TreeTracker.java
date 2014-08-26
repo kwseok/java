@@ -7,8 +7,6 @@ import java.util.List;
 /**
  * 트리 트레커.
  *
- * @author 석기원
- *
  * @param <T> 처리할 클래스 타입
  */
 public class TreeTracker<T> {

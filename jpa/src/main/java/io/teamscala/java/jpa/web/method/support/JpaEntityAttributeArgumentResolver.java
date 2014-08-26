@@ -25,7 +25,6 @@ import java.util.Set;
 /**
  * JPA entity attribute argument resolver.
  *
- * @author 석기원
  */
 public class JpaEntityAttributeArgumentResolver extends AbstractEntityAttributeArgumentResolver {
 	private static final Logger LOG = LoggerFactory.getLogger(JpaEntityAttributeArgumentResolver.class);

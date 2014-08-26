@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 /**
  * Functions tag library.
  *
- * @author 석기원
  */
 public class Functions {
 

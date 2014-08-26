@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 /**
  * Simple handler exception resolver.
  *
- * @author 석기원
  */
 public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver, Ordered, InitializingBean  {
 

@@ -17,7 +17,6 @@ import java.util.*;
 /**
  * A View that renders its model as a JSON object.
  * 
- * @author 석기원
  */
 public class JsonView extends AbstractView {
 

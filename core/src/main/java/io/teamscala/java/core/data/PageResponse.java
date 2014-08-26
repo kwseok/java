@@ -9,8 +9,6 @@ import java.util.List;
 /**
  * Pagination response information class.
  *
- * @author 석기원
- * 
  * @param <T> the list item type
  */
 public class PageResponse<T> implements Serializable {

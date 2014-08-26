@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 /**
  * HTML 유틸리티
  * 
- * @author 석기원
  */
 public abstract class HtmlUtils extends org.springframework.web.util.HtmlUtils {
 

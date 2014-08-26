@@ -16,7 +16,6 @@ import java.util.Locale;
 /**
  * Abstract controller support.
  *
- * @author 석기원
  */
 public abstract class ControllerSupport implements InitializingBean {
 

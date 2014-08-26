@@ -10,7 +10,6 @@ import java.io.Serializable;
 /**
  * Bind Description.
  *
- * @author 석기원
  */
 public class BindDescription implements Serializable {
 	private static final long serialVersionUID = 8572062364525149579L;

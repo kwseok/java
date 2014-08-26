@@ -13,7 +13,6 @@ import java.io.IOException;
 /**
  * 인증 성공에 대해서 결과를 JSON 으로 반환한다.
  * 
- * @author 이영진
  */
 public class AjaxAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 

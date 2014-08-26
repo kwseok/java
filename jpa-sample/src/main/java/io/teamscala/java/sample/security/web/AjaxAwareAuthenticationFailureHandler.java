@@ -16,7 +16,6 @@ import java.io.IOException;
 /**
  * 인증 실패에 대해서 결과를 JSON 으로 반환한다.
  * 
- * @author 이영진
  */
 public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
 

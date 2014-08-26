@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * 트리 트레커: 루프 태그 지원.
  *
- * @author 석기원
  */
 @SuppressWarnings("serial")
 public abstract class LoopTagSupport extends TagSupport implements IterationTag, TryCatchFinally {

@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 /**
  * 검색에 필요한 정보전달을 위한 간단한 구현이다.
  *
- * @author 석기원
  */
 public class SimpleSearch implements Searchable {
 

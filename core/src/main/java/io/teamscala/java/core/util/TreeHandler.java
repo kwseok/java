@@ -3,8 +3,6 @@ package io.teamscala.java.core.util;
 /**
  * 트리 트레커의 핸들링을 위한 추상클래스.
  *
- * @author 석기원
- *
  * @param <T> 처리할 클래스 타입
  */
 public abstract class TreeHandler<T> {
