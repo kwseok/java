@@ -24,7 +24,8 @@ public class SimpleSearchListener implements SearchListener<SimpleSearch> {
 
 	private final Map<String, StringPath> conditions;
 
-	public SimpleSearchListener() { this.conditions = new HashMap<>(); } public SimpleSearchListener(int initialCapacity) { this.conditions = new HashMap<>(initialCapacity); }
+	public SimpleSearchListener() { this.conditions = new HashMap<>(); }
+    public SimpleSearchListener(int initialCapacity) { this.conditions = new HashMap<>(initialCapacity); }
 	public SimpleSearchListener(Map<String, StringPath> conditions) {
 		Assert.notEmpty(conditions, "'conditions' must not be empty");
 		this.conditions = new HashMap<>(conditions);
