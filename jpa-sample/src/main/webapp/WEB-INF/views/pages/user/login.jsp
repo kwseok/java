@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/commons/taglibs.jspf" %>
 
 <script type="text/javascript">
-define('body', ['configs', 'jquery'], function(configs, $){
+require(['jquery', 'jquery-form', 'jquery-validation', 'jquery-i18n-properties'], function($){
     $('form.login').validate({
         submitHandler: function(form) {
             $.ajax({
