@@ -73,11 +73,13 @@
             <name>Teamscala Nexus Repository</name>
             <url>http://repo.teamscala.io/content/groups/public/</url>
         </repository>
+        <!--
         <repository>
             <id>opencast-public</id>
             <name>OpenCast Public Repository</name>
             <url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
         </repository>
+        -->
     </repositories>
 
     <pluginRepositories>
