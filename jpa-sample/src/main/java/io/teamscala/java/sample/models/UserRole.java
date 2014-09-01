@@ -69,9 +69,15 @@ public class UserRole extends Model<Long> {
         this.type = type;
     }
 
-    // Generated Getters and Setters...
+    // Override for Model
 
     @Override
+    public Long identifier() {
+        return id;
+    }
+
+    // Generated Getters and Setters...
+
     public Long getId() {
         return id;
     }

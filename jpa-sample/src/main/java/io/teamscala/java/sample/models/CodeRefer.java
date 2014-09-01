@@ -91,9 +91,15 @@ public class CodeRefer extends Model<CodeReferId> {
         this.getOrCreateId().setCode(code);
     }
 
-    // Generated Getters and Setters...
+    // Override for Model
 
     @Override
+    public CodeReferId identifier() {
+        return id;
+    }
+
+    // Generated Getters and Setters...
+
     public CodeReferId getId() {
         return id;
     }

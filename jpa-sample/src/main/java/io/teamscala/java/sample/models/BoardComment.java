@@ -70,9 +70,15 @@ public class BoardComment extends Model<Long> {
         this.parent = parent;
     }
 
-    // Generated Getters and Setters...
+    // Override for Model
 
     @Override
+    public Long identifier() {
+        return id;
+    }
+
+    // Generated Getters and Setters...
+
     public Long getId() {
         return id;
     }

@@ -63,11 +63,10 @@ public class CodeGroup extends Model<String> {
         this.code = code;
     }
 
-    // Transeit methods
+    // Override for Model
 
-    @Transient
     @Override
-    public String getId() {
+    public String identifier() {
         return code;
     }
 

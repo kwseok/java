@@ -75,9 +75,15 @@ public class User extends Model<Long> {
         this.username = username;
     }
 
-    // Generated Getters and Setters...
+    // Override for Model
 
     @Override
+    public Long identifier() {
+        return id;
+    }
+
+    // Generated Getters and Setters...
+
     public Long getId() {
         return id;
     }
