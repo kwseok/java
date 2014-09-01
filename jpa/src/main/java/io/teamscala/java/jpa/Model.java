@@ -3,9 +3,16 @@ package io.teamscala.java.jpa;
 import com.google.common.base.Objects;
 import com.mysema.query.annotations.QueryExclude;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
 import javax.persistence.EntityManager;
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Method;
 
 /**
  * Base-class for JPA-mapped models that provides convenience methods.
@@ -15,10 +22,69 @@ import javax.persistence.EntityManager;
 @QueryExclude
 public abstract class Model<ID> {
 
+    private Method _idGetter = null;
+
+    private Method _idGetter() {
+        if (_idGetter == null) {
+            try {
+                Class<?> thisClass = JpaHelper.getClass(this);
+                BeanWrapper beanWrapper = new BeanWrapperImpl(thisClass);
+                ReflectionUtils.doWithFields(thisClass, field -> {
+                    Method readMethod = null;
+                    if (_isAnnotationPresent(field, javax.persistence.Id.class, javax.persistence.EmbeddedId.class)) {
+                        if (beanWrapper.isReadableProperty(field.getName())) {
+                            readMethod = beanWrapper.getPropertyDescriptor(field.getName()).getReadMethod();
+                        }
+                    } else if (beanWrapper.isReadableProperty(field.getName())) {
+                        PropertyDescriptor propertyDescriptor = beanWrapper.getPropertyDescriptor(field.getName());
+                        readMethod = propertyDescriptor.getReadMethod();
+                        if (!_isAnnotationPresent(readMethod, javax.persistence.Id.class, javax.persistence.EmbeddedId.class)) {
+                            readMethod = null;
+                        }
+                    }
+                    if (readMethod != null) {
+                        if (_idGetter != null) {
+                            throw new IllegalStateException("Multiple @javax.persistence.Id properties found in class [" + thisClass + "], must override _getId method.");
+                        }
+                        _idGetter = readMethod;
+                    }
+                }, field -> {
+                    Class<?> declaringClass = field.getDeclaringClass();
+                    return !declaringClass.equals(Model.class) && declaringClass.equals(Object.class);
+                });
+                if (_idGetter == null) {
+                    throw new IllegalStateException("No @javax.persistence.Id property found in class [" + thisClass + "]");
+                }
+            } catch (RuntimeException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return _idGetter;
+    }
+
+    @SafeVarargs
+    private final boolean _isAnnotationPresent(AccessibleObject o, Class<? extends Annotation>... aclasses) {
+        for (Class<? extends Annotation> aclass : aclasses) {
+            if (o.isAnnotationPresent(aclass)) return true;
+        }
+        return false;
+    }
+
     /**
      * @return the identifier.
      */
-    public abstract ID identifier();
+    @SuppressWarnings("unchecked")
+    private ID _getId() {
+        try {
+            return (ID) _idGetter().invoke(this);
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * @return the identifier for reference after checked.
@@ -27,11 +93,11 @@ public abstract class Model<ID> {
     public final ID refId() {
         ID id = (this instanceof HibernateProxy)
             ? (ID) ((HibernateProxy) this).getHibernateLazyInitializer().getIdentifier()
-            : identifier();
+            : _getId();
 
-        if (id instanceof Model)
+        if (id instanceof Model) {
             throw new IllegalStateException("Invalid identifier class, Must not be used Model.");
-
+        }
         return id;
     }
 
@@ -55,8 +121,7 @@ public abstract class Model<ID> {
 
     @Override
     public String toString() {
-        return String.format("Entity of type %s with identifier: %s",
-            JpaHelper.getClass(this).getName(), refId());
+        return String.format("Entity of type %s with identifier: %s", JpaHelper.getClass(this).getName(), refId());
     }
 
     //--
