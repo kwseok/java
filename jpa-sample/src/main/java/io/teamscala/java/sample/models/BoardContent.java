@@ -95,13 +95,6 @@ public class BoardContent extends Model<Long> {
         this.id = id;
     }
 
-    // Override for Model
-
-    @Override
-    public Long identifier() {
-        return id;
-    }
-
     // Generated Getters and Setters...
 
     public Long getId() {

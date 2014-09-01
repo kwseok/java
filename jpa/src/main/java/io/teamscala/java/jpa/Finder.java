@@ -28,15 +28,14 @@ import java.util.*;
 public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
 
     transient EntityManager entityManager;
-
     private final Class<M> type;
     private final PathBuilder<M> path;
-     private final List<SearchListener<? extends Searchable>> searchListeners;
+    private final List<SearchListener<? extends Searchable>> searchListeners;
 
     /**
      * Creates a finder for entity of type <code>M</code> with search listeners.
      *
-     * @param type the type.
+     * @param type            the type.
      * @param searchListeners the search listeners.
      */
     @SafeVarargs
@@ -47,7 +46,7 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
     /**
      * Creates a finder for entity of type <code>M</code> with search listeners.
      *
-     * @param type the type.
+     * @param type            the type.
      * @param searchListeners the search listeners.
      */
     public Finder(Class<M> type, Collection<SearchListener<? extends Searchable>> searchListeners) {
@@ -57,8 +56,8 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
     /**
      * Creates a finder for entity of type <code>M</code> with search listeners, using a specific entity manager.
      *
-     * @param entityManager the entity manager.
-     * @param type the type.
+     * @param entityManager   the entity manager.
+     * @param type            the type.
      * @param searchListeners the search listeners.
      */
     @SafeVarargs
@@ -69,8 +68,8 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
     /**
      * Creates a finder for entity of type <code>M</code> with search listeners, using a specific entity manager.
      *
-     * @param entityManager the entity manager.
-     * @param type the type.
+     * @param entityManager   the entity manager.
+     * @param type            the type.
      * @param searchListeners the search listeners.
      */
     public Finder(EntityManager entityManager, Class<M> type, Collection<SearchListener<? extends Searchable>> searchListeners) {
@@ -99,12 +98,16 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param entityManager the entity manager.
      * @return this
      */
-    public Finder<ID, M> on(EntityManager entityManager) { return new Finder<>(entityManager, type, searchListeners); }
+    public Finder<ID, M> on(EntityManager entityManager) {
+        return new Finder<>(entityManager, type, searchListeners);
+    }
 
     /**
      * @return the path builder.
      */
-    public PathBuilder<M> path() { return path; }
+    public PathBuilder<M> path() {
+        return path;
+    }
 
     /**
      * Register Search Listener.
@@ -120,7 +123,9 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
     /**
      * @return Retrieves all entities of the given type.
      */
-    public List<M> all() { return query().list(path); }
+    public List<M> all() {
+        return query().list(path);
+    }
 
     /**
      * Retrieves an entity reference for this ID.
@@ -128,7 +133,9 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param id the identifier.
      * @return the entity reference.
      */
-    public M ref(ID id) { return entityManager().getReference(type, id); }
+    public M ref(ID id) {
+        return entityManager().getReference(type, id);
+    }
 
     /**
      * Retrieves an entity by ID.
@@ -136,7 +143,9 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param id the identifier.
      * @return the entity.
      */
-    public M byId(ID id) { return entityManager().find(type, id); }
+    public M byId(ID id) {
+        return entityManager().find(type, id);
+    }
 
     /**
      * Creates a search, using a specific {@link JPQLQuery}.
@@ -144,23 +153,29 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param query the {@link com.mysema.query.jpa.JPQLQuery}.
      * @return {@link io.teamscala.java.jpa.Searcher}
      */
-    public Searcher<ID, M> search(JPQLQuery query) { return new Searcher<>(query, type, path, searchListeners); }
+    public Searcher<ID, M> search(JPQLQuery query) {
+        return new Searcher<>(query, type, path, searchListeners);
+    }
 
     /**
      * Creates a search by {@link Searchable}, using a specific {@link JPQLQuery}.
      *
      * @param query the {@link com.mysema.query.jpa.JPQLQuery}.
-     * @param s the searchable.
+     * @param s     the searchable.
      * @return {@link io.teamscala.java.jpa.Searcher}
      */
-    public Searcher<ID, M> search(JPQLQuery query, Searchable s) { return search(query).apply(s); }
+    public Searcher<ID, M> search(JPQLQuery query, Searchable s) {
+        return search(query).apply(s);
+    }
 
     /**
      * Creates a search.
      *
      * @return {@link io.teamscala.java.jpa.Searcher}
      */
-    public Searcher<ID, M> search() { return new Searcher<>(query(), type, path, searchListeners); }
+    public Searcher<ID, M> search() {
+        return new Searcher<>(query(), type, path, searchListeners);
+    }
 
     /**
      * Creates a search by {@link Searchable}.
@@ -168,7 +183,9 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param s the searchable.
      * @return {@link io.teamscala.java.jpa.Searcher}
      */
-    public Searcher<ID, M> search(Searchable s) { return search().apply(s); }
+    public Searcher<ID, M> search(Searchable s) {
+        return search().apply(s);
+    }
 
     /**
      * Creates a search by {@link Sort}.
@@ -176,7 +193,9 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param sort the sort.
      * @return {@link io.teamscala.java.jpa.Searcher}
      */
-    public Searcher<ID, M> sort(Sort sort) { return search().sort(sort); }
+    public Searcher<ID, M> sort(Sort sort) {
+        return search().sort(sort);
+    }
 
     /**
      * Creates a search by {@link Pageable}.
@@ -184,7 +203,9 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param pageable the pageable.
      * @return {@link io.teamscala.java.jpa.Searcher}
      */
-    public Searcher<ID, M> paginate(Pageable pageable) { return search().paginate(pageable); }
+    public Searcher<ID, M> paginate(Pageable pageable) {
+        return search().paginate(pageable);
+    }
 
     /**
      * Retrieves entities by {@link Pageable}.
@@ -192,40 +213,50 @@ public class Finder<ID, M extends Model<ID>> implements JPQLQuery {
      * @param pageable the pageable.
      * @return {@link io.teamscala.java.core.data.PageResponse}
      */
-    public PageResponse<M> findPaginatedList(Pageable pageable) { return search().findPaginatedList(pageable); }
+    public PageResponse<M> findPaginatedList(Pageable pageable) {
+        return search().findPaginatedList(pageable);
+    }
 
     /**
      * Creates a search by since id and limit / max results.
      *
      * @param sinceId the since id.
-     * @param limit the limit.
+     * @param limit   the limit.
      * @return {@link io.teamscala.java.core.data.PageResponse}
      */
-    public Searcher<ID, M> limit(ID sinceId, int limit) { return search().limit(sinceId, limit); }
+    public Searcher<ID, M> limit(ID sinceId, int limit) {
+        return search().limit(sinceId, limit);
+    }
 
     /**
      * Creates a search by since id and limit / max results.
      *
-     * @param sinceId the since id.
-     * @param limit the limit.
+     * @param sinceId   the since id.
+     * @param limit     the limit.
      * @param ascending the ascending.
      * @return {@link io.teamscala.java.core.data.PageResponse}
      */
-    public Searcher<ID, M> limit(ID sinceId, int limit, boolean ascending) { return search().limit(sinceId, limit, ascending); }
+    public Searcher<ID, M> limit(ID sinceId, int limit, boolean ascending) {
+        return search().limit(sinceId, limit, ascending);
+    }
 
     /**
      * Creates a query.
      *
      * @return {@link com.mysema.query.jpa.impl.JPAQuery}
      */
-    public JPAQuery query() { return new JPAQuery(entityManager()).from(path); }
+    public JPAQuery query() {
+        return new JPAQuery(entityManager()).from(path);
+    }
 
     /**
      * Creates a subquery.
      *
      * @return {@link com.mysema.query.jpa.JPASubQuery}
      */
-    public JPASubQuery subquery() { return new JPASubQuery().from(path); }
+    public JPASubQuery subquery() {
+        return new JPASubQuery().from(path);
+    }
 
     @Nonnegative
     @Override public long count() { return query().count(); }

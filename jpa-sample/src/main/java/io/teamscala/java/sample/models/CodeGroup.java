@@ -63,13 +63,6 @@ public class CodeGroup extends Model<String> {
         this.code = code;
     }
 
-    // Override for Model
-
-    @Override
-    public String identifier() {
-        return code;
-    }
-
     // Generated Getters and Setters...
 
     public String getCode() {
