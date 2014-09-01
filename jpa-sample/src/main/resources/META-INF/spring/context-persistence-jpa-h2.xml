@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
 	<bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
-		<property name="persistenceUnitName" value="hsqlPersistenceUnit"/>
+		<property name="persistenceUnitName" value="h2PersistenceUnit"/>
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 </beans>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="hsqlPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="h2PersistenceUnit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
 		<properties>
-			<!-- HSQL -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+			<!-- H2 -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
 			<!-- MySQL -->
 			<!--property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/-->
 			<!-- Oracle -->

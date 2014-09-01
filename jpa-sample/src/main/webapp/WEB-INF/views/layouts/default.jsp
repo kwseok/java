@@ -6,59 +6,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
-<title>Test application</title>	
-<script type="text/javascript" src="${CONTEXT_PATH}/webjars/requirejs/2.1.14/require.js"
-        data-main="${CONTEXT_PATH}/resources/js/main"></script>
-<script type="text/javascript">
-require.config({
-    paths: {
-        'jquery-extends-locale_ko': '../../webjars/jquery-extends/1.0.0/i18n/jquery.extends-locale_ko'
-    },
-	shim: {
-		'jquery-extends-locale_ko': { deps: ['jquery-extends'] }
-	}
-});
-define('configs',{
-	CONTEXT_PATH: '${CONTEXT_PATH}'
-});
-define('app',[
-	'configs',
-	'jquery',
-	'jquery-cookie',
-    'jquery-validation',
-    'jquery-validation-additional-methods',
-    'jquery-extends',
-	'jquery-form',
-	'jquery-param',
-	'jquery-tmpl',
-	'jquery-qtip',
-	'jquery-validation-extends',
-    'jquery-validation-qtip',
-	'jquery-inputmask',
-	'jquery-inputmask-extensions',
-	'jquery-inputmask-date-extensions',
-	'jquery-inputmask-numeric-extensions',
-    'jquery-inputmask-phone-extensions',
-    'jquery-inputmask-regex-extensions',
-	'jquery-bpopup',
-	'jquery-popup',
-	'jquery-applyfield',
-	'jquery-extends-locale_ko'
-], function(configs, $){
-	$(document).ready(function(){
-		$('.link-param').click(function(e){
-			e.preventDefault();
-			location.href = $.param.makeUrl($(this).attr('href'));
-		});
-
-        require(['body'], function(){
-            console.log('loaded body script');
-        }, function(err){
-            // IGNORED
+<title>Test application</title>
+    <script type="text/javascript">
+        var configs = {
+            contextPath: '${CONTEXT_PATH}'
+        };
+    </script>
+    <script type="text/javascript" src="${CONTEXT_PATH}/resources/js/require-config.js"></script>
+    <script type="text/javascript" src="${CONTEXT_PATH}/webjars/requirejs/2.1.14/require.js"></script>
+    <script type="text/javascript">
+        require(['jquery','jquery-extends'], function($){
+            $('.link-param').click(function(e){
+                e.preventDefault();
+                location.href = $.param.makeUrl($(this).attr('href'));
+            });
         });
-	});
-});
-</script>
+    </script>
 <tiles:insertAttribute name="resources" ignore="true"/>
 </head>
 <body>

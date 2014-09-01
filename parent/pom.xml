@@ -32,6 +32,11 @@
             <name>Seok Ki Won</name>
             <email>seok.kiwon@gmail.com</email>
         </developer>
+        <developer>
+            <id>zenato</id>
+            <name>Lee Young Jin</name>
+            <email>me.yjlee@gmail.com</email>
+        </developer>
     </developers>
 
     <distributionManagement>
@@ -68,11 +73,13 @@
             <name>Teamscala Nexus Repository</name>
             <url>http://repo.teamscala.io/content/groups/public/</url>
         </repository>
+        <!--
         <repository>
             <id>opencast-public</id>
             <name>OpenCast Public Repository</name>
             <url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
         </repository>
+        -->
     </repositories>
 
     <pluginRepositories>
@@ -148,6 +155,16 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>javax.servlet.jsp.jstl</artifactId>
             <version>1.2.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>jsp-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
