@@ -130,7 +130,7 @@
 					<property name="statusCode" value="400"/>
 					<property name="exception" value="org.springframework.web.multipart.MaxUploadSizeExceededException"/>
 					<property name="errorViewName" value="badRequest"/>
-					<property name="errorMessageCode" value="error.fileupload.sizeExceeded"/>
+					<property name="errorMessageCode" value="error.upload.sizeExceeded"/>
 					<property name="errorMessageArguments" value="maxUploadSize"/>
 				</bean>
 				<bean class="io.teamscala.java.core.web.servlet.handler.HttpExceptionHandler">
