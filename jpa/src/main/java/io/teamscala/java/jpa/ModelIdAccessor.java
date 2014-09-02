@@ -50,6 +50,11 @@ public class ModelIdAccessor<ID> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public static <ID, M extends Model<ID>> ModelIdAccessor<ID> get(M model) {
+        return get((Class<? extends Model<ID>>) JpaHelper.getClass(model));
+    }
+
     // Instance area
 
     private final Class<ID> idClass;
@@ -60,8 +65,7 @@ public class ModelIdAccessor<ID> {
         List<PropertyDescriptor> idProperties = new ArrayList<>();
         ReflectionUtils.doWithFields(modelClass, field -> {
             if (isIdAnnotationPresent(field)) {
-                PropertyDescriptor property = BeanUtils.getPropertyDescriptor(modelClass, field.getName());
-                idProperties.add(checkProperty(property, modelClass));
+                idProperties.add(getProperty(modelClass, field.getName()));
             }
         }, field -> !field.getDeclaringClass().equals(Model.class));
         if (idProperties.isEmpty()) {
@@ -113,6 +117,14 @@ public class ModelIdAccessor<ID> {
 
     private boolean isIdAnnotationPresent(AccessibleObject o) {
         return o.isAnnotationPresent(Id.class) || o.isAnnotationPresent(EmbeddedId.class);
+    }
+
+    private PropertyDescriptor getProperty(Class<? extends Model<ID>> modelClass, String propertyName) {
+        PropertyDescriptor property = BeanUtils.getPropertyDescriptor(modelClass, propertyName);
+        if (property == null) {
+            throw new InvalidPropertyException(modelClass, propertyName, "No property '" + propertyName + "' found");
+        }
+        return checkProperty(property, modelClass);
     }
 
     private PropertyDescriptor checkProperty(PropertyDescriptor property, Class<? extends Model<ID>> modelClass) {
