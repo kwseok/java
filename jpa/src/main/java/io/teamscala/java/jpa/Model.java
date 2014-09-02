@@ -26,7 +26,7 @@ public abstract class Model<ID> {
     @SuppressWarnings("unchecked")
     private ModelIdAccessor<ID> _idAccessor() {
         if (_idAccessor == null) {
-            _idAccessor = ModelIdAccessor.get((Class<? extends Model<ID>>) JpaHelper.getClass(this));
+            _idAccessor = ModelIdAccessor.get(this);
         }
         return _idAccessor;
     }
