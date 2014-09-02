@@ -72,7 +72,7 @@ public class ModelIdAccessor<ID> {
             for (PropertyDescriptor property : BeanUtils.getPropertyDescriptors(modelClass)) {
                 Method readMethod = property.getReadMethod();
                 if (readMethod != null && isIdAnnotationPresent(readMethod)) {
-                    idProperties.add(checkProperty(property, modelClass));
+                    idProperties.add(checkWritableProperty(property, modelClass));
                 }
             }
         }
@@ -124,11 +124,17 @@ public class ModelIdAccessor<ID> {
         if (property == null) {
             throw new InvalidPropertyException(modelClass, propertyName, "No property '" + propertyName + "' found");
         }
-        return checkProperty(property, modelClass);
+        checkReadableProperty(property, modelClass);
+        checkWritableProperty(property, modelClass);
+        return property;
     }
 
-    private PropertyDescriptor checkProperty(PropertyDescriptor property, Class<? extends Model<ID>> modelClass) {
+    private PropertyDescriptor checkReadableProperty(PropertyDescriptor property, Class<? extends Model<ID>> modelClass) {
         if (property.getReadMethod() == null) throw new NotReadablePropertyException(modelClass, property.getName());
+        return property;
+    }
+
+    private PropertyDescriptor checkWritableProperty(PropertyDescriptor property, Class<? extends Model<ID>> modelClass) {
         if (property.getWriteMethod() == null) throw new NotWritablePropertyException(modelClass, property.getName());
         return property;
     }
