@@ -280,7 +280,7 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
 
         if (this.errorDataAttribute != null) {
             LOG.debug("Exposing error data '" + errorData + "' as model attribute '" + this.errorDataAttribute + "'");
-            if (!errorData.isEmpty()) mav.addObject(this.errorDataAttribute, errorData);
+            if (errorData != null) mav.addObject(this.errorDataAttribute, errorData);
         }
 
         return mav;
