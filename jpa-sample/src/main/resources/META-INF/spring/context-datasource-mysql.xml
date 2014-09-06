@@ -4,17 +4,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://iva.co.kr:3306/sample?autoReconnect=true"/>
-		<property name="username" value="sample"/>
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql://iva.co.kr:3306/sample?autoReconnect=true"/>
+		<property name="user" value="sample"/>
 		<property name="password" value="samplepwd"/>
-		<property name="testOnBorrow" value="true"/>
-		<property name="testOnReturn" value="true"/>
-		<property name="testWhileIdle" value="true"/>
-		<property name="validationQuery" value="select 1"/>
-		<property name="numTestsPerEvictionRun" value="3"/>
-		<property name="minEvictableIdleTimeMillis" value="3600000"/>
-		<property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="maxPoolSize" value="20" />
+        <property name="minPoolSize" value="5" />
+        <property name="maxStatements" value="100" />
+        <property name="testConnectionOnCheckout" value="true" />
 	</bean>
 </beans>
