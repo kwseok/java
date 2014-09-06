@@ -7,10 +7,8 @@ import javax.servlet.jsp.JspException;
 
 /**
  * Object tracing children tag.
- *
  */
 public class TrackingChildrenTag extends LoopTagSupport {
-    private static final long serialVersionUID = 2202092604802911246L;
 
     @Override
     protected void prepare(Object obj, String property, TreeHandler<Object> handler) throws JspException {

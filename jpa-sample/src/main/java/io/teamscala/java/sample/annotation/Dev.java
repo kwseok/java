@@ -10,5 +10,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target(TYPE)
 @Retention(RUNTIME)
-@Profile("prod")
-public @interface Production {}
+@Profile("dev")
+public @interface Dev {}

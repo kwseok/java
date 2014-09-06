@@ -3,7 +3,7 @@ package io.teamscala.java.jpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.*;
-import org.springframework.core.GenericTypeResolver;
+import org.springframework.core.ResolvableType;
 import org.springframework.util.ReflectionUtils;
 
 import javax.persistence.EmbeddedId;
@@ -43,7 +43,7 @@ public class ModelIdAccessor<ID> {
                 return (ModelIdAccessor<ID>) ID_ACCESSOR_CACHE.get(modelClass);
             }
             LOG.info("Create identifier accessor for Model[{}]", modelClass);
-            Class<ID> idClass = (Class<ID>) GenericTypeResolver.resolveTypeArguments(modelClass, Model.class)[0];
+            Class<ID> idClass = (Class<ID>) ResolvableType.forClass(modelClass).as(Model.class).resolveGeneric(0);
             ModelIdAccessor<ID> idAccessor = new ModelIdAccessor<>(idClass, modelClass);
             ID_ACCESSOR_CACHE.put(modelClass, idAccessor);
             return idAccessor;

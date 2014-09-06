@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * Bind fields annotation.
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

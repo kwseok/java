@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  * 트리 트레커: 루프 태그 지원.
- *
  */
 @SuppressWarnings("serial")
 public abstract class LoopTagSupport extends TagSupport implements IterationTag, TryCatchFinally {
@@ -56,7 +55,10 @@ public abstract class LoopTagSupport extends TagSupport implements IterationTag,
     /**
      * 기본 생성자.
      */
-    public LoopTagSupport() { super(); init(); }
+    public LoopTagSupport() {
+        super();
+        init();
+    }
 
     /**
      * 초기화.
@@ -71,23 +73,43 @@ public abstract class LoopTagSupport extends TagSupport implements IterationTag,
         this.items = null;
     }
 
-    @Override public void release() { super.release(); init(); }
+    @Override
+    public void release() {
+        super.release();
+        init();
+    }
 
     //--------------------------------------------------------------------------
     // Setter methods
     //--------------------------------------------------------------------------
 
-    /** @param var 어트리뷰트 세팅. */
-    public void setVar(String var) { this.var = var; }
+    /**
+     * @param var 어트리뷰트 세팅.
+     */
+    public void setVar(String var) {
+        this.var = var;
+    }
 
-    /** @param target 어트리뷰트 세팅. */
-    public void setTarget(Object target) { this.target = target; }
+    /**
+     * @param target 어트리뷰트 세팅.
+     */
+    public void setTarget(Object target) {
+        this.target = target;
+    }
 
-    /** @param property 어트리뷰트 세팅. */
-    public void setProperty(String property) { this.property = property; }
+    /**
+     * @param property 어트리뷰트 세팅.
+     */
+    public void setProperty(String property) {
+        this.property = property;
+    }
 
-    /** @param varStatus 어트리뷰트 세팅. */
-    public void setVarStatus(String varStatus) { this.varStatus = varStatus; }
+    /**
+     * @param varStatus 어트리뷰트 세팅.
+     */
+    public void setVarStatus(String varStatus) {
+        this.varStatus = varStatus;
+    }
 
     //--------------------------------------------------------------------------
     // 태그 핸들
@@ -121,9 +143,15 @@ public abstract class LoopTagSupport extends TagSupport implements IterationTag,
         return EVAL_BODY_AGAIN;
     }
 
-    @Override public void doCatch(Throwable t) throws Throwable { throw t; }
+    @Override
+    public void doCatch(Throwable t) throws Throwable {
+        throw t;
+    }
 
-    @Override public void doFinally() { unExposeVariables(); }
+    @Override
+    public void doFinally() {
+        unExposeVariables();
+    }
 
     //--------------------------------------------------------------------------
     // 기타 유틸리티 메서드
@@ -132,9 +160,9 @@ public abstract class LoopTagSupport extends TagSupport implements IterationTag,
     /**
      * 이 메서드를 구현하여 반복자 준비.
      *
-     * @param target 기준 객체
+     * @param target   기준 객체
      * @param property 프로퍼티
-     * @param handler 핸들러 객체
+     * @param handler  핸들러 객체
      * @throws JspException {@link javax.servlet.jsp.JspException}
      */
     protected abstract void prepare(Object target, String property, TreeHandler<Object> handler) throws JspException;
@@ -144,7 +172,7 @@ public abstract class LoopTagSupport extends TagSupport implements IterationTag,
      */
     private void prepare() throws JspException {
         final List<ItemWrapper> itemList = new ArrayList<>();
-        prepare(target, property, new TreeHandler<Object>(){
+        prepare(target, property, new TreeHandler<Object>() {
             @Override
             protected boolean doHandle(Object node, int index, int indexInDepth, int depth, int lastDepth) {
                 ItemWrapper itemWrapper = new ItemWrapper();
@@ -163,22 +191,59 @@ public abstract class LoopTagSupport extends TagSupport implements IterationTag,
     /**
      * @return 현재 아이템 반환
      */
-    private Object getCurrent() { return currentItem.item; }
+    private Object getCurrent() {
+        return currentItem.item;
+    }
 
     /**
      * @return LoopTagStatus 객체 반환.
      */
     private LoopTagStatus getLoopStatus() {
         class Status implements LoopTagStatus {
-            @Override public Object getCurrent()    { return LoopTagSupport.this.currentItem.item;              }
-            @Override public int getIndex()         { return LoopTagSupport.this.currentItem.index;             }
-            @Override public int getCount()         { return LoopTagSupport.this.currentItem.index+1;           }
-            @Override public int getDepth()         { return LoopTagSupport.this.currentItem.depth;             }
-            @Override public int getIndexInDepth()  { return LoopTagSupport.this.currentItem.indexInDepth;      }
-            @Override public int getCountInDepth()  { return LoopTagSupport.this.currentItem.indexInDepth + 1;  }
-            @Override public int getLastDepth()     { return LoopTagSupport.this.currentItem.lastDepth;         }
-            @Override public boolean isFirst()      { return (LoopTagSupport.this.currentItem.index == 0);      }
-            @Override public boolean isLast()       { return !LoopTagSupport.this.items.hasNext();              }
+            @Override
+            public Object getCurrent() {
+                return LoopTagSupport.this.currentItem.item;
+            }
+
+            @Override
+            public int getIndex() {
+                return LoopTagSupport.this.currentItem.index;
+            }
+
+            @Override
+            public int getCount() {
+                return LoopTagSupport.this.currentItem.index + 1;
+            }
+
+            @Override
+            public int getDepth() {
+                return LoopTagSupport.this.currentItem.depth;
+            }
+
+            @Override
+            public int getIndexInDepth() {
+                return LoopTagSupport.this.currentItem.indexInDepth;
+            }
+
+            @Override
+            public int getCountInDepth() {
+                return LoopTagSupport.this.currentItem.indexInDepth + 1;
+            }
+
+            @Override
+            public int getLastDepth() {
+                return LoopTagSupport.this.currentItem.lastDepth;
+            }
+
+            @Override
+            public boolean isFirst() {
+                return (LoopTagSupport.this.currentItem.index == 0);
+            }
+
+            @Override
+            public boolean isLast() {
+                return !LoopTagSupport.this.items.hasNext();
+            }
         }
         if (this.status == null) {
             this.status = new Status();

@@ -12,47 +12,72 @@ import java.util.List;
  * @param <T> the list item type
  */
 public class PageResponse<T> implements Serializable {
-    private static final long serialVersionUID = 5640210143474700456L;
 
     // Fields
 
-    /** 리스트의 시작행 번호 */
+    /**
+     * 리스트의 시작행 번호
+     */
     private long startNo;
 
-    /** 리스트의 시작행 번호(역방향) */
+    /**
+     * 리스트의 시작행 번호(역방향)
+     */
     private long reverseNo;
 
-    /** 첫 페이지 */
+    /**
+     * 첫 페이지
+     */
     private int firstPage;
 
-    /** 마지막 페이지 */
+    /**
+     * 마지막 페이지
+     */
     private int lastPage;
 
-    /** 현재 페이지 단위의 시작 페이지 */
+    /**
+     * 현재 페이지 단위의 시작 페이지
+     */
     private int beginPage;
 
-    /** 페이지 단위의 종료 페이지 */
+    /**
+     * 페이지 단위의 종료 페이지
+     */
     private int endPage;
 
-    /** 이전 페이지 경계의 시작 페이지 */
+    /**
+     * 이전 페이지 경계의 시작 페이지
+     */
     private int beginPageOfPrevBound;
 
-    /** 이전 페이지 경계의 종료 페이지 */
+    /**
+     * 이전 페이지 경계의 종료 페이지
+     */
     private int endPageOfPrevBound;
 
-    /** 다음 페이지 경계의 시작 페이지 */
+    /**
+     * 다음 페이지 경계의 시작 페이지
+     */
     private int beginPageOfNextBound;
 
-    /** 다음 페이지 경계의 종료 페이지 */
+    /**
+     * 다음 페이지 경계의 종료 페이지
+     */
     private int endPageOfNextBound;
 
-    /** 조회된 아이템 리스트 */
+    /**
+     * 조회된 아이템 리스트
+     */
     private List<T> list;
 
-    /** 페이지 요청 정보 */
+    /**
+     * 페이지 요청 정보
+     */
     private Pageable pageable;
 
-    /** 전체 카운트 */
+    /**
+     * 전체 카운트
+     */
     private long totalCount;
 
     // Constructors
@@ -60,8 +85,8 @@ public class PageResponse<T> implements Serializable {
     /**
      * 생성자.
      *
-     * @param list 조회된 아이템 리스트
-     * @param pageable 페이지 요청 정보
+     * @param list       조회된 아이템 리스트
+     * @param pageable   페이지 요청 정보
      * @param totalCount 토탈 카운트
      */
     public PageResponse(List<T> list, Pageable pageable, long totalCount) {
@@ -140,27 +165,86 @@ public class PageResponse<T> implements Serializable {
 
     // Getters...
 
-    public List<T> getList() { return list; }
-    public int getCurrentPage() { return (pageable.getIndex() + 1); }
-    public int getPageSize() { return pageable.getSize(); }
-    public int getPageBoundSize() { return pageable.getBoundSize(); }
-    public long getTotalCount() { return totalCount; }
-    public long getStartNo() { return startNo; }
-    public long getReverseNo() { return reverseNo; }
-    public int getFirstPage() { return firstPage; }
-    public int getLastPage() { return lastPage; }
-    public int getBeginPage() { return beginPage; }
-    public int getEndPage() { return endPage; }
-    public int getBeginPageOfPrevBound() { return beginPageOfPrevBound; }
-    public int getEndPageOfPrevBound() { return endPageOfPrevBound; }
-    public int getBeginPageOfNextBound() { return beginPageOfNextBound; }
-    public int getEndPageOfNextBound() { return endPageOfNextBound; }
-    public boolean isNotFirstPage() { return (getCurrentPage() != getFirstPage()); }
-    public boolean isNotLastPage() { return (getCurrentPage() != getLastPage()); }
-    public boolean isHasPrevBound() { return (getBeginPageOfPrevBound() > 0); }
-    public boolean isHasNextBound() { return (getBeginPageOfNextBound() > 0); }
+    public List<T> getList() {
+        return list;
+    }
+
+    public int getCurrentPage() {
+        return (pageable.getIndex() + 1);
+    }
+
+    public int getPageSize() {
+        return pageable.getSize();
+    }
+
+    public int getPageBoundSize() {
+        return pageable.getBoundSize();
+    }
+
+    public long getTotalCount() {
+        return totalCount;
+    }
+
+    public long getStartNo() {
+        return startNo;
+    }
+
+    public long getReverseNo() {
+        return reverseNo;
+    }
+
+    public int getFirstPage() {
+        return firstPage;
+    }
+
+    public int getLastPage() {
+        return lastPage;
+    }
+
+    public int getBeginPage() {
+        return beginPage;
+    }
+
+    public int getEndPage() {
+        return endPage;
+    }
+
+    public int getBeginPageOfPrevBound() {
+        return beginPageOfPrevBound;
+    }
+
+    public int getEndPageOfPrevBound() {
+        return endPageOfPrevBound;
+    }
+
+    public int getBeginPageOfNextBound() {
+        return beginPageOfNextBound;
+    }
+
+    public int getEndPageOfNextBound() {
+        return endPageOfNextBound;
+    }
+
+    public boolean isNotFirstPage() {
+        return (getCurrentPage() != getFirstPage());
+    }
+
+    public boolean isNotLastPage() {
+        return (getCurrentPage() != getLastPage());
+    }
+
+    public boolean isHasPrevBound() {
+        return (getBeginPageOfPrevBound() > 0);
+    }
+
+    public boolean isHasNextBound() {
+        return (getBeginPageOfNextBound() > 0);
+    }
 
     // Override Object
 
-    @Override public String toString() { return ToStringBuilder.reflectionToString(this); }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

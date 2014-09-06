@@ -8,17 +8,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class SecurityDetailsService implements UserDetailsService {
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = User.find
-				.query()
-				.where(QUser.user.username.eq(username))
-				.limit(1)
-				.uniqueResult(QUser.user);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = User.find
+            .query()
+            .where(QUser.user.username.eq(username))
+            .limit(1)
+            .uniqueResult(QUser.user);
 
-		if (user == null)
-			throw new UsernameNotFoundException(username + " not found.");
+        if (user == null)
+            throw new UsernameNotFoundException(username + " not found.");
 
-		return new SecurityDetails(user);
-	}
+        return new SecurityDetails(user);
+    }
 }

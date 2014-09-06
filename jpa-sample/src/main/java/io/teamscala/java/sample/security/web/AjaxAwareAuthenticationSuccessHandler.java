@@ -12,27 +12,26 @@ import java.io.IOException;
 
 /**
  * 인증 성공에 대해서 결과를 JSON 으로 반환한다.
- * 
  */
 public class AjaxAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	private static final String CONTENT_TYPE = "application/json";
+    private static final String CONTENT_TYPE = "application/json";
 
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-		if (WebUtils.isAjax(request)) {
-			response.setContentType(CONTENT_TYPE);
-			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-			response.setHeader("Pragma", "no-cache");
-			response.setDateHeader("Expires", 0);
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        if (WebUtils.isAjax(request)) {
+            response.setContentType(CONTENT_TYPE);
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
 
-			AuthenticationResultModel model = new AuthenticationResultModel();
-			model.setResult(true);
+            AuthenticationResultModel model = new AuthenticationResultModel();
+            model.setResult(true);
 
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.writeValue(response.getOutputStream(), model);
-		} else {
-			super.onAuthenticationSuccess(request, response, authentication);
-		}
-	}
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(response.getOutputStream(), model);
+        } else {
+            super.onAuthenticationSuccess(request, response, authentication);
+        }
+    }
 }

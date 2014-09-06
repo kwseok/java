@@ -8,39 +8,40 @@ import java.util.List;
 
 /**
  * Simple arguments resolver.
- * 
+ *
  * @param <T> the target object type
  */
 public class SimpleArgumentsResolver<T extends Object> implements ArgumentsResolver<T> {
 
-	private String[] propertyNames;
+    private String[] propertyNames;
 
-	public SimpleArgumentsResolver() {}
-	public SimpleArgumentsResolver(String... propertyNames) {
-		this.propertyNames = propertyNames;
-	}
+    public SimpleArgumentsResolver() {}
 
-	public String[] getPropertyNames() {
-		return propertyNames;
-	}
+    public SimpleArgumentsResolver(String... propertyNames) {
+        this.propertyNames = propertyNames;
+    }
 
-	public void setPropertyNames(String... propertyNames) {
-		this.propertyNames = propertyNames;
-	}
+    public String[] getPropertyNames() {
+        return propertyNames;
+    }
 
-	@Override
-	public Object[] resolve(T target) {
-		if (target == null ||
-				propertyNames == null ||
-				propertyNames.length == 0) return null;
+    public void setPropertyNames(String... propertyNames) {
+        this.propertyNames = propertyNames;
+    }
 
-		BeanWrapper beanWrapper = new BeanWrapperImpl(target);
-		List<Object> arguments = new ArrayList<>(propertyNames.length);
+    @Override
+    public Object[] resolve(T target) {
+        if (target == null || propertyNames == null || propertyNames.length == 0) return null;
 
-		for (String propertyName : propertyNames)
-			if (beanWrapper.isReadableProperty(propertyName))
-				arguments.add(beanWrapper.getPropertyValue(propertyName));
+        BeanWrapper beanWrapper = new BeanWrapperImpl(target);
+        List<Object> arguments = new ArrayList<>(propertyNames.length);
 
-		return arguments.toArray();
-	}
+        for (String propertyName : propertyNames) {
+            if (beanWrapper.isReadableProperty(propertyName)) {
+                arguments.add(beanWrapper.getPropertyValue(propertyName));
+            }
+        }
+
+        return arguments.toArray();
+    }
 }

@@ -9,21 +9,20 @@ import java.util.Locale;
 
 /**
  * Extends ClassUtils.
- *
  */
 public abstract class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 
     public static boolean isSimpleType(Class<?> type) {
         Assert.notNull(type, "Type must not be null");
         return isPrimitiveOrWrapper(type)
-                || type.isEnum()
-                || CharSequence.class.isAssignableFrom(type)
-                || Number.class.isAssignableFrom(type)
-                || Date.class.isAssignableFrom(type)
-                || type.equals(URI.class)
-                || type.equals(URL.class)
-                || type.equals(Locale.class)
-                || type.equals(Class.class);
+            || type.isEnum()
+            || CharSequence.class.isAssignableFrom(type)
+            || Number.class.isAssignableFrom(type)
+            || Date.class.isAssignableFrom(type)
+            || type.equals(URI.class)
+            || type.equals(URL.class)
+            || type.equals(Locale.class)
+            || type.equals(Class.class);
     }
 
     public static Object getDefaultValue(Class<?> type) {

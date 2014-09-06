@@ -10,7 +10,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Bind annotation.
- *
  */
 @Target({FIELD, METHOD})
 @Retention(RUNTIME)
@@ -53,8 +52,8 @@ public @interface Bind {
 
     /**
      * Defines several <code>@Bind</code> annotations on the same element
-     * @see Bind
      *
+     * @see Bind
      */
     @Target({FIELD, METHOD})
     @Retention(RUNTIME)

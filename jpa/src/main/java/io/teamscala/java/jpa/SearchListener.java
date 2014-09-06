@@ -10,12 +10,12 @@ import io.teamscala.java.core.data.Searchable;
  */
 public interface SearchListener<S extends Searchable> {
 
-	/**
-	 * 이벤트
-	 * 
-	 * @param s the search conditions.
-	 * @param query {@link JPQLQuery}
+    /**
+     * 이벤트
+     *
+     * @param s     the search conditions.
+     * @param query {@link JPQLQuery}
      * @return true or false.
      */
-	boolean onSearch(S s, JPQLQuery query);
+    boolean onSearch(S s, JPQLQuery query);
 }

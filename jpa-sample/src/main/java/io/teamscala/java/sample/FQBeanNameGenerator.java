@@ -6,7 +6,6 @@ import org.springframework.beans.factory.support.BeanNameGenerator;
 
 /**
  * FQBN을 빈네임으로 그대로 사용한다.
- *
  */
 public class FQBeanNameGenerator implements BeanNameGenerator {
 

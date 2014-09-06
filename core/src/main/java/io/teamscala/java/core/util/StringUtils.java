@@ -7,51 +7,55 @@ import java.util.regex.Pattern;
 
 /**
  * 문자열 관련 유틸리티 클래스.
- * 
  */
 public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 문자열 토큰을 포함하는지 확인한다.
      *
-     * @param input 입력 문자열
+     * @param input     입력 문자열
      * @param searchStr 검색 문자열
      * @return 확인결과
      */
-    public static boolean containsToken(String input, String searchStr) { return containsToken(input, searchStr, null, false); }
+    public static boolean containsToken(String input, String searchStr) {
+        return containsToken(input, searchStr, null, false);
+    }
 
     /**
      * 문자열 토큰을 포함하는지 확인한다.
      *
-     * @param input 입력 문자열
+     * @param input     입력 문자열
      * @param searchStr 검색 문자열
-     * @param delim 구분자
+     * @param delim     구분자
      * @return 확인결과
      */
-    public static boolean containsToken(String input, String searchStr, String delim) { return containsToken(input, searchStr, delim, false); }
+    public static boolean containsToken(String input, String searchStr, String delim) {
+        return containsToken(input, searchStr, delim, false);
+    }
 
     /**
      * 문자열 토큰을 포함하는지 확인한다.
      *
-     * @param input 입력 문자열
-     * @param searchStr 검색 문자열
+     * @param input      입력 문자열
+     * @param searchStr  검색 문자열
      * @param ignoreCase 대소문자 무시여부
      * @return 확인결과
      */
-    public static boolean containsToken(String input, String searchStr, boolean ignoreCase) { return containsToken(input, searchStr, null, ignoreCase); }
+    public static boolean containsToken(String input, String searchStr, boolean ignoreCase) {
+        return containsToken(input, searchStr, null, ignoreCase);
+    }
 
     /**
      * 문자열 토큰을 포함하는지 확인한다.
      *
-     * @param input 입력 문자열
-     * @param searchStr 검색 문자열
-     * @param delim 구분자
+     * @param input      입력 문자열
+     * @param searchStr  검색 문자열
+     * @param delim      구분자
      * @param ignoreCase 대소문자 무시여부
      * @return 확인결과
      */
     public static boolean containsToken(String input, String searchStr, String delim, boolean ignoreCase) {
-        if (input == null || searchStr == null)
-            return false;
+        if (input == null || searchStr == null) return false;
 
         StringTokenizer token = (delim == null) ? new StringTokenizer(input) : new StringTokenizer(input, delim);
         while (token.hasMoreTokens()) {
@@ -66,7 +70,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 문자열을 주어진 배열에 따라 바꾼다.
-     *
+     * <p>
      * <pre>
      * StringUtils.replace(null, *)               = null
      * StringUtils.replace("", *)                 = ""
@@ -77,15 +81,17 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
      * })                                         = "zxcz"
      * </pre>
      *
-     * @param input 입력 문자열
+     * @param input    입력 문자열
      * @param replaces 바꿀 문자열 배열
      * @return 바뀐 문자열
      */
-    public static String replace(String input, String[][] replaces) { return replace(input, replaces, -1); }
+    public static String replace(String input, String[][] replaces) {
+        return replace(input, replaces, -1);
+    }
 
     /**
      * 문자열을 주어진 배열에 따라 바꾼다.
-     *
+     * <p>
      * <pre>
      * StringUtils.replace(null, *, *)            = null
      * StringUtils.replace("", *, *)              = ""
@@ -105,18 +111,17 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
      * }, -1)                                     = "zxcz"
      * </pre>
      *
-     * @param input 입력 문자열
+     * @param input    입력 문자열
      * @param replaces 바꿀 문자열 배열
-     * @param max 최대 갯수
+     * @param max      최대 갯수
      * @return 바뀐 문자열
      */
     public static String replace(String input, String[][] replaces, int max) {
-        if (isEmpty(input) || replaces == null || replaces.length == 0 || max == 0) {
-            return input;
-        }
+        if (isEmpty(input) || replaces == null || replaces.length == 0 || max == 0) return input;
 
         StringBuilder sb = new StringBuilder(input.length() * 2);
-        OUTTER: for (int i = 0; i < input.length(); i++) {
+        OUTTER:
+        for (int i = 0; i < input.length(); i++) {
             if (max == 0) {
                 sb.append(input.substring(i));
                 break;
@@ -153,16 +158,18 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 문자열을 일정길이만큼 잘라서 가져온다.
      *
-     * @param input 입력 문자열
+     * @param input  입력 문자열
      * @param length 잘라낼 길이
      * @return 처리된 문자열
      */
-    public static String cutstring(String input, int length) { return cutstring(input, length, null); }
+    public static String cutstring(String input, int length) {
+        return cutstring(input, length, null);
+    }
 
     /**
      * 문자열을 일정길이만큼 잘라서 가져온다.
      *
-     * @param input 입력 문자열
+     * @param input  입력 문자열
      * @param length 잘라낼 길이
      * @param suffix 접미사
      * @return 처리된 문자열
@@ -178,7 +185,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
      * 문자열 행마다 앞쪽에 문자열을 붙여준다.
      *
      * @param input 입력 문자열
-     * @param str 붙여줄 문자열
+     * @param str   붙여줄 문자열
      * @return 변형된 문자열
      */
     public static String prependEachLine(String input, String str) {
@@ -202,9 +209,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return the quoted string.
      */
     public static String quote(String input) {
-        if (input == null || input.length() == 0) {
-            return "\"\"";
-        }
+        if (input == null || input.length() == 0) return "\"\"";
 
         char c = '\0';
         int len = input.length();
@@ -222,62 +227,62 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
             char b = c;
             c = chars[i];
             switch (c) {
-            case 34: // '"'
-            case 92: // '\\'
-                buffer[bufferIndex++] = '\\';
-                buffer[bufferIndex++] = c;
-                break;
-
-            case 47: // '/'
-                if (b == '<')
+                case 34: // '"'
+                case 92: // '\\'
                     buffer[bufferIndex++] = '\\';
-                buffer[bufferIndex++] = c;
-                break;
-
-            default:
-                if (c < ' ') {
-                    switch (c) {
-                    case 8: // '\b'
-                        buffer[bufferIndex++] = '\\';
-                        buffer[bufferIndex++] = 'b';
-                        break;
-
-                    case 9: // '\t'
-                        buffer[bufferIndex++] = '\\';
-                        buffer[bufferIndex++] = 't';
-                        break;
-
-                    case 10: // '\n'
-                        buffer[bufferIndex++] = '\\';
-                        buffer[bufferIndex++] = 'n';
-                        break;
-
-                    case 12: // '\f'
-                        buffer[bufferIndex++] = '\\';
-                        buffer[bufferIndex++] = 'f';
-                        break;
-
-                    case 13: // '\r'
-                        buffer[bufferIndex++] = '\\';
-                        buffer[bufferIndex++] = 'r';
-                        break;
-
-                    case 11: // '\013'
-                    default:
-                        String t = "000" + Integer.toHexString(c);
-                        int tLength = t.length();
-                        buffer[bufferIndex++] = '\\';
-                        buffer[bufferIndex++] = 'u';
-                        buffer[bufferIndex++] = t.charAt(tLength - 4);
-                        buffer[bufferIndex++] = t.charAt(tLength - 3);
-                        buffer[bufferIndex++] = t.charAt(tLength - 2);
-                        buffer[bufferIndex++] = t.charAt(tLength - 1);
-                        break;
-                    }
-                } else {
                     buffer[bufferIndex++] = c;
-                }
-                break;
+                    break;
+
+                case 47: // '/'
+                    if (b == '<')
+                        buffer[bufferIndex++] = '\\';
+                    buffer[bufferIndex++] = c;
+                    break;
+
+                default:
+                    if (c < ' ') {
+                        switch (c) {
+                            case 8: // '\b'
+                                buffer[bufferIndex++] = '\\';
+                                buffer[bufferIndex++] = 'b';
+                                break;
+
+                            case 9: // '\t'
+                                buffer[bufferIndex++] = '\\';
+                                buffer[bufferIndex++] = 't';
+                                break;
+
+                            case 10: // '\n'
+                                buffer[bufferIndex++] = '\\';
+                                buffer[bufferIndex++] = 'n';
+                                break;
+
+                            case 12: // '\f'
+                                buffer[bufferIndex++] = '\\';
+                                buffer[bufferIndex++] = 'f';
+                                break;
+
+                            case 13: // '\r'
+                                buffer[bufferIndex++] = '\\';
+                                buffer[bufferIndex++] = 'r';
+                                break;
+
+                            case 11: // '\013'
+                            default:
+                                String t = "000" + Integer.toHexString(c);
+                                int tLength = t.length();
+                                buffer[bufferIndex++] = '\\';
+                                buffer[bufferIndex++] = 'u';
+                                buffer[bufferIndex++] = t.charAt(tLength - 4);
+                                buffer[bufferIndex++] = t.charAt(tLength - 3);
+                                buffer[bufferIndex++] = t.charAt(tLength - 2);
+                                buffer[bufferIndex++] = t.charAt(tLength - 1);
+                                break;
+                        }
+                    } else {
+                        buffer[bufferIndex++] = c;
+                    }
+                    break;
             }
         }
 
@@ -289,7 +294,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 인코딩 변경을 테스트 한다.
      *
-     * @param value 값
+     * @param value    값
      * @param encoding 변경 테스트 할 인코딩
      * @return 잘못된 값의 리스트
      * @throws UnsupportedEncodingException {@link java.io.UnsupportedEncodingException}
@@ -300,9 +305,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
             String c = Character.toString(value.charAt(i));
             String encodingChar = new String(c.getBytes(encoding), encoding);
             String convertedChar = new String(encodingChar.getBytes());
-            if (!c.equals(convertedChar) && !invalidChars.contains(c)) {
-                invalidChars.add(c);
-            }
+            if (!c.equals(convertedChar) && !invalidChars.contains(c)) invalidChars.add(c);
         }
         return invalidChars;
     }
@@ -314,9 +317,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return the converted string
      */
     public static String toCamelCase(String input) {
-        if (input == null) {
-            return null;
-        }
+        if (input == null) return null;
         input = input.toLowerCase();
         StringBuffer output = new StringBuffer();
         Pattern pattern = Pattern.compile("[-_ ]([\\da-z])", Pattern.CASE_INSENSITIVE);
@@ -334,12 +335,14 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param input the input string.
      * @return the converted Map.
      */
-    public static Map<String, String> toMap(String input) { return toMap(input, false); }
+    public static Map<String, String> toMap(String input) {
+        return toMap(input, false);
+    }
 
     /**
      * String convert to Map.
      *
-     * @param input the input string.
+     * @param input     the input string.
      * @param trimValue true if trim value.
      * @return the converted Map.
      */
@@ -372,7 +375,7 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
             // check that the next valEnd occurs after the next eqPos
 
             String keyValue = input.substring(keyStart, eqPos);
-            String valValue = input.substring(eqPos +1, valEnd);
+            String valValue = input.substring(eqPos + 1, valEnd);
             map.put(keyValue, trimValue ? valValue.trim() : valValue);
             keyStart = valEnd + 2;
         }

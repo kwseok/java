@@ -9,10 +9,10 @@ import org.hibernate.proxy.HibernateProxy;
 
 public class HibernateAwareJsonConfigurator implements JsonConfigurator {
 
-	@Override
-	public void configure(JsonConfig jsonConfig) {
-		jsonConfig.setJsonPropertyFilter(new HibernateAwarePropertyFilter());
-		jsonConfig.registerJsonBeanProcessor(HibernateProxy.class, new HibernateProxyJsonBeanProcessor());
-		jsonConfig.registerJsonValueProcessor(HibernateProxy.class, new HibernateProxyJsonValueProcessor());
-	}
+    @Override
+    public void configure(JsonConfig jsonConfig) {
+        jsonConfig.setJsonPropertyFilter(new HibernateAwarePropertyFilter());
+        jsonConfig.registerJsonBeanProcessor(HibernateProxy.class, new HibernateProxyJsonBeanProcessor());
+        jsonConfig.registerJsonValueProcessor(HibernateProxy.class, new HibernateProxyJsonValueProcessor());
+    }
 }

@@ -11,7 +11,6 @@ import java.util.Map;
 
 /**
  * Simple exception handler.
- * 
  */
 public class SimpleExceptionHandler implements ExceptionHandler {
 
@@ -27,6 +26,7 @@ public class SimpleExceptionHandler implements ExceptionHandler {
     // Constructors
 
     public SimpleExceptionHandler() {}
+
     public SimpleExceptionHandler(int statusCode) {
         this.statusCode = statusCode;
     }
@@ -37,7 +37,6 @@ public class SimpleExceptionHandler implements ExceptionHandler {
      * Set the status code.
      *
      * @param statusCode the status code.
-     *
      * @see HttpServletResponse
      */
     public void setStatusCode(int statusCode) {
@@ -68,7 +67,7 @@ public class SimpleExceptionHandler implements ExceptionHandler {
      * @param errorMessageCode the error message code.
      */
     public void setErrorMessageCode(String errorMessageCode) {
-        this.errorMessageCodes = new String[]{ errorMessageCode };
+        this.errorMessageCodes = new String[]{errorMessageCode};
     }
 
     /**
@@ -93,7 +92,6 @@ public class SimpleExceptionHandler implements ExceptionHandler {
      * Set the error message argument names.
      *
      * @param propertyNames the property names.
-     *
      * @see SimpleArgumentsResolver
      */
     public void setErrorMessageArguments(String[] propertyNames) {
@@ -127,8 +125,7 @@ public class SimpleExceptionHandler implements ExceptionHandler {
         if (exception != null) {
             this.exceptions = new ArrayList<>();
             this.exceptions.add(exception);
-        }
-        else this.exceptions = null;
+        } else this.exceptions = null;
     }
 
     // Implementations for ExceptionHandler
@@ -139,7 +136,6 @@ public class SimpleExceptionHandler implements ExceptionHandler {
             for (Class<?> e : this.exceptions) {
                 if (e.isAssignableFrom(exception.getClass())) return true;
             }
-
         }
         return false;
     }
@@ -157,19 +153,23 @@ public class SimpleExceptionHandler implements ExceptionHandler {
     @Override
     public MessageSourceResolvable getErrorMessage(Exception exception) {
         return new DefaultMessageSourceResolvable(
-                this.errorMessageCodes,
-                resolveArguments(exception),
-                this.defaultErrorMessage);
+            this.errorMessageCodes,
+            resolveArguments(exception),
+            this.defaultErrorMessage);
     }
 
     @Override
-    public Map<String, MessageSourceResolvable> getFieldErrorMessages(Exception exception) { return null; }
+    public Map<String, MessageSourceResolvable> getFieldErrorMessages(Exception exception) {
+        return null;
+    }
 
     @Override
-    public Map<String, Object> getData(Exception exception) { return null; }
+    public Map<String, Object> getData(Exception exception) {
+        return null;
+    }
 
     protected Object[] resolveArguments(Exception exception) {
         return (this.errorMessageArgumentsResolver != null
-                ? this.errorMessageArgumentsResolver.resolve(exception) : null);
+            ? this.errorMessageArgumentsResolver.resolve(exception) : null);
     }
 }

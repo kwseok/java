@@ -11,7 +11,6 @@ import java.io.IOException;
 
 /**
  * AJAX 인증 처리를 위한 Authentication Entry Point
- * 
  */
 public class AjaxAwareLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
@@ -20,14 +19,15 @@ public class AjaxAwareLoginUrlAuthenticationEntryPoint extends LoginUrlAuthentic
      *
      * @param loginFormUrl 기본 로그인 URL
      */
-    public AjaxAwareLoginUrlAuthenticationEntryPoint(String loginFormUrl) { super(loginFormUrl); }
+    public AjaxAwareLoginUrlAuthenticationEntryPoint(String loginFormUrl) {
+        super(loginFormUrl);
+    }
 
     @Override
     public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException, ServletException {
         if (WebUtils.isAjax(request)) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-        else {
+        } else {
             super.commence(request, response, authException);
         }
     }

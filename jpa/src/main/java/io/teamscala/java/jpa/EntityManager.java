@@ -17,6 +17,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface EntityManager {
 
-    /** @return Entity Manager Context class. */
+    /**
+     * @return Entity Manager Context class.
+     */
     Class<? extends io.teamscala.java.jpa.EntityManagerContext> value();
 }

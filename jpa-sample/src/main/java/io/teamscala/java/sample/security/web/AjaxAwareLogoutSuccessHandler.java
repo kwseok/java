@@ -28,8 +28,7 @@ public class AjaxAwareLogoutSuccessHandler extends AbstractAuthenticationTargetU
 
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(response.getOutputStream(), model);
-        }
-        else {
+        } else {
             super.handle(request, response, authentication);
         }
     }

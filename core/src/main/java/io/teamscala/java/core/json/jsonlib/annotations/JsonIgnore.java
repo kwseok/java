@@ -9,7 +9,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Json ignore annotation.
- *
  */
 @Target({FIELD, METHOD})
 @Retention(RUNTIME)

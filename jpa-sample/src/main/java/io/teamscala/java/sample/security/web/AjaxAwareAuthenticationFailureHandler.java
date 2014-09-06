@@ -15,38 +15,37 @@ import java.io.IOException;
 
 /**
  * 인증 실패에 대해서 결과를 JSON 으로 반환한다.
- * 
  */
 public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-	private final Logger logger = LoggerFactory.getLogger(AjaxAwareAuthenticationFailureHandler.class);
-	
-	// Constants
-	
-	private static final String CONTENT_TYPE = "application/json";
+    private final Logger logger = LoggerFactory.getLogger(AjaxAwareAuthenticationFailureHandler.class);
 
-	@Override
-	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-		// 인증 서비스(현재는 DB 인증 서비스) 오류인 경우에는 에러 레벨로 출력하고, 그렇지 않은 경우 디버그 레벨로 출력한다
-		if (exception instanceof AuthenticationServiceException) {
-			logger.error(exception.getMessage(), exception);
-		} else {
-			logger.debug(exception.getMessage(), exception);
-		}
-	
-		AuthenticationResultModel model = new AuthenticationResultModel();
+    // Constants
 
-		if (exception instanceof DisabledDetailException) {
-			model.setDisabled(true);
-			model.setReason(((DisabledDetailException) exception).getReason());
-		}
-	
-		response.setContentType(CONTENT_TYPE);
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", 0);
-	
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.writeValue(response.getOutputStream(), model);
-	}
+    private static final String CONTENT_TYPE = "application/json";
+
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        // 인증 서비스(현재는 DB 인증 서비스) 오류인 경우에는 에러 레벨로 출력하고, 그렇지 않은 경우 디버그 레벨로 출력한다
+        if (exception instanceof AuthenticationServiceException) {
+            logger.error(exception.getMessage(), exception);
+        } else {
+            logger.debug(exception.getMessage(), exception);
+        }
+
+        AuthenticationResultModel model = new AuthenticationResultModel();
+
+        if (exception instanceof DisabledDetailException) {
+            model.setDisabled(true);
+            model.setReason(((DisabledDetailException) exception).getReason());
+        }
+
+        response.setContentType(CONTENT_TYPE);
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(response.getOutputStream(), model);
+    }
 }

@@ -4,7 +4,6 @@ import java.io.File;
 
 /**
  * 파일이름 필터 클래스.
- *
  */
 public class FilenameFilter implements java.io.FilenameFilter {
 
@@ -16,7 +15,9 @@ public class FilenameFilter implements java.io.FilenameFilter {
      *
      * @param suffix 파일이름의 접미사
      */
-    public FilenameFilter(String suffix) { this.suffix = suffix; }
+    public FilenameFilter(String suffix) {
+        this.suffix = suffix;
+    }
 
     /**
      * 생성자.
@@ -32,15 +33,14 @@ public class FilenameFilter implements java.io.FilenameFilter {
     /**
      * 파일 이름을 검사하는 메서드.
      *
-     * @param dir 디렉토리
+     * @param dir  디렉토리
      * @param name 파일이름
      * @return true or false
-     *
      * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
      */
     @Override
     public boolean accept(File dir, String name) {
-        return !(prefix != null && !name.startsWith(prefix)) &&
-                !(suffix != null && !name.endsWith(suffix));
+        return !(prefix != null && !name.startsWith(prefix))
+            && !(suffix != null && !name.endsWith(suffix));
     }
 }

@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 /**
  * 정규식을 이용한 파일 이름 필터 클래스.
- *
  */
 public class RegexFilenameFilter implements java.io.FilenameFilter {
 
@@ -27,10 +26,9 @@ public class RegexFilenameFilter implements java.io.FilenameFilter {
     /**
      * 파일 이름을 검사하는 메서드.
      *
-     * @param dir 디렉토리
+     * @param dir  디렉토리
      * @param name 파일이름
      * @return true or false
-     *
      * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
      */
     @Override

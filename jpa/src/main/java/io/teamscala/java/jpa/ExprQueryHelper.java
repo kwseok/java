@@ -13,47 +13,47 @@ import java.util.Map;
 
 public class ExprQueryHelper {
 
-	private final JPQLQuery query;
-	private final PathBuilder<?> path;
-	private ExprQueryCallback callback;
-	private Map<String, ExprValueTransformer> exprValueTransformers = new HashMap<>();
+    private final JPQLQuery query;
+    private final PathBuilder<?> path;
+    private ExprQueryCallback callback;
+    private Map<String, ExprValueTransformer> exprValueTransformers = new HashMap<>();
 
-	public ExprQueryHelper(JPQLQuery query, PathBuilder<?> path) {
-		Assert.notNull(query, "Query must not be null");
-		Assert.notNull(path, "Path must not be null");
-		this.query = query;
-		this.path = path;
-	}
+    public ExprQueryHelper(JPQLQuery query, PathBuilder<?> path) {
+        Assert.notNull(query, "Query must not be null");
+        Assert.notNull(path, "Path must not be null");
+        this.query = query;
+        this.path = path;
+    }
 
-	public ExprQueryHelper setCallback(ExprQueryCallback callback) {
-		this.callback = callback;
-		return this;
-	}
+    public ExprQueryHelper setCallback(ExprQueryCallback callback) {
+        this.callback = callback;
+        return this;
+    }
 
-	public ExprQueryHelper registerExprValueTransformer(String propertyName, ExprValueTransformer transformer) {
-		Assert.hasText(propertyName, "PropertyName must not be empty");
-		Assert.notNull(transformer, "Transformer must not be empty");
-		this.exprValueTransformers.put(propertyName, transformer);
-		return this;
-	}
+    public ExprQueryHelper registerExprValueTransformer(String propertyName, ExprValueTransformer transformer) {
+        Assert.hasText(propertyName, "PropertyName must not be empty");
+        Assert.notNull(transformer, "Transformer must not be empty");
+        this.exprValueTransformers.put(propertyName, transformer);
+        return this;
+    }
 
-	public <T> boolean apply(String propertyName, Expr<T> expr) {
-		if (expr == null || expr.isEmpty()) return false;
-		if (callback != null && !callback.before(query, path, propertyName, expr)) return false;
+    public <T> boolean apply(String propertyName, Expr<T> expr) {
+        if (expr == null || expr.isEmpty()) return false;
+        if (callback != null && !callback.before(query, path, propertyName, expr)) return false;
 
-		Object value;
-		if (exprValueTransformers.containsKey(propertyName))
-			value = exprValueTransformers.get(propertyName).transform(expr);
-		else
-			value = expr.val();
+        Object value;
+        if (exprValueTransformers.containsKey(propertyName))
+            value = exprValueTransformers.get(propertyName).transform(expr);
+        else
+            value = expr.val();
 
-		@SuppressWarnings("rawtypes")
-		ComparablePath<Comparable> comparableProperty = path.getComparable(propertyName, Comparable.class);
-		Comparable<?> comparableValue;
-		if (value instanceof Comparable)
-			comparableValue = (Comparable<?>) value;
-		else
-			throw new IllegalArgumentException("No comparable value : " + value.getClass());
+        @SuppressWarnings("rawtypes")
+        ComparablePath<Comparable> comparableProperty = path.getComparable(propertyName, Comparable.class);
+        Comparable<?> comparableValue;
+        if (value instanceof Comparable)
+            comparableValue = (Comparable<?>) value;
+        else
+            throw new IllegalArgumentException("No comparable value : " + value.getClass());
 
         switch (expr.op()) {
             case LT: query.where(comparableProperty.lt(comparableValue)); break;
@@ -74,18 +74,17 @@ public class ExprQueryHelper {
                 throw new IllegalArgumentException("Unavailable operator : " + expr.op());
         }
 
-		if (callback != null) callback.after(query, path, propertyName, expr);
-		return true;
-	}
+        if (callback != null) callback.after(query, path, propertyName, expr);
+        return true;
+    }
 
-	private String convertMatchMode(String value, Expr.MatchMode matchMode) {
-		switch (matchMode) {
+    private String convertMatchMode(String value, Expr.MatchMode matchMode) {
+        switch (matchMode) {
             case EXACT: return value;
             case START: return "%" + value;
             case END: return value + "%";
             case ANYWHERE: return "%" + value + "%";
-            default:
-                throw new IllegalArgumentException("Unavailable match mode : " + matchMode);
-		}
-	}
+            default: throw new IllegalArgumentException("Unavailable match mode : " + matchMode);
+        }
+    }
 }

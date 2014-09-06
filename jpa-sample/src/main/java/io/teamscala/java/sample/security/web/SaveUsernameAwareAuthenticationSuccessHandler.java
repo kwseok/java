@@ -12,20 +12,27 @@ import java.io.IOException;
 
 /**
  * 사용자 아이디를 쿠키에 저장하는 핸들러
- * 
  */
 public class SaveUsernameAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    /** 사용자 아이디 저장 요청 파라미터 */
+    /**
+     * 사용자 아이디 저장 요청 파라미터
+     */
     static final String REQUEST_PARAM_NAME = "remember_username";
 
-    /** 쿠키 이름 */
+    /**
+     * 쿠키 이름
+     */
     static final String COOKIE_NAME = "_SAVED_ID_";
 
-    /** 쿠키 기본 유효 시간 */
+    /**
+     * 쿠키 기본 유효 시간
+     */
     static final int DEFAULT_MAX_AGE = 60 * 60 * 24 * 30;
 
-    /** 쿠키 유효 기간 */
+    /**
+     * 쿠키 유효 기간
+     */
     private int maxAge = DEFAULT_MAX_AGE;
 
     @Override
@@ -52,5 +59,7 @@ public class SaveUsernameAwareAuthenticationSuccessHandler extends SimpleUrlAuth
      *
      * @param maxAge 유효기간
      */
-    public void setMaxAge(int maxAge) { this.maxAge = maxAge; }
+    public void setMaxAge(int maxAge) {
+        this.maxAge = maxAge;
+    }
 }

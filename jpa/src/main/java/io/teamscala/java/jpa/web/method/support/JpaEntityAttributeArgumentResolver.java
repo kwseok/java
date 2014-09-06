@@ -24,65 +24,66 @@ import java.util.Set;
 
 /**
  * JPA entity attribute argument resolver.
- *
  */
 public class JpaEntityAttributeArgumentResolver extends AbstractEntityAttributeArgumentResolver {
-	private static final Logger LOG = LoggerFactory.getLogger(JpaEntityAttributeArgumentResolver.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JpaEntityAttributeArgumentResolver.class);
 
-	public JpaEntityAttributeArgumentResolver(ConversionService conversionService) { super(conversionService); }
+    public JpaEntityAttributeArgumentResolver(ConversionService conversionService) {
+        super(conversionService);
+    }
 
-	@Override
-	protected Object getIdentifier(MethodParameter parameter, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-		Class<?> entityClass = parameter.getParameterType();
-		EntityManager entityManager = getEntityManager(parameter);
-		EntityType<?> entityType = entityManager.getMetamodel().entity(entityClass);
-		List<SingularAttribute<?, ?>> idAttributes;
+    @Override
+    protected Object getIdentifier(MethodParameter parameter, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        Class<?> entityClass = parameter.getParameterType();
+        EntityManager entityManager = getEntityManager(parameter);
+        EntityType<?> entityType = entityManager.getMetamodel().entity(entityClass);
+        List<SingularAttribute<?, ?>> idAttributes;
 
-		// Singular identifier.
-		if (entityType.hasSingleIdAttribute()) {
-			idAttributes = new ArrayList<>(1);
-			idAttributes.add(entityType.getId(entityType.getIdType().getJavaType()));
-		}
-		// Multiple identifiers.
-		else {
-			Set<? extends SingularAttribute<?, ?>> idClassAttributes = entityType.getIdClassAttributes();
-			idAttributes = new ArrayList<>(idClassAttributes.size());
-			idAttributes.addAll(idClassAttributes);
-		}
+        // Singular identifier.
+        if (entityType.hasSingleIdAttribute()) {
+            idAttributes = new ArrayList<>(1);
+            idAttributes.add(entityType.getId(entityType.getIdType().getJavaType()));
+        }
+        // Multiple identifiers.
+        else {
+            Set<? extends SingularAttribute<?, ?>> idClassAttributes = entityType.getIdClassAttributes();
+            idAttributes = new ArrayList<>(idClassAttributes.size());
+            idAttributes.addAll(idClassAttributes);
+        }
 
-		String[] bindNestedPaths = getBindNestedPaths();
-		List<String> allowedFields = new ArrayList<>(idAttributes.size() * (bindNestedPaths.length + 1));
-		for (SingularAttribute<?, ?> a : idAttributes) {
-			String name = a.getName();
-			allowedFields.add(name);
-			for (String nestedPath : bindNestedPaths) {
-				allowedFields.add(name + nestedPath);
-			}
-		}
-		LOG.debug("Allowed fields for identifier binding : " + allowedFields);
+        String[] bindNestedPaths = getBindNestedPaths();
+        List<String> allowedFields = new ArrayList<>(idAttributes.size() * (bindNestedPaths.length + 1));
+        for (SingularAttribute<?, ?> a : idAttributes) {
+            String name = a.getName();
+            allowedFields.add(name);
+            for (String nestedPath : bindNestedPaths) {
+                allowedFields.add(name + nestedPath);
+            }
+        }
+        LOG.debug("Allowed fields for identifier binding : " + allowedFields);
 
-		ServletRequest servletRequest = (ServletRequest) webRequest.getNativeRequest();
-		PropertyValues propertyValues = new ServletRequestParameterPropertyValues(servletRequest, getPrefixForParameter(parameter));
-		Object idTarget = BeanUtils.instantiateClass(entityClass);
-		WebDataBinder idBinder = binderFactory.createBinder(webRequest, idTarget, "idTarget");
-		if (isDirectFieldAccess(parameter))
-			idBinder.initDirectFieldAccess();
-		else
-			idBinder.initBeanPropertyAccess();
-		idBinder.setAllowedFields(allowedFields.toArray(new String[allowedFields.size()]));
-		idBinder.bind(propertyValues);
+        ServletRequest servletRequest = (ServletRequest) webRequest.getNativeRequest();
+        PropertyValues propertyValues = new ServletRequestParameterPropertyValues(servletRequest, getPrefixForParameter(parameter));
+        Object idTarget = BeanUtils.instantiateClass(entityClass);
+        WebDataBinder idBinder = binderFactory.createBinder(webRequest, idTarget, "idTarget");
+        if (isDirectFieldAccess(parameter))
+            idBinder.initDirectFieldAccess();
+        else
+            idBinder.initBeanPropertyAccess();
+        idBinder.setAllowedFields(allowedFields.toArray(new String[allowedFields.size()]));
+        idBinder.bind(propertyValues);
 
-		Object id = entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(idTarget);
-		return NumberUtils.isZero(id) ? null : id;
-	}
+        Object id = entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(idTarget);
+        return NumberUtils.isZero(id) ? null : id;
+    }
 
-	@Override
-	protected Object findEntity(Object identifier, MethodParameter parameter) {
-		Object entity = getEntityManager(parameter).find(parameter.getParameterType(), identifier);
-		return JpaHelper.getImplementation(entity);
-	}
+    @Override
+    protected Object findEntity(Object identifier, MethodParameter parameter) {
+        Object entity = getEntityManager(parameter).find(parameter.getParameterType(), identifier);
+        return JpaHelper.getImplementation(entity);
+    }
 
-	private EntityManager getEntityManager(MethodParameter parameter) {
-		return JpaHelper.getEntityManager(parameter.getParameterType());
-	}
+    private EntityManager getEntityManager(MethodParameter parameter) {
+        return JpaHelper.getEntityManager(parameter.getParameterType());
+    }
 }

@@ -9,7 +9,6 @@ import java.beans.PropertyDescriptor;
 
 /**
  * XStream marshaller
- *
  */
 public class XStreamMarshaller extends org.springframework.oxm.xstream.XStreamMarshaller {
 
@@ -18,8 +17,8 @@ public class XStreamMarshaller extends org.springframework.oxm.xstream.XStreamMa
         xstream.registerConverter(new JavaBeanConverter(xstream.getMapper(), new BeanProvider() {
             @Override
             protected boolean canStreamProperty(PropertyDescriptor descriptor) {
-                return super.canStreamProperty(descriptor) &&
-                        !descriptor.getReadMethod().isAnnotationPresent(XmlTransient.class);
+                return super.canStreamProperty(descriptor)
+                    && !descriptor.getReadMethod().isAnnotationPresent(XmlTransient.class);
             }
         }), XStream.PRIORITY_LOW);
     }

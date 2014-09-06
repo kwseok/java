@@ -17,132 +17,138 @@ import java.util.WeakHashMap;
 
 /**
  * JPA helper.
- *
  */
 public class JpaHelper implements ApplicationContextAware {
-	private static final Logger LOG = LoggerFactory.getLogger(JpaHelper.class);
-	
-	/**
-	 * The cache for Entity Manager Contexts.
-	 */
-	private static final Map<Class<?>, Class<? extends EntityManagerContext>> EMC_CACHE = new WeakHashMap<>();
+    private static final Logger LOG = LoggerFactory.getLogger(JpaHelper.class);
 
-	/**
-	 * Get the {@link EntityManagerContext}.
-	 * 
-	 * @param entityClass the entity class.
-	 * @return {@link EntityManagerContext}
-	 *
+    /**
+     * The cache for Entity Manager Contexts.
+     */
+    private static final Map<Class<?>, Class<? extends EntityManagerContext>> EMC_CACHE = new WeakHashMap<>();
+
+    /**
+     * Get the {@link EntityManagerContext}.
+     *
+     * @param entityClass the entity class.
+     * @return {@link EntityManagerContext}
      * @see io.teamscala.java.jpa.EntityManager
-	 * @see io.teamscala.java.jpa.EntityManagerContext
-	 */
-	public static Class<? extends EntityManagerContext> getEntityManagerContext(Class<?> entityClass) {
-		if (EMC_CACHE.containsKey(entityClass)) return EMC_CACHE.get(entityClass);
-		synchronized (EMC_CACHE) {
-			if (EMC_CACHE.containsKey(entityClass)) return EMC_CACHE.get(entityClass);
+     * @see io.teamscala.java.jpa.EntityManagerContext
+     */
+    public static Class<? extends EntityManagerContext> getEntityManagerContext(Class<?> entityClass) {
+        if (EMC_CACHE.containsKey(entityClass)) return EMC_CACHE.get(entityClass);
+        synchronized (EMC_CACHE) {
+            if (EMC_CACHE.containsKey(entityClass)) return EMC_CACHE.get(entityClass);
 
-			LOG.info("First Analyzing EntityManagerContext for Class[{}]", entityClass);
-			io.teamscala.java.jpa.EntityManager annot =
-                    AnnotationUtils.findAnnotation(entityClass, io.teamscala.java.jpa.EntityManager.class);
-			Class<? extends EntityManagerContext> emc =
-                    annot != null ? annot.value() : DefaultEntityManagerContext.class;
-			EMC_CACHE.put(entityClass, emc);
-			return emc;
-		}
-	}
+            LOG.info("First Analyzing EntityManagerContext for Class[{}]", entityClass);
+            io.teamscala.java.jpa.EntityManager annot = AnnotationUtils.findAnnotation(entityClass, io.teamscala.java.jpa.EntityManager.class);
+            Class<? extends EntityManagerContext> emc = annot != null ? annot.value() : DefaultEntityManagerContext.class;
+            EMC_CACHE.put(entityClass, emc);
+            return emc;
+        }
+    }
 
-	/** Application context. */
-	private static ApplicationContext applicationContext;
+    /**
+     * Application context.
+     */
+    private static ApplicationContext applicationContext;
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		JpaHelper.applicationContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        JpaHelper.applicationContext = applicationContext;
+    }
 
-	/**
-	 * Get the {@link EntityManager}.
-	 * 
-	 * @param entityClass the entity class.
-	 * @return {@link EntityManager}
-	 * 
-	 * @see io.teamscala.java.jpa.EntityManager
-	 * @see io.teamscala.java.jpa.EntityManagerContext
-	 */
-	public static EntityManager getEntityManager(Class<?> entityClass) {
-		Class<? extends EntityManagerContext> emc = getEntityManagerContext(entityClass);
+    /**
+     * Get the {@link EntityManager}.
+     *
+     * @param entityClass the entity class.
+     * @return {@link EntityManager}
+     * @see io.teamscala.java.jpa.EntityManager
+     * @see io.teamscala.java.jpa.EntityManagerContext
+     */
+    public static EntityManager getEntityManager(Class<?> entityClass) {
+        Class<? extends EntityManagerContext> emc = getEntityManagerContext(entityClass);
 
-		if (applicationContext != null) {
-			EntityManager em = applicationContext.getBean(emc).getEntityManager();
-			if (em == null)
-				throw new IllegalStateException("Entity manager has not been injected from [" + emc + "]");
+        if (applicationContext != null) {
+            EntityManager em = applicationContext.getBean(emc).getEntityManager();
+            if (em == null)
+                throw new IllegalStateException("Entity manager has not been injected from [" + emc + "]");
 
-			return em;
-		}
+            return em;
+        }
 
-		if (emc == DefaultEntityManagerContext.class)
-			emc = DefaultEntityManagerContext.Configurable.class;
+        if (emc == DefaultEntityManagerContext.class)
+            emc = DefaultEntityManagerContext.Configurable.class;
 
-		EntityManager em = BeanUtils.instantiateClass(emc).getEntityManager();
-		if (em == null)
-			throw new IllegalStateException(
-					"Entity manager has not been injected from [" + emc.getName() + "]" +
-					" (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        EntityManager em = BeanUtils.instantiateClass(emc).getEntityManager();
+        if (em == null)
+            throw new IllegalStateException(
+                "Entity manager has not been injected from [" + emc.getName() + "]" +
+                    " (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
 
-		return em;
-	}
+        return em;
+    }
 
-	/**
-	 * Get the {@link EntityManager}.
-	 * 
-	 * @param entity the entity object.
-	 * @return {@link EntityManager}
-	 * 
-	 * @see io.teamscala.java.jpa.EntityManager
-	 * @see io.teamscala.java.jpa.EntityManagerContext
-	 */
-	public static EntityManager getEntityManager(Object entity) { return getEntityManager(getClass(entity)); }
+    /**
+     * Get the {@link EntityManager}.
+     *
+     * @param entity the entity object.
+     * @return {@link EntityManager}
+     * @see io.teamscala.java.jpa.EntityManager
+     * @see io.teamscala.java.jpa.EntityManagerContext
+     */
+    public static EntityManager getEntityManager(Object entity) {
+        return getEntityManager(getClass(entity));
+    }
 
-	/**
-	 * Check if the proxy.
+    /**
+     * Check if the proxy.
      *
      * @param proxy the proxy of entity.
      * @return true or false
      */
-	public static boolean isProxy(Object proxy) { return (proxy instanceof HibernateProxy); }
+    public static boolean isProxy(Object proxy) {
+        return (proxy instanceof HibernateProxy);
+    }
 
     /**
-	 * Get the true, underlying class of a proxied persistent class.
+     * Get the true, underlying class of a proxied persistent class.
      *
      * @param proxy the proxy of entity.
      * @return the entity class.
      */
-	public static Class<?> getClass(Object proxy) { return HibernateProxyHelper.getClassWithoutInitializingProxy(proxy); }
+    public static Class<?> getClass(Object proxy) {
+        return HibernateProxyHelper.getClassWithoutInitializingProxy(proxy);
+    }
 
-	/**
-	 * Check if the proxy is initialized.
+    /**
+     * Check if the proxy is initialized.
      *
      * @param proxy the proxy of entity.
      * @return true or false
      */
-	public static boolean isInitialized(Object proxy) { return Hibernate.isInitialized(proxy); }
+    public static boolean isInitialized(Object proxy) {
+        return Hibernate.isInitialized(proxy);
+    }
 
-	/**
-	 * Force initialization of a proxy.
+    /**
+     * Force initialization of a proxy.
      *
      * @param proxy the proxy of entity.
      */
-	public static void initialize(Object proxy) { Hibernate.initialize(proxy); }
+    public static void initialize(Object proxy) {
+        Hibernate.initialize(proxy);
+    }
 
-	/**
-	 * Return the underlying persistent object, initializing if necessary
+    /**
+     * Return the underlying persistent object, initializing if necessary
      *
      * @param proxy the proxy of entity.
      * @return the entity object.
      */
-	public static Object getImplementation(Object proxy) {
-		if (proxy instanceof HibernateProxy) {
+    public static Object getImplementation(Object proxy) {
+        if (proxy instanceof HibernateProxy) {
             return ((HibernateProxy) proxy).getHibernateLazyInitializer().getImplementation();
         }
-		return proxy;
-	}
+        return proxy;
+    }
 }

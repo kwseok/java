@@ -7,10 +7,9 @@ import org.hibernate.collection.spi.PersistentCollection;
 
 public class PersistentCollectionJsonPreprocessor implements JsonPreprocessor<PersistentCollection> {
 
-	@Override
-	public Object process(PersistentCollection target, JsonConfig jsonConfig) {
-		if (!target.wasInitialized()) return new JSONArray();
-
+    @Override
+    public Object process(PersistentCollection target, JsonConfig jsonConfig) {
+        if (!target.wasInitialized()) return new JSONArray();
         return JSONArray.fromObject(target, jsonConfig);
-	}
+    }
 }

@@ -16,7 +16,7 @@ import static org.apache.commons.lang3.ClassUtils.isAssignable;
 
 /**
  * 동적으로 객체의 속성, 메소드에 접근할 수 있는 접근자입니다.
- * 
+ *
  * @param <T> the target type
  */
 public class DynamicAccessor<T> {
@@ -58,34 +58,89 @@ public class DynamicAccessor<T> {
         this.methodAccessor = MethodAccess.get(targetType);
     }
 
-    public T newInstance() { return ctorAccessor.newInstance(); }
-    public T newInstance(Object enclosingInstance) { return ctorAccessor.newInstance(enclosingInstance); }
+    public T newInstance() {
+        return ctorAccessor.newInstance();
+    }
 
-    public String[] getFieldNames() { return fieldAccessor.getFieldNames(); }
-    public String[] getMethodNames() { return methodAccessor.getMethodNames(); }
-    public Class<?>[][] getMethodParameterTypes() { return methodAccessor.getParameterTypes(); }
+    public T newInstance(Object enclosingInstance) {
+        return ctorAccessor.newInstance(enclosingInstance);
+    }
 
-    public Object getField(Object instance, String fieldName) { return fieldAccessor.get(instance, fieldName); }
+    public String[] getFieldNames() {
+        return fieldAccessor.getFieldNames();
+    }
 
-    public void setField(Object instance, String fieldName, Object value) { fieldAccessor.set(instance, fieldName, value); }
-    public void setField(Object instance, String fieldName, boolean value) { fieldAccessor.setBoolean(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, byte value) { fieldAccessor.setByte(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, char value) { fieldAccessor.setChar(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, short value) { fieldAccessor.setShort(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, int value) { fieldAccessor.setInt(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, long value) { fieldAccessor.setLong(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, float value) { fieldAccessor.setFloat(instance, fieldAccessor.getIndex(fieldName), value); }
-    public void setField(Object instance, String fieldName, double value) { fieldAccessor.setDouble(instance, fieldAccessor.getIndex(fieldName), value); }
+    public String[] getMethodNames() {
+        return methodAccessor.getMethodNames();
+    }
 
-    public Object invoke(Object instance, String methodName, Object... args) { return methodAccessor.invoke(instance, methodName, args); }
-    public Object invoke(Object instance, int methodIndex, Object... args) { return methodAccessor.invoke(instance, methodIndex, args); }
+    public Class<?>[][] getMethodParameterTypes() {
+        return methodAccessor.getParameterTypes();
+    }
 
-    public int indexOfField(String fieldName) { return indexOf(getFieldNames(), fieldName); }
-    public int indexOfMethod(String methodName) { return indexOf(getMethodNames(), methodName); }
+    public Object getField(Object instance, String fieldName) {
+        return fieldAccessor.get(instance, fieldName);
+    }
 
-    public int indexOfBooleanGetter(String propertyName) { return indexOfMethod(getBooleanGetterName(propertyName)); }
+    public void setField(Object instance, String fieldName, Object value) {
+        fieldAccessor.set(instance, fieldName, value);
+    }
 
-    public int indexOfGetter(String propertyName) { return indexOfMethod(getGetterName(propertyName)); }
+    public void setField(Object instance, String fieldName, boolean value) {
+        fieldAccessor.setBoolean(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, byte value) {
+        fieldAccessor.setByte(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, char value) {
+        fieldAccessor.setChar(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, short value) {
+        fieldAccessor.setShort(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, int value) {
+        fieldAccessor.setInt(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, long value) {
+        fieldAccessor.setLong(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, float value) {
+        fieldAccessor.setFloat(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public void setField(Object instance, String fieldName, double value) {
+        fieldAccessor.setDouble(instance, fieldAccessor.getIndex(fieldName), value);
+    }
+
+    public Object invoke(Object instance, String methodName, Object... args) {
+        return methodAccessor.invoke(instance, methodName, args);
+    }
+
+    public Object invoke(Object instance, int methodIndex, Object... args) {
+        return methodAccessor.invoke(instance, methodIndex, args);
+    }
+
+    public int indexOfField(String fieldName) {
+        return indexOf(getFieldNames(), fieldName);
+    }
+
+    public int indexOfMethod(String methodName) {
+        return indexOf(getMethodNames(), methodName);
+    }
+
+    public int indexOfBooleanGetter(String propertyName) {
+        return indexOfMethod(getBooleanGetterName(propertyName));
+    }
+
+    public int indexOfGetter(String propertyName) {
+        return indexOfMethod(getGetterName(propertyName));
+    }
 
     public int indexOfGetter(String propertyName, Class<?> returnType) {
         if (boolean.class.equals(returnType))
@@ -157,11 +212,19 @@ public class DynamicAccessor<T> {
             return invoke(instance, index, value);
         }
         throw new IllegalArgumentException(
-                "Unable to find public setter for property: " + propertyName +
+            "Unable to find public setter for property: " + propertyName +
                 ", type: " + propertyType);
     }
 
-    private static String getBooleanGetterName(String propertyName) { return IS_PREFIX + StringUtils.capitalize(propertyName); }
-    private static String getGetterName(String propertyName) { return GET_PREFIX + StringUtils.capitalize(propertyName); }
-    private static String getSetterName(String propertyName) { return SET_PREFIX + StringUtils.capitalize(propertyName); }
+    private static String getBooleanGetterName(String propertyName) {
+        return IS_PREFIX + StringUtils.capitalize(propertyName);
+    }
+
+    private static String getGetterName(String propertyName) {
+        return GET_PREFIX + StringUtils.capitalize(propertyName);
+    }
+
+    private static String getSetterName(String propertyName) {
+        return SET_PREFIX + StringUtils.capitalize(propertyName);
+    }
 }

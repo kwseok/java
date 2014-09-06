@@ -8,14 +8,14 @@ import org.hibernate.proxy.LazyInitializer;
 
 public class HibernateProxyJsonBeanProcessor implements JsonBeanProcessor {
 
-	@Override
-	public JSONObject processBean(Object bean, JsonConfig jsonConfig) {
-		if (bean instanceof HibernateProxy) {
-			LazyInitializer lazyInitializer = ((HibernateProxy) bean).getHibernateLazyInitializer();
-			if (!lazyInitializer.isUninitialized()) {
-				return JSONObject.fromObject(lazyInitializer.getImplementation(), jsonConfig);
+    @Override
+    public JSONObject processBean(Object bean, JsonConfig jsonConfig) {
+        if (bean instanceof HibernateProxy) {
+            LazyInitializer lazyInitializer = ((HibernateProxy) bean).getHibernateLazyInitializer();
+            if (!lazyInitializer.isUninitialized()) {
+                return JSONObject.fromObject(lazyInitializer.getImplementation(), jsonConfig);
             }
-		}
-		return new JSONObject(true);
-	}
+        }
+        return new JSONObject(true);
+    }
 }

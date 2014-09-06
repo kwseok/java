@@ -3,25 +3,30 @@ package io.teamscala.java.core.util;
 /**
  * 한글 처리를 위한 유틸리티 클래스
  * 유니코드 2.0 한글의 범위 * AC00(가) ~ D7A3(힣)
- *
  */
 public abstract class HangulUtils {
 
-    /** 초성 테이블 */
+    /**
+     * 초성 테이블
+     */
     private static final char[] INITIAL_CONSONANTS = {
         'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
         'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
 
-    /** 중성 테이블 */
+    /**
+     * 중성 테이블
+     */
     private static final char[] VOWELS = {
         'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ',
         'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'
     };
 
-    /** 종성 테이블 */
+    /**
+     * 종성 테이블
+     */
     private static final char[] FINAL_CONSONANTS = {
-        ' ' , 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ',
+        ' ', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ',
         'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ',
         'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
@@ -35,7 +40,7 @@ public abstract class HangulUtils {
 
     /**
      * 숫자 단위 테이블 ('극' 단위 까지만 처리)
-     *
+     * <p>
      * <p>일, 십, 백, 천, 만, 억, 조, 경, 해, 자, 양, 구, 간, 정, 재, 극,
      * 항하사, 아승기, 나유타, 불가사의, 무량대수(10의68제곱)</p>
      */
@@ -49,7 +54,9 @@ public abstract class HangulUtils {
      * @param c 문자
      * @return true or false
      */
-    public static boolean isHangul(char c) { return !(c < 0xAC00 || c > 0xD7A3); }
+    public static boolean isHangul(char c) {
+        return !(c < 0xAC00 || c > 0xD7A3);
+    }
 
     /**
      * 문자열이 한글인지 검사한다
@@ -136,7 +143,9 @@ public abstract class HangulUtils {
      * @param number 숫자
      * @return 한글숫자
      */
-    public static String toHangulNumber(int number) { return toHangulNumber(number, null); }
+    public static String toHangulNumber(int number) {
+        return toHangulNumber(number, null);
+    }
 
     /**
      * 숫자를 한글형식으로 바꿔준다
@@ -144,21 +153,25 @@ public abstract class HangulUtils {
      * @param number 숫자
      * @return 한글숫자
      */
-    public static String toHangulNumber(String number) { return toHangulNumber(number, null); }
+    public static String toHangulNumber(String number) {
+        return toHangulNumber(number, null);
+    }
 
     /**
      * 숫자를 한글형식으로 바꿔준다
      *
-     * @param number 숫자
+     * @param number    숫자
      * @param delimiter 구분자
      * @return 한글숫자
      */
-    public static String toHangulNumber(int number, String delimiter) { return toHangulNumber(String.valueOf(number), delimiter); }
+    public static String toHangulNumber(int number, String delimiter) {
+        return toHangulNumber(String.valueOf(number), delimiter);
+    }
 
     /**
      * 숫자를 한글형식으로 바꿔준다
      *
-     * @param number 숫자
+     * @param number    숫자
      * @param delimiter 구분자
      * @return 한글숫자
      */
@@ -168,9 +181,7 @@ public abstract class HangulUtils {
         // 숫자가 0으로 시작할 경우 0이 아닐때까지 건너 뛴다
         if (number.charAt(0) == '0') {
             number = StringUtils.stripStart(number, "0");
-            if (number.isEmpty()) {
-                return String.valueOf(NUMBERS[0]);
-            }
+            if (number.isEmpty()) return String.valueOf(NUMBERS[0]);
         }
 
         // 숫자가 한자리일 경우

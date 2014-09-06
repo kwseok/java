@@ -8,7 +8,6 @@ import static org.springframework.beans.BeanUtils.instantiateClass;
 
 /**
  * Abstract entity converter.
- *
  */
 public abstract class AbstractEntityConverter implements GenericConverter {
 
@@ -27,8 +26,8 @@ public abstract class AbstractEntityConverter implements GenericConverter {
             Object entity = findEntity(id, targetType);
             if (entity == null)
                 throw new IllegalArgumentException(String.format(
-                        "No row with the given identifier exists: [%s#%s]",
-                        targetType.getType().getName(), id));
+                    "No row with the given identifier exists: [%s#%s]",
+                    targetType.getType().getName(), id));
 
             return entity;
         }
@@ -37,7 +36,7 @@ public abstract class AbstractEntityConverter implements GenericConverter {
     /**
      * Convert to the identifier.
      *
-     * @param source the source string.
+     * @param source     the source string.
      * @param targetType the target type.
      * @return the identifier.
      */
@@ -46,7 +45,7 @@ public abstract class AbstractEntityConverter implements GenericConverter {
     /**
      * Find the entity.
      *
-     * @param id the identifier.
+     * @param id         the identifier.
      * @param targetType the target type.
      * @return the entity.
      */

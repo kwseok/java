@@ -7,13 +7,13 @@ import org.hibernate.proxy.LazyInitializer;
 
 /**
  * Hibernate property filter.
- *
  */
 public class HibernateAwarePropertyFilter implements PropertyFilter {
 
-	@Override public boolean apply(Object target, String name, Object value) {
-        return value instanceof FieldHandler ||
-                value instanceof LazyInitializer ||
-                !Hibernate.isInitialized(value);
+    @Override
+    public boolean apply(Object target, String name, Object value) {
+        return value instanceof FieldHandler
+            || value instanceof LazyInitializer
+            || !Hibernate.isInitialized(value);
     }
 }

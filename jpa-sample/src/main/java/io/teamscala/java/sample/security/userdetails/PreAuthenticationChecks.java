@@ -5,9 +5,9 @@ import org.springframework.security.core.userdetails.UserDetailsChecker;
 
 public class PreAuthenticationChecks implements UserDetailsChecker {
 
-	@Override
-	public void check(UserDetails toCheck) {
-		
-	}
+    @Override
+    public void check(UserDetails toCheck) {
+
+    }
 
 }

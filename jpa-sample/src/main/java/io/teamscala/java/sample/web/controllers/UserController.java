@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 사용자 컨트롤러 샘플.
- *
  */
 @Controller
 @RequestMapping("/user")

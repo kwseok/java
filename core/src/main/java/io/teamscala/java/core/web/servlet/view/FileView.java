@@ -11,32 +11,41 @@ import java.util.Map;
 
 /**
  * 파일 뷰
- *
  */
 public class FileView extends AbstractView {
 
-	private final File file;
-	private String filename;
+    private final File file;
+    private String filename;
 
-	public FileView(File file) { this(file, null); }
-	public FileView(File file, String filename) {
-		Assert.notNull(file, "File must not be null");
-		Assert.state(file.length() > 0, "File must not be empty");
+    public FileView(File file) {
+        this(file, null);
+    }
 
-		this.file = file;
-		this.filename = filename != null ? filename : file.getName();
-		super.setContentType("application/octet-stream");
-	}
+    public FileView(File file, String filename) {
+        Assert.notNull(file, "File must not be null");
+        Assert.state(file.length() > 0, "File must not be empty");
 
-	public File getFile() { return file; }
+        this.file = file;
+        this.filename = filename != null ? filename : file.getName();
+        super.setContentType("application/octet-stream");
+    }
 
-	public String getFilename() { return filename; }
-	public void setFilename(String filename) { this.filename = filename; }
+    public File getFile() {
+        return file;
+    }
 
-	// AbstractView implementations
+    public String getFilename() {
+        return filename;
+    }
 
-	@Override
-	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		WebUtils.download(request, response, file, filename);
-	}
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    // AbstractView implementations
+
+    @Override
+    protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        WebUtils.download(request, response, file, filename);
+    }
 }

@@ -6,14 +6,13 @@ import java.io.File;
 
 /**
  * 파일이름 유틸리티 클래스.
- * 
  */
 public abstract class FilenameUtils extends org.apache.commons.io.FilenameUtils {
 
     /**
      * 중복되지 않은 파일 명을 가져온다.
      *
-     * @param dir 대상 디렉토리
+     * @param dir      대상 디렉토리
      * @param filename 업로드 할 파일명
      * @return 중복되지 않는 파일명(1,2,3..).확장자
      */
@@ -24,7 +23,7 @@ public abstract class FilenameUtils extends org.apache.commons.io.FilenameUtils 
     /**
      * 중복되지 않은 파일 명을 가져온다.
      *
-     * @param dir 대상 디렉토리
+     * @param dir      대상 디렉토리
      * @param filename 업로드 할 파일명
      * @return 중복되지 않는 파일명(1,2,3..).확장자
      */

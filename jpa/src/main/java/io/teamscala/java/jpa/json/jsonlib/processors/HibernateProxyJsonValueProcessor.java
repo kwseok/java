@@ -6,19 +6,18 @@ import org.hibernate.proxy.HibernateProxy;
 
 /**
  * Json value processor for {@link HibernateProxy}.
- *
  */
 public class HibernateProxyJsonValueProcessor implements JsonValueProcessor {
 
-	@Override
-	public Object processArrayValue(Object value, JsonConfig jsonConfig) {
-		return processor.processBean(value, jsonConfig);
-	}
+    @Override
+    public Object processArrayValue(Object value, JsonConfig jsonConfig) {
+        return processor.processBean(value, jsonConfig);
+    }
 
-	@Override
-	public Object processObjectValue(String key, Object value, JsonConfig jsonConfig) {
-		return processor.processBean(value, jsonConfig);
-	}
+    @Override
+    public Object processObjectValue(String key, Object value, JsonConfig jsonConfig) {
+        return processor.processBean(value, jsonConfig);
+    }
 
-	private HibernateProxyJsonBeanProcessor processor = new HibernateProxyJsonBeanProcessor();
+    private HibernateProxyJsonBeanProcessor processor = new HibernateProxyJsonBeanProcessor();
 }

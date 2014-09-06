@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * Entity attribute annotation.
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

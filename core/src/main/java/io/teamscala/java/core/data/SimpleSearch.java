@@ -10,43 +10,64 @@ import java.util.StringTokenizer;
 
 /**
  * 검색에 필요한 정보전달을 위한 간단한 구현이다.
- *
  */
 public class SimpleSearch implements Searchable {
 
     // Static constants
 
-    /** 검색 조건의 구분자들. */
+    /**
+     * 검색 조건의 구분자들.
+     */
     public static final String CONDITION_DELIMITERS = ", ";
 
-    /** 기본 검색어 구분자들. */
+    /**
+     * 기본 검색어 구분자들.
+     */
     public static final String DEFAULT_KEYWORD_DELIMITERS = "\t\n\r\f ,-/:;#%";
 
-    /** 검색 조건들 간의 기본 결합자. */
+    /**
+     * 검색 조건들 간의 기본 결합자.
+     */
     public static final Junction DEFAULT_CONDITION_JUNCTION = Junction.OR;
 
-    /** 검색어들 간의 기본 결합자. */
+    /**
+     * 검색어들 간의 기본 결합자.
+     */
     public static final Junction DEFAULT_KEYWORD_JUNCTION = Junction.OR;
 
-    /** 기본 연산자. */
+    /**
+     * 기본 연산자.
+     */
     public static final Operator DEFAULT_OPERATOR = Operator.ANYWHERE;
 
     // Enumerations
 
-    public enum Junction { OR, AND }
+    public enum Junction {OR, AND}
+
     public enum Operator {
         EXACT,
         START {
-            @Override public String toMatchString(String pattern) { return '%' + pattern; }
+            @Override
+            public String toMatchString(String pattern) {
+                return '%' + pattern;
+            }
         },
         END {
-            @Override public String toMatchString(String pattern) { return pattern + '%'; }
+            @Override
+            public String toMatchString(String pattern) {
+                return pattern + '%';
+            }
         },
         ANYWHERE {
-            @Override public String toMatchString(String pattern) { return '%' + pattern + '%'; }
+            @Override
+            public String toMatchString(String pattern) {
+                return '%' + pattern + '%';
+            }
         };
 
-        public String toMatchString(String pattern) { return pattern; }
+        public String toMatchString(String pattern) {
+            return pattern;
+        }
     }
 
     // Fields
@@ -70,7 +91,9 @@ public class SimpleSearch implements Searchable {
      *
      * @return 검색어 구분자들
      */
-    public String getKeywordDelimiters() { return keywordDelimiters; }
+    public String getKeywordDelimiters() {
+        return keywordDelimiters;
+    }
 
     /**
      * 검색어 구분자들을 세팅한다.
@@ -86,7 +109,9 @@ public class SimpleSearch implements Searchable {
      *
      * @return 검색 조건들 간의 결합자
      */
-    public Junction getConditionJunction() { return conditionJunction; }
+    public Junction getConditionJunction() {
+        return conditionJunction;
+    }
 
     /**
      * 검색 조건들 간의 결합자를 세팅한다.
@@ -114,7 +139,9 @@ public class SimpleSearch implements Searchable {
      *
      * @return 검색어들 간의 결합자를
      */
-    public Junction getKeywordJunction() { return keywordJunction; }
+    public Junction getKeywordJunction() {
+        return keywordJunction;
+    }
 
     /**
      * 검색어들 간의 결합자를 세팅한다.
@@ -144,7 +171,9 @@ public class SimpleSearch implements Searchable {
      *
      * @return 검색어들 간의 연산자
      */
-    public Operator getOperator()     { return operator; }
+    public Operator getOperator() {
+        return operator;
+    }
 
     /**
      * 연산자를 세팅한다.
@@ -165,60 +194,83 @@ public class SimpleSearch implements Searchable {
      * @param operator 문자열 형식의 연산자
      * @see Operator
      */
-    public void setOperator(String operator) { this.operator = convertOperator(operator); }
+    public void setOperator(String operator) {
+        this.operator = convertOperator(operator);
+    }
 
-    public boolean isIgnoreCase() { return ignoreCase; }
+    public boolean isIgnoreCase() {
+        return ignoreCase;
+    }
 
-    public void setIgnoreCase(boolean ignoreCase) { this.ignoreCase = ignoreCase; }
+    public void setIgnoreCase(boolean ignoreCase) {
+        this.ignoreCase = ignoreCase;
+    }
 
     /**
      * 검색 조건을 반환한다.
      *
      * @return 검색 조건
      */
-    public String getCondition() { return condition; }
+    public String getCondition() {
+        return condition;
+    }
 
     /**
      * 검색 조건을 세팅한다.
      *
      * @param condition 검색 조건(공백 또는 콤마(,)로 구분)
      */
-    public void setCondition(String condition) { this.condition = condition; }
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 
     /**
      * 검색어를 반환한다.
      *
      * @return 검색어
      */
-    public String getKeyword() { return keyword; }
+    public String getKeyword() {
+        return keyword;
+    }
 
     /**
      * 검색어를 세팅한다.
      *
      * @param keyword 검색어
      */
-    public void setKeyword(String keyword) { this.keyword = keyword; }
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     // Implementations for Object
 
-    @Override public String toString() { return ToStringBuilder.reflectionToString(this); }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     // Operation methods
 
     /**
      * @return 검색이 가능한지 확인한다.
      */
-    public boolean isSearchable() { return (hasCondition() && hasKeyword()); }
+    public boolean isSearchable() {
+        return (hasCondition() && hasKeyword());
+    }
 
     /**
      * @return 검색 조건 존재 여부를 확인한다.
      */
-    public boolean hasCondition() { return StringUtils.isNotBlank(condition); }
+    public boolean hasCondition() {
+        return StringUtils.isNotBlank(condition);
+    }
 
     /**
      * @return 검색어 존재 여부를 확인한다.
      */
-    public boolean hasKeyword() { return StringUtils.isNotBlank(keyword); }
+    public boolean hasKeyword() {
+        return StringUtils.isNotBlank(keyword);
+    }
 
     /**
      * 검색 조건을 검사 한다.
@@ -252,9 +304,7 @@ public class SimpleSearch implements Searchable {
      * @return 검색 조건을 파싱하여 배열로 반환한다.
      */
     public String[] parseCondition() {
-        if (!hasCondition())
-            return ArrayUtils.EMPTY_STRING_ARRAY;
-
+        if (!hasCondition()) return ArrayUtils.EMPTY_STRING_ARRAY;
         return StringUtils.split(condition, CONDITION_DELIMITERS);
     }
 
@@ -262,9 +312,7 @@ public class SimpleSearch implements Searchable {
      * @return 검색어를 파싱하여 배열로 반환한다.
      */
     public String[] parseKeyword() {
-        if (!hasKeyword())
-            return ArrayUtils.EMPTY_STRING_ARRAY;
-
+        if (!hasKeyword()) return ArrayUtils.EMPTY_STRING_ARRAY;
         String[] parsedKeywords = StringUtils.split(keyword, keywordDelimiters);
         this.setKeyword(StringUtils.join(parsedKeywords, ' '));
         return parsedKeywords;
@@ -277,9 +325,9 @@ public class SimpleSearch implements Searchable {
             return Junction.valueOf(junction.toUpperCase());
         } catch (Exception e) {
             throw new IllegalArgumentException(
-                    String.format("Illegal junction: '%s' (available to %s)",
-                            junction, StringUtils.join(Junction.values(), ", ")),
-                    e);
+                String.format("Illegal junction: '%s' (available to %s)",
+                    junction, StringUtils.join(Junction.values(), ", ")),
+                e);
         }
     }
 
@@ -288,9 +336,9 @@ public class SimpleSearch implements Searchable {
             return Operator.valueOf(operator.toUpperCase());
         } catch (Exception e) {
             throw new IllegalArgumentException(
-                    String.format("Illegal operator: '%s' (available to %s)",
-                            operator, StringUtils.join(Operator.values(), ", ")),
-                    e);
+                String.format("Illegal operator: '%s' (available to %s)",
+                    operator, StringUtils.join(Operator.values(), ", ")),
+                e);
         }
     }
 }

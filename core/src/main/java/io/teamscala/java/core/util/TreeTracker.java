@@ -45,12 +45,14 @@ public class TreeTracker<T> {
     /**
      * 기본 생성자.
      */
-    public TreeTracker() { this(null, null); }
+    public TreeTracker() {
+        this(null, null);
+    }
 
     /**
      * 생성자.
      *
-     * @param parentPropertyName 부모 프로퍼티 이름
+     * @param parentPropertyName   부모 프로퍼티 이름
      * @param childrenPropertyName 자식 프로퍼티 이름
      */
     public TreeTracker(String parentPropertyName, String childrenPropertyName) {
@@ -60,6 +62,7 @@ public class TreeTracker<T> {
 
     /**
      * 부모 프로퍼티 이름 세팅
+     *
      * @param parentPropertyName 부모 프로퍼티 이름
      */
     public void setParentPropertyName(String parentPropertyName) {
@@ -71,6 +74,7 @@ public class TreeTracker<T> {
 
     /**
      * 자식 프로퍼티 이름 세팅
+     *
      * @param childrenPropertyName 자식 프로퍼티 이름
      */
     public void setChildrenPropertyName(String childrenPropertyName) {
@@ -93,22 +97,22 @@ public class TreeTracker<T> {
     /**
      * 부모 방향으로 추적하여 리스트로 반환한다.
      *
-     * @param node 기준 객체
+     * @param node      기준 객체
      * @param ascending 추적방향이 오름차순인지 여부
      * @return 컬렉션
      * @throws Exception {@link java.lang.Exception}
      */
     public List<T> trackingParent(T node, boolean ascending) throws Exception {
-        final List<T> resultList = new ArrayList<>();
-        TreeHandler<T> handler = new TreeHandler<T>(){
+        final List<T> results = new ArrayList<>();
+        TreeHandler<T> handler = new TreeHandler<T>() {
             @Override
             protected boolean doHandle(T node, int index, int depth, int indexOfDepth, int lastDepth) {
-                resultList.add(node);
+                results.add(node);
                 return true;
             }
         };
         trackingParent(node, handler, ascending);
-        return resultList;
+        return results;
     }
 
     /**
@@ -119,23 +123,23 @@ public class TreeTracker<T> {
      * @throws Exception {@link java.lang.Exception}
      */
     public List<T> trackingChildren(T node) throws Exception {
-        final List<T> resultList = new ArrayList<>();
-        TreeHandler<T> handler = new TreeHandler<T>(){
+        final List<T> results = new ArrayList<>();
+        TreeHandler<T> handler = new TreeHandler<T>() {
             @Override
             protected boolean doHandle(T node, int index, int depth, int indexOfDepth, int lastDepth) {
-                resultList.add(node);
+                results.add(node);
                 return true;
             }
         };
         trackingChildren(node, handler);
-        return resultList;
+        return results;
     }
 
     /**
      * 부모 방향으로 추적한다.
      *
-     * @param node 기준 객체
-     * @param handler 핸들러
+     * @param node      기준 객체
+     * @param handler   핸들러
      * @param ascending 추적방향이 오름차순인지 여부
      * @throws Exception {@link java.lang.Exception}
      */
@@ -149,7 +153,7 @@ public class TreeTracker<T> {
     /**
      * 자식 방향으로 추적한다.
      *
-     * @param node 기준 객체
+     * @param node    기준 객체
      * @param handler 핸들러 객체
      * @throws Exception {@link java.lang.Exception}
      */
@@ -165,10 +169,10 @@ public class TreeTracker<T> {
     /**
      * 부모 방향으로 추적한다.
      *
-     * @param node 기준 객체
-     * @param handler 핸들러
+     * @param node      기준 객체
+     * @param handler   핸들러
      * @param ascending 추적방향이 오름차순인지 여부
-     * @param depth 깊이 처리를 하지 않는다; 항상 '0' 이다.
+     * @param depth     깊이 처리를 하지 않는다; 항상 '0' 이다.
      * @throws Exception {@link java.lang.Exception}
      */
     @SuppressWarnings("unchecked")
@@ -190,9 +194,9 @@ public class TreeTracker<T> {
     /**
      * 자식 방향으로 추적한다.
      *
-     * @param node 기준 객체
+     * @param node    기준 객체
      * @param handler 핸들러
-     * @param depth 깊이
+     * @param depth   깊이
      * @throws Exception {@link java.lang.Exception}
      */
     @SuppressWarnings("unchecked")
@@ -216,9 +220,9 @@ public class TreeTracker<T> {
     /**
      * 핸들.
      *
-     * @param node 기준 객체
+     * @param node    기준 객체
      * @param handler 핸들러.
-     * @param depth 깊이
+     * @param depth   깊이
      * @return boolean
      * @throws Exception {@link java.lang.Exception}
      */
@@ -234,22 +238,30 @@ public class TreeTracker<T> {
     /**
      * @return 인덱스.
      */
-    protected int getIndex() { return index; }
+    protected int getIndex() {
+        return index;
+    }
 
     /**
      * @return 깊이.
      */
-    protected int getDepth() { return depth; }
+    protected int getDepth() {
+        return depth;
+    }
 
     /**
      * @return 마지막 깊이.
      */
-    protected int getLastDepth() { return lastDepth; }
+    protected int getLastDepth() {
+        return lastDepth;
+    }
 
     /**
      * @return 현재 깊이의 인덱스.
      */
-    protected int getIndexInDepth() { return ((indexesInDepth.size() > depth) ? indexesInDepth.get(depth) : 0); }
+    protected int getIndexInDepth() {
+        return ((indexesInDepth.size() > depth) ? indexesInDepth.get(depth) : 0);
+    }
 
     /**
      * 현재 깊이의 인덱스를 증가시킨다.
@@ -267,30 +279,38 @@ public class TreeTracker<T> {
             private String name;
             private Test parent;
             private List<Test> children = new ArrayList<>();
+
             public Test(String name) {
                 this.name = name;
             }
+
             public String getName() {
                 return name;
             }
+
             public void setName(String name) {
                 this.name = name;
             }
+
             public Test getParent() {
                 return parent;
             }
+
             public void setParent(Test parent) {
                 this.parent = parent;
             }
+
             public List<Test> getChildren() {
                 return children;
             }
+
             public void setChildren(List<Test> children) {
                 this.children = children;
                 for (Test child : children) {
                     child.setParent(this);
                 }
             }
+
             public void addChild(Test child) {
                 this.children.add(child);
                 child.setParent(this);
@@ -332,7 +352,7 @@ public class TreeTracker<T> {
         n3.addChild(n34);
         n3.addChild(n35);
 
-        new TreeTracker<Test>().trackingParent(n35, new TreeHandler<Test>(){
+        new TreeTracker<Test>().trackingParent(n35, new TreeHandler<Test>() {
             @Override
             protected boolean doHandle(Test node, int index, int indexInDepth, int depth, int lastDepth) throws Exception {
                 System.out.print(index);
@@ -349,7 +369,7 @@ public class TreeTracker<T> {
         }, true);
 
         System.out.println("=========================================");
-        new TreeTracker<Test>().trackingChildren(root, new TreeHandler<Test>(){
+        new TreeTracker<Test>().trackingChildren(root, new TreeHandler<Test>() {
             @Override
             protected boolean doHandle(Test node, int index, int indexInDepth, int depth, int lastDepth) throws Exception {
                 System.out.print(index);

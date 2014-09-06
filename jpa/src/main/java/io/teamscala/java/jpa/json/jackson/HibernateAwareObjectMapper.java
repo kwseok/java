@@ -15,44 +15,44 @@ import java.util.List;
 
 /**
  * Hibernate aware object mapper.
- *
  */
 public class HibernateAwareObjectMapper extends ObjectMapper {
-	private static final long serialVersionUID = -8608734296572465463L;
+    private static final long serialVersionUID = -8608734296572465463L;
 
-	public HibernateAwareObjectMapper() { this(false); }
-	public HibernateAwareObjectMapper(boolean prettyPrint) {
+    public HibernateAwareObjectMapper() {
+        this(false);
+    }
+
+    public HibernateAwareObjectMapper(boolean prettyPrint) {
         registerModule(new Hibernate4Module() {
             @Override
             public void setupModule(SetupContext context) {
                 super.setupModule(context);
                 context.addBeanSerializerModifier(new BeanSerializerModifier() {
                     @Override
-                    public List<BeanPropertyWriter> changeProperties(
-                            SerializationConfig config,
-                            BeanDescription beanDesc,
-                            List<BeanPropertyWriter> beanProperties) {
+                    public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
+                                                                     BeanDescription beanDesc,
+                                                                     List<BeanPropertyWriter> beanProperties) {
 
                         if (FieldHandled.class.isAssignableFrom(beanDesc.getBeanClass())) {
                             for (Iterator<BeanPropertyWriter> iter = beanProperties.iterator(); iter.hasNext(); ) {
                                 if (FieldHandler.class.isAssignableFrom(iter.next().getPropertyType())) iter.remove();
                             }
                         }
-
                         return beanProperties;
                     }
                 });
             }
         });
 
-		setPrettyPrint(prettyPrint);
+        setPrettyPrint(prettyPrint);
 
-		configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-		configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-	}
+        configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+    }
 
-	public HibernateAwareObjectMapper setPrettyPrint(boolean prettyPrint) {
-		configure(SerializationFeature.INDENT_OUTPUT, prettyPrint);
-		return this;
-	}
+    public HibernateAwareObjectMapper setPrettyPrint(boolean prettyPrint) {
+        configure(SerializationFeature.INDENT_OUTPUT, prettyPrint);
+        return this;
+    }
 }

@@ -7,7 +7,7 @@ import static org.apache.commons.lang3.ArrayUtils.toArray;
 
 /**
  * Throws.
- * 
+ *
  * @see HttpException
  */
 public final class Throws {

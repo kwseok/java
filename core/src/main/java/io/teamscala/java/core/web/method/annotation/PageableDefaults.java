@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
 /**
  * Annotation to set defaults when injecting a {@link Pageable} into a
  * controller method.
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

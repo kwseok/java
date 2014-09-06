@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 게시판 컨트롤러 샘플.
- *
  */
 @Controller
 @RequestMapping("/board")
@@ -26,27 +25,22 @@ public class BoardController extends BaseController {
 
     // Instance constants
 
-    protected static final UriTemplate URI_LIST =
-            new UriTemplate("redirect:/board/list")
-                    .params("page", "condition", "keyword");
+    protected static final UriTemplate URI_LIST = new UriTemplate("redirect:/board/list").params("page", "condition", "keyword");
 
-    protected static final UriTemplate URI_VIEW =
-            new UriTemplate("redirect:/board/view/{id}")
-                    .params("page", "condition", "keyword");
+    protected static final UriTemplate URI_VIEW = new UriTemplate("redirect:/board/view/{id}").params("page", "condition", "keyword");
 
     // Dependency injections
 
     // Request mappings
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(
-            @Validated
-            @ModelAttribute("boardSearch")
-            SimpleSearch search,
-            BindingResult bindingResult,
-            @PageableDefaults(sort = BoardContent.DEFAULT_ORDER)
-            Pageable pageable,
-            Model model) throws Exception {
+    public String list(@Validated
+                       @ModelAttribute("boardSearch")
+                       SimpleSearch search,
+                       BindingResult bindingResult,
+                       @PageableDefaults(sort = BoardContent.DEFAULT_ORDER)
+                       Pageable pageable,
+                       Model model) throws Exception {
 
         model.addAttribute("contents", BoardContent.find.search(search).findPaginatedList(pageable));
         return "board/list";
@@ -73,11 +67,10 @@ public class BoardController extends BaseController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(
-            @Validated
-            @EntityAttribute
-            BoardContent content,
-            BindingResult bindingResult) throws Exception {
+    public String update(@Validated
+                         @EntityAttribute
+                         BoardContent content,
+                         BindingResult bindingResult) throws Exception {
 
         if (bindingResult.hasErrors()) return "board/form";
         else {
@@ -93,19 +86,17 @@ public class BoardController extends BaseController {
     }
 
     @RequestMapping(value = "/{contentId}/comment/create", method = RequestMethod.POST)
-    public String commentCreate(
-            @PathVariable Long contentId,
-            @Validated
-            @EntityAttribute
-            BoardComment comment,
-            BindingResult bindingResult,
-            Model model) throws Exception {
+    public String commentCreate(@PathVariable Long contentId,
+                                @Validated
+                                @EntityAttribute
+                                BoardComment comment,
+                                BindingResult bindingResult,
+                                Model model) throws Exception {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("content", BoardContent.find.byId(contentId));
             return "board/view";
-        }
-        else {
+        } else {
             comment.save();
             return URI_VIEW.tmpl().toUriString(contentId);
         }

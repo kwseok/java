@@ -5,39 +5,46 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 
 /**
  * Is tag support.
- *
  */
 public abstract class IsTagSupport extends BodyTagSupport {
-	private static final long serialVersionUID = -2517095372997445127L;
 
-	//--------------------------------------------------------------------------
-	// 생성자 및 라이프사이클 관리
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // 생성자 및 라이프사이클 관리
+    //--------------------------------------------------------------------------
 
-	public IsTagSupport() { super(); init(); }
+    public IsTagSupport() {
+        super();
+        init();
+    }
 
-	public void init() {
-		
-	}
+    public void init() {
 
-	@Override public void release() { super.release(); init(); }
+    }
 
-	//--------------------------------------------------------------------------
-	// 태그 핸들
-	//--------------------------------------------------------------------------
+    @Override
+    public void release() {
+        super.release();
+        init();
+    }
 
-	@Override public int doStartTag() throws JspException {
-		return evaluation() ? EVAL_BODY_INCLUDE : SKIP_BODY;
-	}
+    //--------------------------------------------------------------------------
+    // 태그 핸들
+    //--------------------------------------------------------------------------
 
-	//--------------------------------------------------------------------------
-	// 하위클래스로 위임할 메서드
-	//--------------------------------------------------------------------------
+    @Override
+    public int doStartTag() throws JspException {
+        return evaluation() ? EVAL_BODY_INCLUDE : SKIP_BODY;
+    }
 
-	/**
-	 * 이 메서드를 구현하여 처리하도록한다.
+    //--------------------------------------------------------------------------
+    // 하위클래스로 위임할 메서드
+    //--------------------------------------------------------------------------
+
+    /**
+     * 이 메서드를 구현하여 처리하도록한다.
+     *
      * @return true or false
      * @throws JspException {@link javax.servlet.jsp.JspException}
-	 */
-	protected abstract boolean evaluation() throws JspException;
+     */
+    protected abstract boolean evaluation() throws JspException;
 }
