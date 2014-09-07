@@ -17,14 +17,15 @@ import java.util.List;
  * Hibernate aware object mapper.
  */
 public class HibernateAwareObjectMapper extends ObjectMapper {
-    private static final long serialVersionUID = -8608734296572465463L;
+
+    private final Hibernate4Module hibernate4Module;
 
     public HibernateAwareObjectMapper() {
         this(false);
     }
 
     public HibernateAwareObjectMapper(boolean prettyPrint) {
-        registerModule(new Hibernate4Module() {
+        this.hibernate4Module = new Hibernate4Module() {
             @Override
             public void setupModule(SetupContext context) {
                 super.setupModule(context);
@@ -43,7 +44,8 @@ public class HibernateAwareObjectMapper extends ObjectMapper {
                     }
                 });
             }
-        });
+        };
+        registerModule(hibernate4Module);
 
         setPrettyPrint(prettyPrint);
 
@@ -53,6 +55,25 @@ public class HibernateAwareObjectMapper extends ObjectMapper {
 
     public HibernateAwareObjectMapper setPrettyPrint(boolean prettyPrint) {
         configure(SerializationFeature.INDENT_OUTPUT, prettyPrint);
+        return this;
+    }
+
+    public HibernateAwareObjectMapper enable(Hibernate4Module.Feature f) {
+        hibernate4Module.enable(f);
+        return this;
+    }
+
+    public HibernateAwareObjectMapper disable(Hibernate4Module.Feature f) {
+        hibernate4Module.disable(f);
+        return this;
+    }
+
+    public final boolean isEnabled(Hibernate4Module.Feature f) {
+        return hibernate4Module.isEnabled(f);
+    }
+
+    public HibernateAwareObjectMapper configure(Hibernate4Module.Feature f, boolean state) {
+        hibernate4Module.configure(f, state);
         return this;
     }
 }
