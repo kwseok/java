@@ -8,6 +8,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.core.Ordered;
+import org.springframework.http.MediaType;
+import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.accept.ContentNegotiationStrategy;
+import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
@@ -23,34 +27,49 @@ import java.util.Map.Entry;
 
 /**
  * Simple handler exception resolver.
- *
  */
-public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver, Ordered, InitializingBean  {
+public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver, Ordered, InitializingBean {
 
-    /** Logger available to subclasses */
+    /**
+     * Logger available to subclasses
+     */
     private static final Logger LOG = LoggerFactory.getLogger(SimpleHandlerExceptionResolver.class);
 
     // Public Constants
 
-    /** The default name of the status code attribute. */
+    /**
+     * The default name of the status code attribute.
+     */
     public static final String DEFAULT_STATUS_CODE_ATTRIBUTE = "statusCode";
 
-    /** The default name of the exception attribute. */
+    /**
+     * The default name of the exception attribute.
+     */
     public static final String DEFAULT_EXCEPTION_ATTRIBUTE = "exception";
 
-    /** The default name of the error message attribute. */
+    /**
+     * The default name of the error message attribute.
+     */
     public static final String DEFAULT_ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
 
-    /** The default name of the field error message attribute. */
+    /**
+     * The default name of the field error message attribute.
+     */
     public static final String DEFAULT_FIELD_ERROR_MESSAGES_ATTRIBUTE = "fieldErrorMessages";
 
-    /** The default name of the error data attribute. */
+    /**
+     * The default name of the error data attribute.
+     */
     public static final String DEFAULT_ERROR_DATA_ATTRIBUTE = "data";
 
-    /** The default name of the error view. */
+    /**
+     * The default name of the error view.
+     */
     public static final String DEFAULT_ERROR_VIEW_NAME = "uncaughtException";
 
-    /** The default code of the error. */
+    /**
+     * The default code of the error.
+     */
     public static final String DEFAULT_ERROR_CODE = "errors.unknown";
 
     // Private Constants
@@ -86,6 +105,8 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
     private List<ExceptionHandler> exceptionHandlers;
 
     private MessageSource messageSource;
+
+    private MediaTypeRequestMatcher jsonRequestMatcher = new MediaTypeRequestMatcher(new HeaderContentNegotiationStrategy(), MediaType.APPLICATION_JSON);
 
     // Implementations for InitializingBean
 
@@ -171,6 +192,13 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
         this.messageSource = messageSource;
     }
 
+    public void setJsonRequestMatcherContentNegotiationStrategy(ContentNegotiationStrategy contentNegotiationStrategy) {
+        if (contentNegotiationStrategy == null) {
+            contentNegotiationStrategy = new HeaderContentNegotiationStrategy();
+        }
+        this.jsonRequestMatcher = new MediaTypeRequestMatcher(contentNegotiationStrategy, MediaType.APPLICATION_JSON);
+    }
+
     // Implementations for HandlerExceptionResolver
 
     @Override
@@ -230,22 +258,24 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
             }
         }
 
-        if (WebUtils.isAjax(request) && this.ajaxErrorView != null)
+        if (this.ajaxErrorView != null && (WebUtils.isAjax(request) || jsonRequestMatcher.matches(request))) {
             errorView = this.ajaxErrorView;
-        else if (errorView == null) {
+        } else if (errorView == null) {
             if (this.defaultErrorView == null) return null;
 
             errorView = this.defaultErrorView;
         }
 
-        if (statusCode == 0)
+        if (statusCode == 0) {
             statusCode = this.defaultStatusCode;
+        }
 
-        if (!resolvedExceptionHandler)
+        if (!resolvedExceptionHandler) {
             errorMessage = this.messageSource
-                    .getMessage(this.defaultErrorCode, null,
-                            "???" + this.defaultErrorCode + "???",
-                            locale);
+                .getMessage(this.defaultErrorCode, null,
+                    "???" + this.defaultErrorCode + "???",
+                    locale);
+        }
 
         LOG.debug("Resolving to status code '" + statusCode + "'");
         LOG.debug("Resolving to error view '" + errorView + "'");
@@ -291,7 +321,8 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
      * <p>The default implementation prevents the response from being cached,
      * if the {@link #setPreventResponseCaching "preventResponseCaching"} property
      * has been set to "true".
-     * @param ex the exception that got thrown during handler execution
+     *
+     * @param ex       the exception that got thrown during handler execution
      * @param response current HTTP response
      * @see #preventCaching
      */
@@ -303,6 +334,7 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
     /**
      * Prevents the response from being cached, through setting corresponding
      * HTTP headers. See <code>http://www.mnot.net/cache_docs</code>.
+     *
      * @param response current HTTP response
      */
     protected void preventCaching(HttpServletResponse response) {
