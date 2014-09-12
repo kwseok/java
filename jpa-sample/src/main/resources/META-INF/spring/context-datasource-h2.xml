@@ -9,8 +9,10 @@
 		<property name="jdbcUrl" value="jdbc:h2:file:~/.h2/java-jpa-sample"/>
 		<property name="user" value="sa"/>
 		<property name="password" value=""/>
+        <property name="autoCommitOnClose" value="false"/>
         <property name="maxPoolSize" value="20" />
         <property name="minPoolSize" value="5" />
+        <property name="acquireIncrement" value="1" />
         <property name="maxStatements" value="100" />
         <property name="testConnectionOnCheckout" value="true" />
 	</bean>

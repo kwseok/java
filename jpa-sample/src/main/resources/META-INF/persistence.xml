@@ -14,6 +14,9 @@
 			<!-- value="create" to build a new database on each run; value="update" to modify an existing database; value="create-drop" means the same as "create" but also drops tables when Hibernate closes; value="validate" makes no changes to the database -->
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <!--
+            <property name="hibernate.ejb.use_class_enhancer" value="true"/>
+            -->
 			<property name="hibernate.connection.charSet" value="UTF-8"/>
 			<property name="hibernate.bytecode.use_reflection_optimizer" value="true"/>
 
@@ -69,6 +72,9 @@
             <!-- value="create" to build a new database on each run; value="update" to modify an existing database; value="create-drop" means the same as "create" but also drops tables when Hibernate closes; value="validate" makes no changes to the database -->
             <!--property name="hibernate.hbm2ddl.auto" value="update"/-->
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <!--
+            <property name="hibernate.ejb.use_class_enhancer" value="true"/>
+            -->
             <property name="hibernate.connection.charSet" value="UTF-8"/>
             <property name="hibernate.bytecode.use_reflection_optimizer" value="true"/>
 

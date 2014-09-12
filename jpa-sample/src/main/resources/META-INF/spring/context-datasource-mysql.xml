@@ -11,6 +11,7 @@
 		<property name="password" value="samplepwd"/>
         <property name="maxPoolSize" value="20" />
         <property name="minPoolSize" value="5" />
+        <property name="acquireIncrement" value="1" />
         <property name="maxStatements" value="100" />
         <property name="testConnectionOnCheckout" value="true" />
 	</bean>
