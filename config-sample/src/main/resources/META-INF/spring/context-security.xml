@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- Excludes urls -->
+	<sec:http pattern="/favicon.ico" security="none" />
+	<sec:http pattern="/resources/**" security="none" />
+		
+	<sec:http auto-config="true" 
+				use-expressions="true"
+				disable-url-rewriting="true" 
+				access-denied-page="/accessDenied"
+				entry-point-ref="authenticationEntryPoint">
+
+		<!--
+		<sec:intercept-url pattern="/test" access="isAuthenticated()" />
+		-->
+		
+		<!-- <sec:intercept-url pattern="/admin" access="hasAnyRole('ROLE_ADMIN')" /> -->
+
+        <!-- 임시수정
+		<sec:intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')" />
+		-->
+
+		<!-- <sec:http pattern="/admin/engine/summary/diff**" security="none" />
+	    <sec:http pattern="/admin/engine/detail/diff**" security="none" />  -->
+	    
+	    <sec:intercept-url pattern="/greenList/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/lawsuitDetail/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/searchBookmark/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/lawsuit/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/addpatent/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/requestPatent/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/addLawsuit/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    <sec:intercept-url pattern="/stats/**" access="hasAnyRole('ROLE_SERVICE_PREMIUM' , 'ROLE_ADMIN')" />
+	    
+		
+		<!-- 지정되지 않은 url 접근 가능. -->
+		<sec:intercept-url pattern="/framework/validation/constraints/impl" access="permitAll" />
+
+		<sec:form-login login-page="/user/login"
+				username-parameter="username"
+				password-parameter="password"
+				authentication-success-handler-ref="authenticationSuccessHandler"
+				authentication-failure-handler-ref="authenticationFailureHandler"
+				login-processing-url="/user/security"/>
+		<sec:logout logout-url="/user/logout" success-handler-ref="logoutSuccessHandler"/>
+		
+		<!-- 동시 접속 (같은 아이디로 중복 로그인 불가) --> 
+		<sec:session-management>
+            <sec:concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/" />
+        </sec:session-management>
+        
+		<!-- 자동 로그인 -->
+		<sec:remember-me token-validity-seconds="31536000" key="r" user-service-ref="userDetailsService"/>
+
+		<!--
+		<sec:custom-filter after="FILTER_SECURITY_INTERCEPTOR" ref="switchUserProcessingFilter"/>
+		-->
+	</sec:http>
+
+	<!-- SwitchUserFilter -->
+	<!-- 
+	<bean id="switchUserProcessingFilter" class="org.springframework.security.web.authentication.switchuser.SwitchUserFilter">
+		<property name="userDetailsService" ref="userDetailsService" />
+		<property name="userDetailsChecker" ref="postAuthenticationChecks"/>
+		<property name="successHandler" ref="authenticationSuccessHandler"/>
+		<property name="failureHandler" ref="authenticationFailureHandler"/>
+		<property name="switchUserUrl" value="/admin/user/switch" />
+		<property name="exitUserUrl" value="/user/exit" />
+		<property name="usernameParameter" value="loginId"/>
+	</bean>	
+	-->
+
+	<!-- SecurityContextHolder set strategy to Inheritable thread local -->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.security.core.context.SecurityContextHolder"/>
+		<property name="targetMethod" value="setStrategyName"/>
+		<property name="arguments" value="MODE_INHERITABLETHREADLOCAL"/>
+	</bean>
+
+	<!-- EntryPoint -->
+	<bean id="authenticationEntryPoint" class="io.teamscala.java.sample.security.web.AjaxAwareLoginUrlAuthenticationEntryPoint"
+			c:loginFormUrl="/user/login" p:useForward="true"/>
+
+	<!-- Success handlers -->
+	<bean id="authenticationSuccessHandler" class="io.teamscala.java.sample.security.web.AjaxAwareAuthenticationSuccessHandler" p:defaultTargetUrl="/"/>
+
+	<!-- Failure handlers -->
+	<bean id="authenticationFailureHandler" class="io.teamscala.java.sample.security.web.AjaxAwareAuthenticationFailureHandler"/>
+	
+	<!-- Logout success handler -->
+	<bean id="logoutSuccessHandler" class="io.teamscala.java.sample.security.web.AjaxAwareLogoutSuccessHandler" p:defaultTargetUrl="/"/>
+
+	<!-- UserDetails service -->
+	<bean id="userDetailsService" class="io.teamscala.java.sample.security.userdetails.SecurityDetailsService"/>
+
+	<!-- Authentication manager -->
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="authenticationProvider"/>
+	</sec:authentication-manager>
+	
+	<!-- Authentication provider -->
+	<bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService"/>
+		<property name="preAuthenticationChecks" ref="preAuthenticationChecks"/>
+		<property name="postAuthenticationChecks" ref="postAuthenticationChecks"/>
+	</bean>
+	
+	<!-- Authentication checkers -->
+	<bean id="preAuthenticationChecks" class="io.teamscala.java.sample.security.userdetails.PreAuthenticationChecks"/>
+	<bean id="postAuthenticationChecks" class="io.teamscala.java.sample.security.userdetails.PostAuthenticationChecks"/>
+
+	<!-- Support annotation -->
+	<sec:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled"/>
+
+</beans>

@@ -14,5 +14,6 @@
         <module>core</module>
         <module>jpa</module>
         <module>jpa-sample</module>
+        <module>config-sample</module>
     </modules>
 </project>

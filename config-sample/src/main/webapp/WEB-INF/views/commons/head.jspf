@@ -1,0 +1,14 @@
+<%@ page contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="util" uri="http://io.teamscala.java/tags/util" %>
+<%@ taglib prefix="site" tagdir="/WEB-INF/tags" %>
+
+<meta http-equiv="content-language" content="ko"/>
+<meta http-equiv="content-style-type" content="text/css"/>
+<meta http-equiv="content-script-type" content="text/javascript"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="language" content="Korean"/>
+<title>::: SAMPLE :::</title>
+<script type="text/javascript">var ENUMS = ${util:toJSON(ENUMS)};</script>
+<site:style href="/assets/css/common.css"/>
