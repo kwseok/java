@@ -35,7 +35,7 @@ public @interface EntityAttribute {
     /**
      * @return Entity not found message code.
      */
-    String notFoundMessage() default "errors.entityNotFound";
+    String notFoundMessage() default "error.entityNotFound";
 
     /**
      * @return Include bind fields.

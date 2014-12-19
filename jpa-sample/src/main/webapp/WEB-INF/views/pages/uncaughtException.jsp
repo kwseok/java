@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/commons/taglibs.jspf" %>
 
-<fmt:message var="defaultErrorMessage" key="errors.unknown"/>
+<fmt:message var="defaultErrorMessage" key="error.unknown"/>
 <h2><c:out value="${errorMessage}" default="${defaultErrorMessage}"/></h2>
 <div class="HT25_empty_space"></div>
 <c:if test="${not empty exception}">

@@ -70,7 +70,7 @@ public class SimpleHandlerExceptionResolver implements HandlerExceptionResolver,
     /**
      * The default code of the error.
      */
-    public static final String DEFAULT_ERROR_CODE = "errors.unknown";
+    public static final String DEFAULT_ERROR_CODE = "error.unknown";
 
     // Private Constants
 
