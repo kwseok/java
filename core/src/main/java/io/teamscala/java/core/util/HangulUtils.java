@@ -1,5 +1,14 @@
 package io.teamscala.java.core.util;
 
+import com.google.common.collect.Lists;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * 한글 처리를 위한 유틸리티 클래스
  * 유니코드 2.0 한글의 범위 * AC00(가) ~ D7A3(힣)
@@ -9,44 +18,40 @@ public abstract class HangulUtils {
     /**
      * 초성 테이블
      */
-    private static final char[] INITIAL_CONSONANTS = {
-        'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
-        'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    private static final String[] INITIAL_CONSONANTS = {
+        "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
+        "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
     };
 
     /**
      * 중성 테이블
      */
-    private static final char[] VOWELS = {
-        'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ',
-        'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'
+    private static final String[] VOWELS = {
+        "ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ",
+        "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"
     };
 
     /**
      * 종성 테이블
      */
-    private static final char[] FINAL_CONSONANTS = {
-        ' ', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ',
-        'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ',
-        'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    private static final String[] FINAL_CONSONANTS = {
+        "", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ",
+        "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ",
+        "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
     };
 
     /**
      * 숫자 테이블
      */
-    private static final char[] NUMBERS = {
-        '영', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'
-    };
+    private static final String[] NUMBERS = {"영", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구"};
 
     /**
-     * 숫자 단위 테이블 ('극' 단위 까지만 처리)
+     * 숫자 단위 테이블 ('경' 단위 까지만 처리)
      * <p>
      * <p>일, 십, 백, 천, 만, 억, 조, 경, 해, 자, 양, 구, 간, 정, 재, 극,
      * 항하사, 아승기, 나유타, 불가사의, 무량대수(10의68제곱)</p>
      */
-    private static final char[] NUMBER_UNITS = {
-        '십', '백', '천', '만', '억', '조', '경', '해', '자', '양', '구', '간', '정', '재', '극'
-    };
+    private static final String[][] LARGE_NUMBERS = {{"십", "백", "천"}, {"만", "억", "조", "경"}};
 
     /**
      * 문자 하나가 한글인지 검사한다 ('가' ~ '힣')
@@ -78,8 +83,8 @@ public abstract class HangulUtils {
      * @param c 문자
      * @return 초성
      */
-    public static char getInitial(char c) {
-        if (!isHangul(c)) return c;
+    public static String getInitial(char c) {
+        if (!isHangul(c)) return String.valueOf(c);
         return INITIAL_CONSONANTS[((c & 0xFFFF) - 0xAC00) / (21 * 28)];
     }
 
@@ -100,8 +105,8 @@ public abstract class HangulUtils {
      * @param c 문자
      * @return 중성
      */
-    public static char getVowel(char c) {
-        if (!isHangul(c)) return c;
+    public static String getVowel(char c) {
+        if (!isHangul(c)) return String.valueOf(c);
         return VOWELS[(((c & 0xFFFF) - 0xAC00) % (21 * 28)) / 28];
     }
 
@@ -111,9 +116,9 @@ public abstract class HangulUtils {
      * @param c 문자
      * @return 종성
      */
-    public static char getUnder(char c) {
-        if (!isHangul(c)) return c;
-        return FINAL_CONSONANTS[(((c & 0xFFFF) - 0xAC00) % (21 * 28)) % 28];
+    public static Optional<String> getUnder(char c) {
+        if (!isHangul(c)) return Optional.empty();
+        return Optional.of(FINAL_CONSONANTS[(((c & 0xFFFF) - 0xAC00) % (21 * 28)) % 28]).filter(a -> !a.isEmpty());
     }
 
     /**
@@ -123,7 +128,7 @@ public abstract class HangulUtils {
      * @return true or false
      */
     public static boolean hasUnder(char c) {
-        return (isHangul(c) && getUnder(c) != FINAL_CONSONANTS[0]);
+        return (isHangul(c) && getUnder(c).isPresent());
     }
 
     /**
@@ -144,7 +149,7 @@ public abstract class HangulUtils {
      * @return 한글숫자
      */
     public static String toHangulNumber(int number) {
-        return toHangulNumber(number, null);
+        return toHangulNumber(number, "");
     }
 
     /**
@@ -154,7 +159,7 @@ public abstract class HangulUtils {
      * @return 한글숫자
      */
     public static String toHangulNumber(String number) {
-        return toHangulNumber(number, null);
+        return toHangulNumber(number, "");
     }
 
     /**
@@ -179,47 +184,25 @@ public abstract class HangulUtils {
         if (!StringUtils.isNumeric(number)) return number;
 
         // 숫자가 0으로 시작할 경우 0이 아닐때까지 건너 뛴다
-        if (number.charAt(0) == '0') {
-            number = StringUtils.stripStart(number, "0");
-            if (number.isEmpty()) return String.valueOf(NUMBERS[0]);
-        }
-
+        if (number.charAt(0) == '0') number = StringUtils.stripStart(number, "0");
+        if (number.isEmpty()) return String.valueOf(NUMBERS[0]);
         // 숫자가 한자리일 경우
         if (number.length() == 1) return String.valueOf(NUMBERS[number.charAt(0) - '0']);
 
-        int unit = NUMBER_UNITS.length - 3; // (십, 백, 천) 3자리를 빼준다.
-        int rest = number.length() - 1;
-
-        // 숫자의 자릿수가 표현 단위를 초과하였을 경우
-        if (rest / 4 > unit) {
-            throw new IllegalArgumentException("Number is overflow [" + number + "]");
-        }
-
-        StringBuilder result = new StringBuilder(100);
-        for (int i = 0, ignoreNumber = 1; i < number.length(); i++, rest--) {
-            int c = number.charAt(i) - '0';
-
-            if ((unit = rest % 4) == 0) {
-                if (c > 0) result.append(NUMBERS[c]);
-                if (rest > 0) {
-                    if (c >= ignoreNumber) {
-                        result.append(NUMBER_UNITS[rest / 4 + 2]);
-                        ignoreNumber = 1;
-                    }
-                    if (delimiter != null) {
-                        result.append(delimiter);
-                    }
-                }
-            } else {
-                if (c > 1) result.append(NUMBERS[c]);
-                if (c > 0) {
-                    result.append(NUMBER_UNITS[unit - 1]);
-                    ignoreNumber = 0;
-                }
-            }
-        }
-
-        return result.toString();
+        List<Integer> numberFragments = Arrays.stream(number.split("")).map(a -> Integer.parseInt(a)).collect(Collectors.toList());
+        Collections.reverse(numberFragments);
+        List<List<Integer>> groupedNumbers = Lists.partition(numberFragments, 4);
+        return IntStream.range(0, groupedNumbers.size()).mapToObj(i -> {
+            List<Integer> nums = groupedNumbers.get(i);
+            String hnums = IntStream.range(0, nums.size()).mapToObj(j -> {
+                Integer n = nums.get(j);
+                String hnum = (n > 1 || j == 0 && n == 1) ? NUMBERS[n] : "";
+                String unit = (n > 0 && j > 0) ? LARGE_NUMBERS[0][j - 1] : "";
+                return hnum + unit;
+            }).reduce((a, b) -> b + a).orElse("");
+            String lunit = (i > 0 && !hnums.isEmpty()) ? LARGE_NUMBERS[1][(i - 1) % 4] : "";
+            return hnums + lunit;
+        }).filter(a -> !a.isEmpty()).reduce((a, b) -> b + delimiter + a).orElse("");
     }
 
 
@@ -228,11 +211,11 @@ public abstract class HangulUtils {
         String s = "석기원";
         char c = '석';
 
-        System.out.println(toHangulNumber("1111111111"));
-        System.out.println(toHangulNumber("00000000000001"));
-        System.out.println(toHangulNumber("00000010000000000"));
+        System.out.println(toHangulNumber("1111111111", " "));
+        System.out.println(toHangulNumber("00000000000001", " "));
+        System.out.println(toHangulNumber("00000010000000000", " "));
         System.out.println(toHangulNumber("111111111111111111111", " "));
-        System.out.println(toHangulNumber("1346430412632951232"));
+        System.out.println(toHangulNumber("1346430412632951232", " "));
         System.out.print(getInitial(c));
         System.out.print(getVowel(c));
         System.out.println(getUnder(c));
