@@ -1,2 +1,1 @@
-java-jpa-sample
-===============
+# Java JPA Sample Project

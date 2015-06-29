@@ -1,2 +1,1 @@
-java-core
-=========
+# Java Core Project

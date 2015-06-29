@@ -1,2 +1,1 @@
-java-project
-============
+# Java Root Project

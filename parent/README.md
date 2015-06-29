@@ -1,2 +1,1 @@
-java-parent
-===========
+# Java Parent Project
