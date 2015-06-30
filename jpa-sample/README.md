@@ -1,1 +1,1 @@
-# Java JPA Sample Project
+# Java JPA Sample
